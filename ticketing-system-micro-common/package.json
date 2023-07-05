@@ -1,5 +1,5 @@
 {
-  "name": "init-micro-common",
+  "name": "ticketing-system-micro-common",
   "version": "1.0.0",
   "description": "INIT Project",
   "main": "app.js",
@@ -38,7 +38,7 @@
       "node_modules/**/node_modules"
     ],
     "env": {
-      "MODULE": "init-micro-common"
+      "MODULE": "ticketing-system-micro-common"
     }
   }
 }

@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "init-frontend-admin": {
+    "ticketing-system-frontend-admin": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/init-frontend-admin",
+            "outputPath": "dist/ticketing-system-frontend-admin",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -102,13 +102,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "init-frontend-admin:build:production"
+              "browserTarget": "ticketing-system-frontend-admin:build:production"
             },
             "dev": {
-              "browserTarget": "init-frontend-admin:build:dev"
+              "browserTarget": "ticketing-system-frontend-admin:build:dev"
             },
             "development": {
-              "browserTarget": "init-frontend-admin:build:development"
+              "browserTarget": "ticketing-system-frontend-admin:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -116,7 +116,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "init-frontend-admin:build"
+            "browserTarget": "ticketing-system-frontend-admin:build"
           }
         },
         "test": {
@@ -138,5 +138,5 @@
       }
     }
   },
-  "defaultProject": "init-frontend-admin"
+  "defaultProject": "ticketing-system-frontend-admin"
 }
