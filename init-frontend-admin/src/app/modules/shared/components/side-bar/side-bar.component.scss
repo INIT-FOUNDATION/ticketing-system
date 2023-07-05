@@ -1,0 +1,185 @@
+@import '../../../../../theme/color';
+
+.sideBarNav {
+  position: fixed;
+  background: $alabaster;
+  border-radius: 20px;
+  height: 100%;
+  transition: all 0.5s ease-in-out;
+  top: 20px;
+  /* bottom: 20px; */
+  height: 700px;
+  width: 18%;
+
+  @media only screen and (min-width: 1000px) and (max-width: 1400px) {
+    height: 35rem;
+  }
+
+  @media only screen and (min-width: 1410px) and (max-width: 1500px) {
+    height: 740px;
+  }
+
+  @media only screen and (min-width: 1600px) and (max-width: 2000px) {
+    height: 57rem;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+
+    li {
+      a {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        color: $storm-gray;
+        padding: 20px 20px;
+        display: block;
+        text-decoration: none;
+
+        @media only screen and (min-width: 1000px) and (max-width: 1400px) {
+          font-size: 12px;
+          padding: 15px 25px
+        }
+
+        &:hover {
+          background: $iron;
+        }
+
+        &.active {
+          background: $iron;
+        }
+      }
+
+      img {
+        // margin-right: 10px;
+        width: 20px;
+      }
+    }
+  }
+
+  .dashboardLogo {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px;
+    align-items: center;
+
+    .leftLogo {
+      img {
+        // width: 25%;
+        width: 5rem;
+      }
+
+      span {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 50px;
+        color: $blue-lagoon;
+        position: relative;
+        top: 5px;
+        left: 6px;
+      }
+    }
+  }
+
+
+}
+
+.emNumber {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  border-top: 1px solid $alto;
+  padding: 20px 30px;
+  width: 100%;
+
+  @media only screen and (min-width: 1000px) and (max-width: 1400px) {
+    padding: 15px 10px;
+  }
+}
+
+.phoneIcon {
+  img {
+    background: $blue-lagoon;
+    border-radius: 5px;
+    padding: 7px;
+    margin-right: 5px;
+  }
+}
+
+.phoneNumber {
+  p {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0;
+
+    @media only screen and (min-width: 1000px) and (max-width: 1400px) {
+      font-size: 10px;
+    }
+  }
+}
+
+.phoneNumber {
+
+  p {
+
+    i {
+      color: $torch-red;
+    }
+  }
+}
+
+span.menuItemList {
+  position: relative;
+  left: 10px;
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1400px) {
+  ::ng-deep .leftSection-collapse {
+    .sideBarNav {
+      .dashboardLogo {
+        padding: 15px !important;
+      }
+
+      ul {
+        li {
+          a {
+            padding: 15px !important;
+            text-align: center;
+          }
+        }
+      }
+
+      .emNumber {
+        padding: 15px !important;
+      }
+
+    }
+  }
+}
+
+.contact-details {
+  color: $black;
+}
+
+.custom-admin-dashboard,
+.custom-admin-user,
+.custom-admin-roles,
+.custom-admin-hospital,
+.custom-admin-manage-password,
+.custom-right-slid-icon,
+.custom-appointments,
+.custom-organaization,
+.custom-patientManagment,
+.custom-doctorRoster,
+.custom-patient-appointments,
+.custom-patient-lab-reports,
+.custom-patient-medication{
+  width: 25px !important;
+  height: 25px !important;
+  color: $storm-gray;
+}
+
+.rightIcon {
+  cursor: pointer;
+}

@@ -1,0 +1,299 @@
+@import '../../../../../theme/color';
+
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  height: 90vh;
+  margin: 1rem auto;
+
+  #formContent {
+    -webkit-border-radius: 15px;
+    border: 2px solid $mercury;
+    border-radius: 15px;
+    background: $white;
+    padding: 30px;
+    // width: 90%;
+    width: 100%;
+    max-width: 450px;
+    // -webkit-box-shadow: 0 30px 60px 0 rgb(0 0 0 / 30%);
+    // box-shadow: 0 30px 60px 0 rgb(0 0 0 / 30%);
+
+    .logo {
+      text-align: center;
+
+      img {
+        width: 30%;
+      }
+
+      p {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        color: $mine-shaft;
+        margin-top: 5%;
+      }
+    }
+  }
+
+  .labelName {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: $mine-shaft;
+  }
+
+  .form-control {
+    background: $white;
+    border: 1px solid $mercury;
+    box-sizing: border-box;
+    border-radius: 40px;
+    height: 50px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: $mine-shaft;
+    position: relative;
+    padding-left: 3rem;
+  }
+
+
+  .rememberBox {
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+  }
+
+  .rememberBox label .rememberme {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: $mine-shaft;
+    position: relative;
+    top: -5px;
+  }
+
+  .rememberBox .forgot a {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    text-decoration-line: underline;
+    color: $blue-lagoon;
+    position: relative;
+    top: -5px;
+  }
+
+  .form-check {
+    position: relative;
+  }
+
+  /* The container */
+  .form-check-label {
+    margin: 0;
+  }
+
+  /* Hide the browser's default checkbox */
+  .form-check-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    border: 1px solid $mercury;
+    box-sizing: border-box;
+    border-radius: 3px;
+  }
+
+  /* On mouse-over, add a grey background color */
+  .form-check-label:hover input~.checkmark {
+    background: $blue-lagoon;
+  }
+
+  /* When the checkbox is checked, add a blue background */
+  .form-check-label input:checked~.checkmark {
+    background: $blue-lagoon;
+  }
+
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  /* Show the checkmark when checked */
+  .form-check-label input:checked~.checkmark:after {
+    display: block;
+  }
+
+  /* Style the checkmark/indicator */
+  .form-check-label .checkmark:after {
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 9px;
+    border: solid $white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+  .loginBtn {
+    background: $blue-lagoon;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    color: $white !important;
+    width: 100%;
+    border: 1px solid $mercury;
+    box-sizing: border-box;
+    border-radius: 40px;
+    height: 50px;
+  }
+
+  h6 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: $mine-shaft;
+    text-align: center;
+    margin-top: 5%;
+
+    a {
+      text-decoration-line: underline;
+      color: $blue-lagoon;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .invalid-form-control {
+    border: 1px solid $torch-red;
+  }
+
+  .password-toggle {
+    cursor: pointer;
+    float: right;
+    margin-top: -33px;
+    margin-right: 13px;
+    color: $blue-lagoon;
+  }
+}
+
+
+::ng-deep .mat-tab-labels {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 0px solid $mercury !important;
+}
+
+::ng-deep .mat-tab-label {
+  background: $white !important;
+  border-radius: 50px !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  color: $black !important;
+  letter-spacing: 0.1px !important;
+  opacity: 1 !important;
+  height: 40px !important;
+  min-width: 8.4rem !important;
+}
+
+::ng-deep .mat-tab-label-active {
+  background: $blue-lagoon !important;
+  color: $white !important;
+
+}
+
+::ng-deep .mat-ink-bar {
+  height: 0 !important;
+}
+
+::ng-deep .mat-tab-nav-bar,
+::ng-deep .mat-tab-header {
+  border-bottom: 0px solid rgba(0, 0, 0, .12) !important;
+}
+
+::ng-deep .mat-tab-header {
+  margin-bottom: 2rem !important;
+}
+
+::ng-deep .ng-otp-input-wrapper {
+  margin: auto;
+  display: table;
+}
+
+
+.loginSection {
+  // background: #F0F0FA;
+  // height: 79vh;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    width: 80%;
+  }
+}
+
+.loginImgSection {
+  // height: 79vh;
+}
+
+span.phoneIcon {
+  position: absolute;
+  z-index: 10;
+  left: 1rem;
+  top: 1rem;
+  font-size: 16px;
+
+  .fa {
+    color: $blue-lagoon;
+  }
+}
+
+.forgot {
+  text-align: center;
+  margin: 2rem auto;
+
+  a {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    text-decoration-line: underline;
+    color: $blue-lagoon;
+    // position: relative;
+    // top: -5px;
+    text-align: center;
+    margin: auto;
+  }
+
+}
+
+.loginRow {
+  background: #F0F0FA;
+}
+
+.userSignUp{
+  cursor: pointer;
+}

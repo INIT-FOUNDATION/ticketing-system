@@ -1,0 +1,81 @@
+@import '../../../../../theme/custome';
+@import '../../../../../theme/color';
+
+.custom-checkbox .custom-control-label::before {
+  border: 2px solid $black;
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+  background-color: transparent;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+}
+
+.custom-control.custom-checkbox {
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 50%;
+}
+
+.userDetailsLabelCheckBox {
+  border-radius: 5px;
+  //   background: $alabaster;
+  font-size: 16px;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  color: $black;
+}
+
+.scroolDiv {
+  height: 220px;
+  overflow: auto;
+}
+
+::ng-deep .cdk-overlay-pane.my-dialog {
+  width: 30% !important;
+  height: 400px !important;
+}
+
+.custom-control-label::after {
+  width: 20px;
+  height: 20px;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+  background-image: url(../../../../../assets/check-mark.png);
+}
+
+.btnCenter {
+  width: 80%;
+  padding: 10px 20px;
+  font-size: 14px;
+  margin-top: 1rem;
+}
+
+.cdk-overlay-pane.my-dialog {
+  position: relative !important;
+}
+
+.close.mat-button {
+  // position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+  line-height: 14px;
+  min-width: auto;
+}
+
+
+::ng-deep .close {
+  background: $white !important;
+
+  &:hover {
+    background: transparent;
+  }
+}

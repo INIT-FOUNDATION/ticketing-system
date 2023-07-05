@@ -1,0 +1,96 @@
+// @import '../../../../../theme/custome';
+@import '../../../../../theme/color';
+
+.uploadImg {
+  margin: 1rem auto;
+
+  .imageUploadBox {
+    width: 180px;
+    height: 180px;
+    margin: 1rem auto;
+    display: table;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.chooseFileBox {
+  width: 50%;
+  display: table;
+  margin: auto;
+  position: relative;
+
+  .uploadBtn {
+    font-weight: 700;
+    font-size: 15px;
+    padding: 10px 25px;
+    border-radius: 100px;
+    display: block;
+    margin: 15px auto;
+    width: 100%;
+    border: 1px solid $blue-lagoon;
+    background: $blue-lagoon;
+    cursor: pointer;
+    color: $white;
+  }
+
+  .uploadFileInput {
+    margin-bottom: -3.7rem;
+    display: block;
+    width: 100%;
+    /* background: #f00; */
+    padding: 10px;
+    opacity: 0;
+  }
+}
+
+.popupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+
+  .closeIcon {
+    cursor: pointer;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.uploadImgCrop {
+  margin: 1rem auto;
+}
+
+.dragInfo {
+  text-align: center;
+
+  p {
+    font-size: 20px;
+    color: $black;
+  }
+}
+
+.orInfo {
+  text-align: center;
+
+  p {
+    font-size: 15px;
+    color: $mine-shaft;
+  }
+}
+
+.cancelBtn {
+  border: 1px solid $blue-lagoon;
+  color: $blue-lagoon;
+  margin-right: 10px;
+}
+
+.confirmBtn {
+  background: $blue-lagoon;
+  color: $white;
+}

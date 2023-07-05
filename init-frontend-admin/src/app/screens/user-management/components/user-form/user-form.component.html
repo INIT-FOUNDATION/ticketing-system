@@ -1,0 +1,176 @@
+<div class="col-md-12">
+    <div class="row createRoles ">
+        <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 pl-0">
+            <h2>User Details</h2>
+            <form class=" marginTop20" [formGroup]="userForm" (ngSubmit)="submit()">
+                <div class="row">
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                        <label class="userDetailsLabel" for="first_name">First Name*</label>
+                        <input type="text" class="form-control userInput" id="first_name" formControlName="first_name"
+                            appInputTrim
+                            [ngClass]="{'invalid-field': formSubmitted && userForm.get(['first_name']).hasError('required')}"
+                            [appRangeLength]="[2, 30]" appInputChar='username'>
+
+                        <div class="invalid-feedback"
+                            *ngIf="userForm.get(['first_name']).hasError('inputcharvalidator') && !userForm.get(['first_name']).hasError('rangeLength')"
+                            [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                            placement="bottom">
+                            {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open
+                            parenthesis
+                            “(“ and Close parenthesis “)”'}}
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="userForm.get(['first_name']).hasError('rangeLength') || userForm.get(['first_name']).hasError('trimError')"
+                            [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                            Must be between 2-30 characters
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && userForm.get(['first_name']).hasError('required')"
+                            tooltip="User Name is required" placement="bottom">
+                            First Name is required
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6 pr-0">
+                        <label class="userDetailsLabel" for="last_name">Last Name*</label>
+                        <input type="text" class="form-control userInput" id="last_name" formControlName="last_name"
+                            appInputTrim
+                            [ngClass]="{'invalid-field': formSubmitted && userForm.get(['last_name']).hasError('required')}"
+                            [appRangeLength]="[2, 30]" appInputChar='username'>
+
+                        <div class="invalid-feedback"
+                            *ngIf="userForm.get(['last_name']).hasError('inputcharvalidator') && !userForm.get(['last_name']).hasError('rangeLength')"
+                            [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                            placement="bottom">
+                            {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open
+                            parenthesis
+                            “(“ and Close parenthesis “)”'}}
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="userForm.get(['last_name']).hasError('rangeLength') || userForm.get(['last_name']).hasError('trimError')"
+                            [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                            Must be between 2-30 characters
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="formSubmitted && userForm.get(['last_name']).hasError('required')"
+                            tooltip="User Name is required" placement="bottom">
+                            Last Name is required
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                        <label class="userDetailsLabel" for="mobile_number">Mobile Number*</label>
+                        <input type="tel" maxlength="10" class="form-control userInput" id="mobile_number"
+                            formControlName="mobile_number" [appRange]="[1000000000, 9999999999]" [appMin]="1000000000"
+                            [appMax]="9999999999" appMobileNumber="true"
+                            onkeypress="(event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+
+                        <div class="invalid-feedback" *ngIf="userForm.get(['mobile_number']).hasError('range')"
+                            tooltip="Must be 10 digits" placement="bottom">
+                            Must be 10 digits
+                        </div>
+                        <div class="invalid-feedback"
+                            *ngIf="!userForm.get(['mobile_number']).hasError('range') && userForm.get(['mobile_number']).hasError('pattern')"
+                            tooltip="Mobile Number must start with 6, 7, 8 or 9" placement="bottom">
+                            Mobile Number must start with 6, 7, 8 or 9
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6 pr-0">
+                        <label class="userDetailsLabel" for="email_id">Email ID</label>
+                        <input type="email" class="form-control userInput" id="email_id" formControlName="email_id"
+                            appInputTrim                           
+                            appInputChar='email'>
+                        <div class="invalid-feedback" *ngIf="userForm.get(['email_id']).hasError('inputcharvalidator')"
+                            [tooltip]="'Email Id is not valid'" placement="bottom">
+                            Email Id is not valid
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 marginTop20">
+                        <label class="userDetailsLabel" for="is_active">Status*</label>
+                        <mat-form-field>
+                            <mat-select class="userInput" id="is_active" formControlName='is_active'>
+                                <mat-option *ngFor="let status of statusList" [value]="status.value">{{status.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <h2>Assign Role</h2>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 ">
+                        <label class="userDetailsLabel" for="role_id">Role*</label>
+                        <mat-form-field>
+                            <mat-select class="userInput" id="role_id" formControlName='role_id'>
+                                <mat-option *ngFor="let role of roleList" [value]="role.role_id">{{role.role_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <h2 *ngIf="isHierarchySectionNecessary">Select Hierarchy</h2>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 marginTop20"
+                        *ngIf="showHide.state">
+                        <label class="userDetailsLabel" for="state_id">State{{ mandatory.state ? '*' : '' }}</label>
+                        <mat-form-field>
+                            <mat-select class="userInput" id="state_id" formControlName='state_id'
+                                (selectionChange)="onStateChange()">
+                                <mat-option *ngFor="let state of stateList" [value]="state.state_id">
+                                    {{state.state_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 marginTop20"
+                        *ngIf="showHide.district">
+                        <label class="userDetailsLabel" for="district_id">District{{ mandatory.district ? '*' : ''
+                            }}</label>
+                        <mat-form-field>
+                            <mat-select class="userInput" id="district_id" formControlName='district_id'
+                                (selectionChange)="onDistrictChange()">
+                                <mat-option *ngFor="let district of districtList" [value]="district.district_id">
+                                    {{district.district_name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 marginTop20"
+                        *ngIf="showHide.block">
+                        <label class="userDetailsLabel" for="block_id">Block{{ mandatory.block ? '*' : '' }}</label>
+                        <mat-form-field>
+                            <mat-select class="userInput" id="block_id" formControlName='block_id'
+                                (selectionChange)="onBlockChange()">
+                                <mat-option *ngFor="let block of blockList" [value]="block.block_id">
+                                    {{block.block_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 marginTop20"
+                        *ngIf="showHide.village">
+                        <label class="userDetailsLabel" for="village_id">Village{{ mandatory.village ? '*' : ''
+                            }}</label>
+                        <mat-form-field>
+                            <mat-select class="userInput" id="village_id" formControlName='village_id'
+                                (selectionChange)="onVillageChange()">
+                                <mat-option *ngFor="let village of villageList" [value]="village.village_id">
+                                    {{village.village_name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12"></div>
+                    <div class="col-md-6 text-start" *ngIf="userForm.get('role_id').value">
+                        <span class="userInfoCustomize">Customize Screens Access:</span>
+                        <button class="btn addBtn" type="button"
+                            (click)="openCustomScreenAccessDialog()">Add/Change</button>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button class="btn createRoleBtn btnCenter" type="submit">{{ buttonLabel }}</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

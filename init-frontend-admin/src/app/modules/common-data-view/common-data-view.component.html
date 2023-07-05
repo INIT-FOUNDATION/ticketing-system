@@ -1,0 +1,25 @@
+<div class="card">
+  <p-dataView #dv [value]="data" [paginator]="pagination" [rows]="rowsPerPage"
+      [showCurrentPageReport]="true" [id]="gridId"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [totalRecords]="totalRecords" [loading]="loading"
+      [filterBy]="filterByList" [lazy]="lazyLoad"
+      [sortField]="sortField" [sortOrder]="sortOrder" [paginatorPosition]="paginationpos" (onPage)="onCustomPageChange($event)" layout="grid">
+      <ng-template pTemplate="header">
+          <div class="flex flex-column md:flex-row md:justify-content-between">
+            <ng-container *ngTemplateOutlet='headerItem; context: {griDdata : rowData}'></ng-container>
+              <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+          </div>
+      </ng-template>
+      <ng-template let-rowData pTemplate="listItem">
+          <div class="col-12">
+            <ng-container *ngTemplateOutlet='listViewItem; context: {griDdata : rowData}'></ng-container>
+          </div>
+      </ng-template>
+      <ng-template let-rowData pTemplate="gridItem">
+          <div class="col-12 md:col-3">
+            <ng-container *ngTemplateOutlet='gridViewItem; context: {griDdata : rowData}'></ng-container>
+          </div>
+      </ng-template>
+  </p-dataView>
+</div>

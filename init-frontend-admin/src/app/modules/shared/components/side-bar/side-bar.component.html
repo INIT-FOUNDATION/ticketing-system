@@ -1,0 +1,48 @@
+
+    <!-- Side Bar section start  -->
+    <div class="sideBarNav">
+        <div class="dashboardLogo ">
+            <div class="leftLogo menuItemList">
+                <!-- <img src="../assets/logo.svg" alt="Logo">
+                <span>HMIS</span> -->
+                <img src="../../../../../assets/aemsNewLogo.png" alt="Logo">
+            </div>
+            <div class="rightIcon" (click)="hideShowSideBar()">
+                <mat-icon class="custom-right-slid-icon" alt="side icon" data-toggle="sidebar-colapse"></mat-icon>
+            </div>
+        </div>
+        <ul class="menu-collapsed">
+            <li class="collspanLogo">
+                <!-- <img src="../assets/logo.svg" alt="Logo"> -->
+                <img src="../../../../../assets/favIconNew.png" alt="Logo">
+                <!-- <img src="../../../../../assets/aemsNewLogo.png" alt="Logo"> -->
+
+            </li>
+            <ng-container *ngFor="let menu of menu_items">
+              <li *ngIf="menu.permission">
+                  <a [routerLink]="menu.route_url" routerLinkActive="active" #tooltip="matTooltip"
+                  [matTooltip]="menu.label"
+                  matTooltipPosition="right">
+                      <span>
+                        <!-- <img src="../../../../../assets/{{menu.icon}}.svg" class="sidebar-icon" alt="Logo"> -->
+                        <mat-icon class="{{menu.icon}}"></mat-icon>
+                      </span>
+                      <span class="menuItemList">{{menu.label}}</span>
+                  </a>
+              </li>
+            </ng-container>
+        </ul>
+
+
+        <!-- <div class="emNumber">
+            <div class="phoneIcon">
+                <img src="../assets/phone.svg" alt="phone">
+            </div>
+            <div class="phoneNumber menuItemList">
+                <p><i>Emergency Numbers:</i></p>
+                <p class="contact-details">+91 XXXXX XXXXX, XXXXX XXXXX</p>
+            </div>
+
+        </div> -->
+    </div>
+    <!-- Side Bar section end  -->

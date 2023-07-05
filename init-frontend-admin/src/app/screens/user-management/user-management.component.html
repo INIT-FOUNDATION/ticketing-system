@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-md-9 col-sm-9 col-lg-9 col-xl-4 ">
+    <form class="searchDoctor">
+      <input type="search" name="search" (input)="filter($event.target.value)"
+        placeholder="Search doctors by name or title" class="searchRole">
+      <mat-icon class="custom-search-icon"></mat-icon>
+    </form>
+  </div>
+  <div class="col-md-3 col-sm-3 col-lg-3 col-xl-2 ">
+    <a><button type="button" class="btn createRole" (click)="addUser()">Add New Member</button></a>
+  </div>
+</div>
+
+
+<app-common-data-view #dataView [paginator]="true" filterByList="display_name,role_name,mobile_number" paginationpos="both" gridId="userGrid" sField="name" sOrder="0"
+  idColumn="id" [lazyLoad]="true" [rowsPerPage]="rowsPerPage" [localData]="userGridData" [listViewItem]="listViewItem"
+  [gridViewItem]="gridViewItem" [headerItem]="headerItem" (onCustomPageChangeEvent)="onCustomPageChangeEvent($event)">
+
+  <ng-template #headerItem>
+  </ng-template>
+
+  <ng-template #listViewItem let-rowData='griDdata'>
+    <div class="product-list-item">
+      <div class="doctorImg doctorImgList">
+        <img *ngIf="rowData.profile_pic" [src]="rowData.profile_pic" alt="">
+        <mat-icon *ngIf="!rowData.profile_pic"  class="custom-admin-user"></mat-icon>
+        <span [ngClass]="{'status-green': rowData.is_logged_in == 1, 'status-red': !rowData.is_logged_in}"></span>
+      </div>
+      <div class="product-list-detail">
+        <h1 class="titleName">{{rowData.display_name}}</h1>
+        <p class="titleDis">{{rowData.role_name}}</p>
+        <h5 class="userInfos">{{rowData.designation}}</h5>
+        <h6 class="numberInfo">+91 {{rowData.mobile_number}}</h6>
+      </div>
+      <div class="product-list-action">
+        <button class="btn inactive" *ngIf="rowData.is_active == 1" (click)="updateUsersStatus(rowData.user_id, '0')">De-activate</button>
+      <button class="btn inactive" *ngIf="rowData.is_active == 0" (click)="updateUsersStatus(rowData.user_id, '1')">Activate</button>
+        <button class="btn remove" *ngIf="removePermission" (click)="deleteUserConfirmation(rowData)">Remove</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #gridViewItem let-rowData='griDdata'>
+    <div class="product-grid-item card">
+      <div class="infoIcon">
+
+        <button class="editDropDown" mat-button [matMenuTriggerFor]="menu">
+          <mat-icon class="custom-dots"></mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="editUser(rowData)">Edit</button>
+          <button mat-menu-item (click)="resetUserPwd(rowData.user_id)">Reset Password</button>
+          <button mat-menu-item (click)="resetUserPwd(rowData.user_id, 'default')">Set Default Password</button>
+        </mat-menu>
+      </div>
+
+      <div class="product-grid-item-content">
+        <div class="doctorImg">
+          <img *ngIf="rowData.profile_pic" [src]="rowData.profile_pic" alt="">
+          <mat-icon *ngIf="!rowData.profile_pic" class="custom-admin-user"></mat-icon>
+          <span [ngClass]="{'status-green': rowData.is_logged_in == 1, 'status-red': !rowData.is_logged_in}"></span>
+        </div>
+        <h1 class="titleName">{{rowData.display_name}}</h1>
+        <p class="titleDis">{{rowData.role_name}}</p>
+        <h5 class="userInfos">{{rowData.designation}}</h5>
+        <h6 class="numberInfo">+91 {{rowData.mobile_number}}</h6>
+      </div>
+      <hr>
+      <button class="btn inactive" *ngIf="rowData.is_active == 1" (click)="updateUsersStatus(rowData.user_id, '0')">De-activate</button>
+      <button class="btn inactive" *ngIf="rowData.is_active == 0" (click)="updateUsersStatus(rowData.user_id, '1')">Activate</button>
+      <button class="btn remove" *ngIf="removePermission" (click)="deleteUserConfirmation(rowData)">Remove</button>
+    </div>
+  </ng-template>
+</app-common-data-view>

@@ -1,0 +1,100 @@
+{
+	"data": [
+		{
+			"id": "1000",
+			"code": "f230fh0g3",
+			"name": "Universal Admin",
+			"description": "Universal Admin",
+			"image": "user1.svg",
+      "status": "Active"
+		},
+		{
+			"id": "1001",
+			"code": "f230fh0g3",
+			"name": "National Admin",
+			"description": "National Admin",
+			"image": "user1.svg",
+      "status": "Active"
+		},
+    {
+			"id": "1002",
+			"code": "f230fh0g3",
+			"name": "State Admin",
+			"description": "State Admin",
+			"image": "user1.svg",
+      "status": "Active"
+		},
+    {
+			"id": "1003",
+			"code": "f230fh0g3",
+			"name": "District Admin",
+			"description": "District Admin",
+			"image": "user1.svg",
+      "status": "Active"
+		},
+    {
+			"id": "1004",
+			"code": "f230fh0g3",
+			"name": "Block Admin",
+			"description": "Block Admin",
+			"image": "user1.svg",
+      "status": "Active"
+		},
+    {
+			"id": "1005",
+			"code": "f230fh0g3",
+			"name": "Organization Admin",
+			"description": "Organization Admin",
+			"image": "user1.svg",
+      "status": "Active"
+		},
+    {
+			"id": "1006",
+			"code": "f230fh0g3",
+			"name": "Hospital Admin",
+			"description": "Hospital Admin",
+			"image": "user1.svg",
+      "status": "Active"
+		},
+    {
+			"id": "1007",
+			"code": "f230fh0g3",
+			"name": "Receptionist",
+			"description": "Receptionist",
+			"image": "user1.svg",
+      "status": "Active"
+		},
+    {
+			"id": "1008",
+			"code": "f230fh0g3",
+			"name": "Counselor",
+			"description": "Counselor",
+			"image": "user1.svg",
+      "status": "Active"
+		},
+    {
+			"id": "1009",
+			"code": "f230fh0g3",
+			"name": "Psychologist",
+			"description": "Psychologist",
+			"image": "user1.svg",
+      "status": "Active"
+		},
+    {
+			"id": "1010",
+			"code": "f230fh0g3",
+			"name": "Psychiatrist",
+			"description": "Psychiatrist",
+			"image": "user1.svg",
+      "status": "Active"
+		},
+    {
+			"id": "1011",
+			"code": "f230fh0g3",
+			"name": "Doctor",
+			"description": "Doctor",
+			"image": "user1.svg",
+      "status": "Active"
+		}
+	]
+}

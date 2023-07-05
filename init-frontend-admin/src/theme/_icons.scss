@@ -1,0 +1,153 @@
+mat-icon {
+  &[class*="custom-"] {
+    mask-size: contain;
+    mask-position: 50% 50%;
+    mask-repeat: no-repeat;
+    background: currentColor;
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+  }
+
+  &[class*="custom-pan"] {
+    mask-image: url(../assets/pan.svg);
+  }
+
+  &[class*="custom-dots"] {
+    mask-image: url(../assets/dots.svg);
+  }
+
+  &[class*="custom-userProfile"] {
+    mask-image: url(../assets/userProfile.svg);
+  }
+
+  &[class*="custom-admin-dashboard"] {
+    mask-image: url(../assets/color-dashboard.svg);
+  }
+
+  &[class*="custom-admin-user"] {
+    mask-image: url(../assets/color-user-management.svg);
+  }
+
+  &[class*="custom-admin-roles"] {
+    mask-image: url(../assets/color-role-management.svg);
+  }
+
+  &[class*="custom-admin-hospital"] {
+    mask-image: url(../assets/color-hospital-management.svg);
+  }
+
+  &[class*="custom-patient-appointments"] {
+    mask-image: url(../assets/New-Appointments1.svg);
+  }
+
+  &[class*="custom-patient-lab-reports"] {
+    mask-image: url(../assets/Lab-Reports.svg);
+  }
+
+  &[class*="custom-patient-medication"] {
+    mask-image: url(../assets/Medication1.svg);
+  }
+
+  // &[class*="custom-admin-hospital"] {
+  //   mask-image: url(../assets/hospital1.svg);
+  // }
+
+  &[class*="custom-admin-manage-password"] {
+    mask-image: url(../assets/color-password-policy.svg);
+  }
+
+  &[class*="custom-right-slid-icon"] {
+    mask-image: url(../assets/rightSlideIcon.svg);
+  }
+
+  &[class*="custom-contrast-icon"] {
+    mask-image: url(../assets/contrast.svg);
+  }
+
+  &[class*="custom-search-icon"] {
+    mask-image: url(../assets/searchIcon.svg);
+  }
+
+  &[class*="custom-clock-icon"] {
+    mask-image: url(../assets/clock.svg);
+  }
+
+  &[class*="custom-appointments"] {
+    mask-image: url(../assets/Appointments.svg);
+  }
+
+  &[class*="custom-organaization"] {
+    mask-image: url(../assets/color-organization.svg);
+  }
+  &[class*="custom-patientManagment"] {
+    mask-image: url(../assets/color-patient-management.svg);
+  }
+  &[class*="custom-doctorRoster"] {
+    mask-image: url(../assets/color-doctor-roster.svg);
+  }
+
+  &[class*="custom-moon"] {
+    mask-image: url(../assets/moon.png);
+  }
+  &[class*="custom-cashless-payment"] {
+    mask-image: url(../assets/cashless-payment.png);
+  }
+  &[class*="custom-add-plus"] {
+    mask-image: url(../assets/addIcon.svg);
+  }
+  &[class*="custom-add-plus-icon"] {
+    mask-image: url(../assets/plus.svg);
+  }
+  &[class*="custom-available"] {
+    mask-image: url(../assets/availableIcon.svg);
+  }
+  &[class*="custom-available-disable"] {
+    mask-image: url(../assets/availableIcon.svg);
+  }
+  &[class*="custom-available-maintenance"] {
+    mask-image: url(../assets/maintenance-bed.svg);
+  }
+  &[class*="custom-available-housekeeping"] {
+    mask-image: url(../assets/housekeeping-bed.svg);
+  }
+  &[class*="custom-reserved"] {
+    mask-image: url(../assets/reservedIcon.svg);
+  }
+  &[class*="custom-selected"] {
+    mask-image: url(../assets/availableIcon.svg);
+  }
+  &[class*="custom-reserved-mid"] {
+    mask-image: url(../assets/reserved-midIcon.svg);
+  }
+  &[class*="custom-reserved-critical"] {
+    mask-image: url(../assets/reserved-criticalIcon.svg);
+  }
+  &[class*="custom-reserved-vip"] {
+    mask-image: url(../assets/reserved-vipIcon.svg);
+  }
+  &[class*="custom-close"] {
+    mask-image: url(../assets/close.png);
+  }
+  &[class*="custom-save"] {
+    mask-image: url(../assets/floppy-disk.png);
+  }
+  &[class*="custom-back"] {
+    mask-image: url(../assets/back.png);
+  }
+  &[class*="custom-info"] {
+    mask-image: url(../assets/info.png);
+  }
+  &[class*="custom-diagram"] {
+    mask-image: url(../assets/diagram.png);
+  }
+  &[class*="custom-camera-pic"] {
+    mask-image: url(../assets/camera-pic.svg);
+  }
+  &[class*="custom-delete"] {
+    mask-image: url(../assets/delete.svg);
+  }
+
+
+
+}

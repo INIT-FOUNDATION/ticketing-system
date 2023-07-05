@@ -1,0 +1,32 @@
+<button class="close" mat-button (click)="closePopup()">X</button>
+<h1 mat-dialog-title>Custom Access</h1>
+<div mat-dialog-content>
+  <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 p-0">
+    <form [formGroup]="data.userFormGroup" >
+        <div class="scroolDiv" formArrayName="access_control">
+          <div class="form-group" [formGroup]="control" *ngFor="let control of controls; let i = index;">
+              <div class="userDetailsLabelCheckBox" >{{ control.get('menu_name').value }}</div>
+              <div class="checkboxRow">
+                  <div class="custom-control custom-checkbox mb-3">
+                      <input type="checkbox" class="custom-control-input"
+                             id="{{'access_'+control.get('menu_id').value+'_read'}}"
+                             formControlName="read_permission">
+                      <label class="custom-control-label" for="{{'access_'+control.get('menu_id').value+'_read'}}">Read</label>
+                  </div>
+                  <div class="custom-control custom-checkbox mb-3">
+                      <input type="checkbox" class="custom-control-input"
+                             id="{{'access_'+control.get('menu_id').value+'_write'}}"
+                             (change)='validate(control)'
+                             formControlName="write_permission">
+                      <label class="custom-control-label" for="{{'access_'+control.get('menu_id').value+'_write'}}">Write</label>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button class="btn createRoleBtn btnCenter" (click)="saveRoles()">Save Changes</button>
+  <!-- <button mat-raised-button class="btn createRoleBtn btnCenter" (click)="closePopup()">Cancel</button> -->
+</div>

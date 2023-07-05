@@ -1,0 +1,19 @@
+<div class="content-section implementation">
+  <div class="card">
+      <p-organizationChart #orgChart [value]="hierarchy"
+                           selectionMode="single" [(selection)]="selectedNode" styleClass="company"
+                           (onNodeExpand)="onSelectedNodeExpand($event)">
+          <ng-template let-node pTemplate="person">
+              <div class="node-header">{{node.label}}</div>
+              <div class="node-content">
+                  <img [src]="node.data.profile_pic" width="32">
+                  <div>{{node.data.name}}</div>
+                  <span class="designation-span">{{node.data.designation}}</span>
+              </div>
+          </ng-template>
+          <ng-template let-node pTemplate="department">
+              {{node.label}}
+          </ng-template>
+      </p-organizationChart>
+  </div>
+</div>

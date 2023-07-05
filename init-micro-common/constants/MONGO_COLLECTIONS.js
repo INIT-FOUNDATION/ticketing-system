@@ -1,0 +1,18 @@
+module.exports = {
+    PATIENT_REGISTRATION: 'patient_registration',
+    PATIENT_PAYMENT_TRANSACTION: 'patient_payment_transaction',
+    PATIENT_APPOINTMENT: 'patient_appointment',
+    PATIENT_PRESCRIPTION: 'patient_prescription',
+    PATIENT_PROVISION_DIAGNOSIS_TREATMENT: 'patient_provision_diagnosis_treatment',
+    PATIENT_COMPLAINT: 'patient_complaint',
+    PATIENT_MEETING: 'patient_meeting',
+    PATIENT_ASSIGN_TO: 'patient_assign_to',
+    PATIENT_DOCUMENTS: 'patient_documents',
+    PATIENT_BILL: 'patient_bill',
+    PATIENT_DISCHARGE_SUMMARY: 'patient_discharge_summary',
+    LEAD_CONTACT_US: 'lead_contact_us',
+    ONBOARD_EVENT_TRACKER: 'onboard_event_tracker',
+    MEDICINES: 'medicines',
+    PRESCRIPTION_SETTINGS: 'prescription_settings',
+    URL_SHORTNER: 'url_shortner',
+};

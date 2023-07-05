@@ -1,0 +1,4 @@
+exports.user = {
+    REDIS_EXPIRE_TIME_PWD : 3000,
+    REDIS_EXPIRE_TIME_OTP : 3000
+}

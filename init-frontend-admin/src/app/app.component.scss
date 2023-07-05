@@ -1,0 +1,78 @@
+.mainContainer {
+  padding: 20px;
+}
+
+.leftSection {
+  width: 20%;
+  @media only screen and (min-width: 320px) and (max-width: 1000px) {
+    display: none;
+  }
+  @media only screen and (min-width: 1000px) and (max-width: 1200px) {
+    width: 25%;
+  }
+}
+
+.content-wrapper {
+  width: 80%;
+  @media only screen and (min-width: 320px) and (max-width: 1000px) {
+    width: 100%;
+  }
+
+  @media only screen and (min-width: 1000px) and (max-width: 1200px) {
+    width: 75%;
+  }
+
+}
+
+.leftSection-collapse {
+  width: 6% !important;
+}
+
+.leftSection-collapse .collspanLogo {
+  display: block;
+
+}
+
+.leftSection-collapse .collspanLogo img {
+  margin: auto;
+  display: table;
+  width: 20px;
+  margin-bottom: 20px;
+}
+
+::ng-deep .leftSection-collapse .menuItemList {
+  display: none;
+}
+
+.rightSection-slide {
+  width: 94%;
+  height: 595px;
+  overflow: auto;
+  @media only screen and (min-width: 320px) and (max-width: 1000px) {
+    width: 100%;
+  }
+
+  @media only screen and (min-width: 1200px) and (max-width: 1400px) {
+   height: 27.5rem;
+  }
+}
+
+::ng-deep .collspanLogo {
+  display: none;
+}
+
+::ng-deep .leftSection-collapse .collspanLogo {
+  display: block;
+
+}
+::ng-deep .leftSection-collapse .sideBarNav {
+  width: auto !important;
+
+}
+
+::ng-deep .leftSection-collapse .collspanLogo img {
+  margin: auto;
+  display: table;
+  width: 20px;
+  margin-bottom: 20px;
+}

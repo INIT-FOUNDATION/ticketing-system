@@ -1,0 +1,80 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+;
+
+// @import '~bootstrap/scss/functions';
+// @import '~bootstrap/scss/variables';
+// @import '~bootstrap/scss/mixins';
+@import '~ngx-toastr/toastr';
+
+@import './theme/icons';
+
+
+.dark-theme {
+  background: #202124;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+::ng-deep .gbFcPS {
+  background-color: var(--btn-primary-bg, var(--color-primary, #000000)) !important;
+}
+
+::ng-deep .feTdjY {
+  display: block !important;
+}
+
+::ng-deep .iVwNhr span {
+  background-color: red !important;
+}
+
+::ng-deep iframe {
+  span {
+    background-color: #f00 !important;
+  }
+}
+
+::ng-deep .p-selectbutton ::ng-deep .p-button.p-highlight {
+  background: #048390 !important;
+}
+
+::ng-deep .fc-scrollgrid-sync-table {
+  height: auto !important;
+}
+
+::ng-deep.fc ::ng-deep.fc-scrollgrid-section-body ::ng-deep table {
+  height: auto !important;
+}
+
+.form-control:focus {
+  // border-color: #86b7fe00 !important;
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 0%) !important;
+}

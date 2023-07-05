@@ -1,0 +1,75 @@
+<div class="row ">
+  <!-- <div class="col-md-6 col-sm-6 col-lg-6 col-xl-2 ">
+    <div class="selectOptionBox">
+      <label for="sel1">SHOW</label>
+      <select class="form-control" id="sel1" name="sellist1" [(ngModel)]="rowsPerPage">
+        <option *ngFor="let item of rows" [value]="item.value">{{item.label}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-2 pl-0">
+    <div class="selectOptionBox">
+      <label for="sel1">STATUS</label>
+      <select class="form-control" id="sel1" name="sellist1" (change)="filterByStatus($event.target.value)">
+        <option value="Active">Active</option>
+        <option value="In Active">In Active</option>
+      </select>
+    </div>
+  </div> -->
+
+  <div class="col-md-9 col-sm-9 col-lg-9 col-xl-4 ">
+    <form class="searchDoctor">
+      <input type="search" name="search" (input)="filter($event.target.value)" placeholder="Search doctors by name or title" class="searchRole">
+      <mat-icon class="custom-search-icon"></mat-icon>
+    </form>
+  </div>
+  <div class="col-md-3 col-sm-3 col-lg-3 col-xl-2 ">
+    <a><button type="button" class="btn createRole" (click)="addRole()">Create Role</button></a>
+  </div>
+</div>
+
+
+<app-common-data-view #dataView [paginator]="true" paginationpos="none" gridId="roleGrid" sField="name" sOrder="0"
+  idColumn="id" lazyLoad="true"  [localData]="rolesData" [listViewItem]="listViewItem"
+  [gridViewItem]="gridViewItem" [headerItem]="headerItem">
+
+  <ng-template #headerItem>
+    <!-- <p-button (click)="addRole()">Add Role</p-button> -->
+  </ng-template>
+
+  <ng-template #listViewItem let-rowData='griDdata'>
+    <div class="product-list-item">
+      <div class="doctorImg doctorImgList">
+        <!-- <img src="../../../assets/Roles1.svg" alt=""> -->
+        <mat-icon class="custom-admin-roles"></mat-icon>
+      </div>
+      <div class="product-list-detail">
+        <h1 class="titleName">{{rowData.role_name}}</h1>
+        <p class="titleDis">{{rowData.role_description}}</p>
+      </div>
+      <div class="product-list-action">
+        <button class="btn inactive" *ngIf="rowData.is_active == 1" type="button" (click)="updateRoleStatus(rowData.role_name, rowData.role_id, 0)">Deactivate</button>
+        <button class="btn inactive" type="button" *ngIf="rowData.is_active == 0" (click)="updateRoleStatus(rowData.role_name, rowData.role_id, 1)">Activate</button>
+        <button class="btn remove" type="button" (click)="editRole(rowData)">Edit</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #gridViewItem let-rowData='griDdata'>
+    <div class="product-grid-item card">
+      <div class="product-grid-item-content">
+        <div class="doctorImg">
+          <!-- <img src="../../../assets/Roles1.svg" alt=""> -->
+          <mat-icon class="custom-admin-roles"></mat-icon>
+        </div>
+        <h1 class="titleName">{{rowData.role_name}}</h1>
+        <p class="titleDis">{{rowData.role_description}}</p>
+      </div>
+      <hr>
+      <button class="btn inactive" *ngIf="rowData.is_active == 1" type="button" (click)="updateRoleStatus(rowData.role_name, rowData.role_id, 0)">Deactivate</button>
+        <button class="btn inactive" type="button" *ngIf="rowData.is_active == 0" (click)="updateRoleStatus(rowData.role_name, rowData.role_id, 1)">Activate</button>
+      <button class="btn remove" type="button" (click)="editRole(rowData)">Edit</button>
+    </div>
+  </ng-template>
+</app-common-data-view>

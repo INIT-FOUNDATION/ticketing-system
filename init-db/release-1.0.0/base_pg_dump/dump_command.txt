@@ -1,0 +1,5 @@
+Restore
+    psql -U postgres -d hmis < hmis.sql
+
+Dump
+    pg_dump -U postgres -d hmis > hmis.sql 

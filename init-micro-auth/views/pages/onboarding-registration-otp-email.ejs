@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    
+<head>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body style="font-family: 'Poppins', sans-serif; margin: 1rem auto; display: table;">
+    <table
+        style="margin: auto; display: table; width: 600px; background:  #0EA59E; border-radius: 30px;  padding:3px; text-align: center;border-spacing: 0px;">
+        <thead style="font-weight: 600;font-size: 30px;color: #fff; background: #0EA59E;
+        border-radius: 28px 28px 0px 0px; padding-top: 1rem; padding-bottom: 1rem; display: table; width: 100%;">
+            <tr>
+                <th>CARE, AIEZE | Registration OTP</th>
+            </tr>
+        </thead>
+        <tbody
+            style="background: #fff;border-radius: 0 0 28px 28px;display: table; padding-bottom: 2rem; padding-top: 1rem;width: 100%;">
+            <tr>
+                <td style="padding: 0;">
+                    <div style="background-image: url(https://api.dev.aieze.in/api/v1/admin/cdn/file?file_name=public/patient-registration-otp.png);background-repeat: no-repeat;padding: 3rem 2rem;background-size: cover;width: 65%;margin: auto; height: 11rem;">
+                        <div>
+                            
+                            <p style="font-weight: 500;font-size: 15px;text-align: center;color: #fff; margin: 0; ">
+                                Your OTP is
+                            </p>
+                            
+                            <div style="position: relative;top: 1rem;">
+                                <span style="background: #FFFFFF;width: 25px;height: 30px;display: inline-block;font-size: 20px;border-radius: 5px;font-weight: 600;"><%=otp_array[0]%></span>
+                                <span style="background: #FFFFFF;width: 25px;height: 30px;display: inline-block;font-size: 20px;border-radius: 5px;font-weight: 600;"><%=otp_array[1]%></span>
+                                <span style="background: #FFFFFF;width: 25px;height: 30px;display: inline-block;font-size: 20px;border-radius: 5px;font-weight: 600;"><%=otp_array[2]%></span>
+                                <span style="background: #FFFFFF;width: 25px;height: 30px;display: inline-block;font-size: 20px;border-radius: 5px;font-weight: 600;"><%=otp_array[3]%></span>
+                                <span style="background: #FFFFFF;width: 25px;height: 30px;display: inline-block;font-size: 20px;border-radius: 5px;font-weight: 600;"><%=otp_array[4]%></span>
+                                <span style="background: #FFFFFF;width: 25px;height: 30px;display: inline-block;font-size: 20px;border-radius: 5px;font-weight: 600;"><%=otp_array[5]%></span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p
+                        style="font-weight: 500;font-size: 15px;text-align: center;color: #000000; margin: 0; margin-top: 1rem;">
+                        Dear <span style="color:#0EA59E;"><%= name %></span></p>
+                    <p style="font-weight: 500;font-size: 15px;text-align: center;color: #000000; margin: 0; ">
+                        (<%=otp%>) is the OTP for registration. This is valid for <%=duration%> mins.
+                    </p>
+                    <p style="font-weight: 500;font-size: 15px;text-align: center;color: #000000; margin: 0;">
+                        Do not share this OTP with anyone. - CARE, AIEZE</p>
+
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+</body>
+
+</html>

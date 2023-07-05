@@ -1,0 +1,74 @@
+<!-- top header section start  -->
+<div class="row justify-content-end">
+    <div class="content-wrapper" [ngClass]="(sideBarService.sidebarHidden | async) ? 'rightSection-slide' : ''">
+        <div class="mobileSideBar">
+            <button class="btn burgurBtn" mat-button [matMenuTriggerFor]="menu1"><i class="fa fa-bars"></i></button>
+            <mat-menu #menu1="matMenu">
+                <ul class="menu-collapsed">
+
+                    <ng-container *ngFor="let menu of menu_items">
+                        <li *ngIf="menu.permission">
+                            <a [routerLink]="menu.route_url" routerLinkActive="active">
+                                <span class="p-r10">
+                                    <mat-icon class="{{menu.icon}}"></mat-icon>
+                                </span>
+                                <span class="menuItemList">{{menu.label}}</span>
+                            </a>
+                        </li>
+                    </ng-container>
+                </ul>
+            </mat-menu>
+        </div>
+
+        <div class="topHeader darkThemMain">
+            <div class="row align-items-center">
+                <div class="col-md-6 col-sm-12 col-lg-8 col-xl-8">
+                    <!-- <form>
+                        <input type="text" name="search" placeholder="Search.." class="searchRole">
+                        <mat-icon class="custom-search-icon"></mat-icon>
+                    </form> -->
+                    <h1 class="headingSection"> <mat-icon class="custom-back" *ngIf="pageHeaderService.backButtonRequired" (click)="goBackToPrvsScreen()"></mat-icon> {{ pageHeaderService.pageHeader | async }}</h1>
+                </div>
+                <div class="col-md-6 col-sm-12 col-lg-4 col-xl-4 p-0">
+                    <ul>
+
+                        <li>
+                            <mat-icon (click)="changeThemeToggle()" [ngClass]="{'custom-contrast-icon': !dark_theme, 'custom-moon': dark_theme}" class="" alt="contrast-icon"></mat-icon>
+                            <!-- <mat-icon class="custom-moon" alt="contrast-icon"></mat-icon> -->
+
+                        </li>
+                      
+                        <li>
+                            <img src="../assets/notification.svg" alt="notification">
+                        </li>
+
+                        <li>
+                            <div class="userDetails">
+                                <div class="userImg">
+                                  <img [src]="(dataService.profilePic | async) || '../assets/Profile-photo.svg'" class="img-fluid" alt="">
+                                </div>
+                                <div class="userNameRole dropdown-toggle" mat-button [matMenuTriggerFor]="menu">
+                                <h5>{{ (dataService.userData | async)?.display_name}}</h5>
+                                    <p class="desInfo">{{ (dataService.userData | async)?.name}}</p>
+                                    <p >{{ (dataService.userData | async)?.designation}}</p>
+                                </div>
+                                <mat-menu #menu="matMenu">
+                                    <div class=" userDetailsMenu">
+                                        <a class="dropdown-item" routerLink="/profile"
+                                            routerLinkActive="active">Profile</a>
+                                        <a class="dropdown-item" routerLink="/prescription-settings"
+                                            routerLinkActive="active" *ngIf="dataService.userDetails?.name == 'Doctor'" >Prescription Settings</a>
+                                        <a class="dropdown-item" (click)="logout()">Logout</a>
+                                    </div>
+                                </mat-menu>
+                            </div>
+
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- top header section end  -->

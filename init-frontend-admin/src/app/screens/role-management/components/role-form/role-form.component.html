@@ -1,0 +1,100 @@
+<div class="col-md-12">
+    <div class="row createRoles ">
+        <h2 class="subHeading">Role Details</h2>
+        <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6 pl-0">
+
+            <form class="marginTop20" [formGroup]="roleForm">
+                <div class="form-group">
+                    <label class="userDetailsLabel" for="role_name">Role Name</label>
+                    <input type="text" class="form-control userInput" id="role_name"
+                        [ngClass]="{'invalid-form-control': formSubmitted && roleForm.get('role_name').invalid}"
+                        appInputChar='roleName' [appRangeLength]="[1, 50]" appInputTrim formControlName="role_name">
+                    <div class="invalid-feedback"
+                        *ngIf="roleForm.get('role_name').errors?.inputcharvalidator && !roleForm.get('role_name').errors?.rangeLength"
+                        tooltip="Must contain only English Alphabets (“a-z” and “A-Z”), Numbers “0-9”, Dot “.”, Hyphen “-”, Ampersand “&”, Open parenthesis “(” and Close parenthesis “)”"
+                        placement="bottom">
+                        Must contain only English Alphabets (“a-z” and “A-Z”), Numbers “0-9”, Dot “.”, Hyphen “-”,
+                        Ampersand “&”, Open parenthesis “(” and Close parenthesis “)”
+                    </div>
+                    <div class="invalid-feedback"
+                        *ngIf="roleForm.get('role_name').errors?.rangeLength || roleForm.get('role_name').errors?.trimError"
+                        tooltip="Must be upto 50 characters" placement="bottom">
+                        Must be upto 50 characters
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="userDetailsLabel" for="level">Level</label>
+                    <mat-form-field>
+                        <mat-select class="userInput" id="level"
+                            [ngClass]="{'invalid-form-control': formSubmitted && roleForm.get('level').invalid}"
+                            formControlName="level">
+                            <mat-option [value]="level.value" *ngFor="let level of levelsList">{{level.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <label class="userDetailsLabel" for="is_active">Status</label>
+                    <mat-form-field>
+                        <mat-select class="userInput" id="is_active"
+                            [ngClass]="{'invalid-form-control': formSubmitted && roleForm.get('is_active').invalid}"
+                            formControlName="is_active">
+                            <mat-option [value]="status.value" *ngFor="let status of statusList">{{status.label}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <label class="userDetailsLabel" for="role_description">Description</label>
+                    <input type="text" class="form-control userInput" id="role_description"
+                        [ngClass]="{'invalid-form-control': formSubmitted && roleForm.get('role_description').invalid}"
+                        formControlName="role_description" appInputChar='street' [appRangeLength]="[1, 100]">
+                    <div class="invalid-feedback"
+                        *ngIf="roleForm.get('role_description').errors?.inputcharvalidator && !roleForm.get('role_description').errors?.rangeLength"
+                        tooltip="Must contain only English Alphabets (“a-z” and “A-Z”), Numbers “0-9”, Dot “.”, Comma “,”, Hyphen “-”, Open parenthesis “(” and Close parenthesis “)”"
+                        placement="bottom">
+                        Must contain only English Alphabets (“a-z” and “A-Z”), Numbers “0-9”, Dot “.”, Comma “,”, Hyphen
+                        “-”, Open parenthesis “(” and Close parenthesis “)”
+                    </div>
+                    <div class="invalid-feedback"
+                        *ngIf="roleForm.get('role_description').errors?.rangeLength || roleForm.get('role_description').errors?.trimError"
+                        tooltip="Must be upto 100 characters" placement="bottom">
+                        Must be upto 100 characters
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 col-sm-12 col-lg-6 col-xl-6 pr-0">
+            <form class="marginTop20" [formGroup]="roleForm">
+                <div class="scroolDiv" formArrayName="access_control">
+                    <div class="form-group" [formGroup]="control" *ngFor="let control of controls; let i = index;">
+                        <div class="userDetailsLabelCheckBox">{{ control.get('menu_name').value }}</div>
+                        <div class="checkboxRow">
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input"
+                                    id="{{'access_'+control.get('menu_id').value+'_read'}}"
+                                    formControlName="read_permission">
+                                <label class="custom-control-label"
+                                    for="{{'access_'+control.get('menu_id').value+'_read'}}">Read</label>
+                            </div>
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input"
+                                    id="{{'access_'+control.get('menu_id').value+'_write'}}"
+                                    (change)='validate(control)' formControlName="write_permission">
+                                <label class="custom-control-label"
+                                    for="{{'access_'+control.get('menu_id').value+'_write'}}">Write</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <form [formGroup]="roleForm" (ngSubmit)="submit()">
+            <div class="col-md-12">
+                <button class="btn createNewRoleBtn" type="submit">{{ formType == 'add' ? 'Create New Role' : 'Update
+                    Role' }}</button>
+            </div>
+        </form>
+    </div>
+</div>

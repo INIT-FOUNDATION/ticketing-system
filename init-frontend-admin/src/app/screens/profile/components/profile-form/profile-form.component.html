@@ -1,0 +1,491 @@
+<div class="main">
+
+    <div class="container-fluid" style="padding: 0;">
+        <div class="row">
+
+            <!-- Right section start  -->
+            <div class="rightSection">
+
+                <!-- heading section start  -->
+
+                <!-- heading section end  -->
+
+                <!-- create role section start  -->
+                <div class="row createRoles marginTop20" *ngIf="!is_edit">
+                    <h2 class="subTitle" *ngIf="!(dataService.userData | async).patient_id">{{ (dataService.userData |
+                        async).display_name}} <mat-icon class="custom-diagram" (click)="navigateToHierarchy()"></mat-icon></h2>
+                    <h2 class="subTitle" *ngIf="(dataService.userData | async).patient_id">{{ (dataService.userData |
+                        async).patient_name}}</h2>
+
+                    <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pl-0 marginTop20">
+                        <div class="userProfileUpload">
+                            <img [src]="(dataService.profilePic | async) || '../assets/Profile-photo.svg'"
+                                class="img-fluid" alt="">
+                            <!-- <div class="clickChangePhoto">
+                                <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" required=""
+                                    capture>
+                                <p>Click to change photo</p>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="col-md-10 col-sm-10 col-lg-10 col-xl-10 pr-0 marginTop20">
+                        <div class="row profileSettings">
+                            <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pl-0 marginTop20">
+                                <label class="userDetailsLabel">First Name*</label>
+                                <p class="userDetails">{{userInfo?.first_name}}</p>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pl-0 marginTop20">
+                                <label class="userDetailsLabel">Last Name*</label>
+                                <p class="userDetails">{{userInfo?.last_name}}</p>
+                            </div>
+
+                            <div class="col-md-3 col-sm-3 col-lg-3 col-xl-3 pl-0 marginTop20">
+                                <label class="userDetailsLabel">DOB</label>
+                                <p class="userDetails" *ngIf="!(dataService.userData | async).patient_id">{{
+                                    userInfo?.date_of_birth | date:'dd/MM/YYYY' }}</p>
+                                <p class="userDetails" *ngIf="(dataService.userData | async).patient_id">{{
+                                    userInfo?.dob | date:'dd/MM/YYYY' }}</p>
+                            </div>
+
+                            <div *ngIf="!is_edit && !(dataService.userData | async).patient_id"
+                                class="col-md-1 col-sm-1 col-lg-1 col-xl-1 pr-0 marginTop20 text-right"
+                                (click)="is_edit = true">
+                                <mat-icon class="custom-pan"></mat-icon>
+                            </div>
+
+
+                            <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pl-0 marginTop20">
+                                <label class="userDetailsLabel">Gender</label>
+                                <p class="userDetails">{{userInfo?.gender_name}}</p>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pl-0 marginTop20">
+                                <label class="userDetailsLabel">Mobile Number</label>
+                                <p class="userDetails">{{userInfo?.mobile_number}}</p>
+                            </div>
+
+                            <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pl-0 marginTop20">
+                                <label class="userDetailsLabel">Email ID</label>
+                                <p class="userDetails">{{userInfo?.email_id}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 p-0" *ngIf="isHierarchySectionNecessary">
+                        <hr>
+                    </div>
+
+                    <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pl-0 marginTop20" *ngIf="showHide.state">
+                        <label class="userDetailsLabel">State/UT</label>
+                        <p class="userDetails">{{userInfo?.state_name}}</p>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pr-0 marginTop20" *ngIf="showHide.district">
+                        <label class="userDetailsLabel">District</label>
+                        <p class="userDetails">{{userInfo?.district_name}}</p>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pl-0 marginTop20" *ngIf="showHide.block">
+                        <label class="userDetailsLabel">Block</label>
+                        <p class="userDetails">{{userInfo?.block_name}}</p>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pr-0 marginTop20" *ngIf="showHide.village">
+                        <label class="userDetailsLabel">Village</label>
+                        <p class="userDetails">{{userInfo?.village_name}}</p>
+                    </div>
+                    <!-- <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pl-0 marginTop20" *ngIf="showHide.org">
+                        <label class="userDetailsLabel">Organization</label>
+                        <p class="userDetails">{{userInfo?.org_name}}</p>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pr-0 marginTop20" *ngIf="showHide.hosp">
+                        <label class="userDetailsLabel">Hospital</label>
+                        <p class="userDetails">{{userInfo?.hospital_name}}</p>
+                    </div> -->
+
+
+                    <div class="col-md-12 p-0" *ngIf="ROLES.DOCTOR == userInfo?.name">
+                      <hr>
+                    </div>
+                    <ng-container *ngIf="ROLES.DOCTOR == userInfo?.name">
+                      <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 px-0 marginTop20">
+                        <label class="userDetailsLabel">Speciality</label>
+                        <p class="userDetails text-ellipsis" *ngIf="userInfo?.specIds">{{userInfo?.specIds | specialityName: departmentList}}</p>
+                      </div>
+
+                      <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 px-0 marginTop20">
+                        <label class="userDetailsLabel">Experience</label>
+                        <p class="userDetails" *ngIf="userInfo?.experience">{{userInfo?.experience}} Years</p>
+                      </div>
+
+                      <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 px-0 marginTop20">
+                        <label class="userDetailsLabel">Price Per Consultation</label>
+                        <p class="userDetails" *ngIf="userInfo?.price_of_consultation">{{userInfo?.price_of_consultation}}</p>
+                      </div>
+
+                      <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 px-0 marginTop20">
+                        <label class="userDetailsLabel">Education Degree</label>
+                        <p class="userDetails" *ngIf="userInfo?.education_degree">{{userInfo?.education_degree}}</p>
+                      </div>
+
+                      <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 px-0 marginTop20">
+                        <label class="userDetailsLabel">Languages</label>
+                        <p class="userDetails" *ngIf="userInfo?.langIds">{{userInfo?.langIds | languageName: languagesList}}</p>
+                      </div>
+
+                      <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 px-0 marginTop20">
+                        <label class="userDetailsLabel">Medical Registration No</label>
+                        <p class="userDetails" *ngIf="userInfo?.medical_registration_no">{{userInfo?.medical_registration_no}}</p>
+                      </div>
+
+                      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 px-0 marginTop20">
+                        <label class="userDetailsLabel">About Me</label>
+                        <p class="userDetails" *ngIf="userInfo?.about_me">{{userInfo?.about_me}}</p>
+                      </div>
+
+                      <div class="col-md-12 p-0" *ngIf="userInfo?.preferred_state_id && userInfo?.preferred_district_id && userInfo?.preferred_zipcode">
+                        <hr>
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pl-0 marginTop20" *ngIf="userInfo?.preferred_state_id">
+                        <label class="userDetailsLabel">Preferred State/UT</label>
+                        <p class="userDetails">{{userInfo?.preferred_state_name}}</p>
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pr-0 marginTop20" *ngIf="userInfo?.preferred_district_id">
+                          <label class="userDetailsLabel">Preferred District</label>
+                          <p class="userDetails">{{userInfo?.preferred_district_name}}</p>
+                      </div>
+                      <div class="col-md-4 col-sm-42 col-lg-4 col-xl-4 pr-0 marginTop20" *ngIf="userInfo?.preferred_zipcode">
+                          <label class="userDetailsLabel">Preferred Pincode</label>
+                          <p class="userDetails">{{userInfo?.preferred_zipcode}}</p>
+                      </div>
+
+                      <div class="col-md-12 p-0">
+                        <hr>
+                      </div>
+                      <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pl-0 marginTop20">
+                        <div class="userSignatureUpload">
+                            <img *ngIf="(dataService.signaturePic | async); else emptySignatureDiv"  [src]="(dataService.signaturePic | async)"
+                                class="img-fluid" alt="">
+                        </div>
+                    </div>
+                    </ng-container>
+
+                </div>
+                <form *ngIf="is_edit" [formGroup]="profileForm" (ngSubmit)="submit()">
+                    <div class="row createRoles marginTop20">
+                        <h2 class="subTitle">{{ (dataService.userData | async).display_name}}
+                          <mat-icon class="custom-diagram" (click)="navigateToHierarchy()"></mat-icon>
+                        </h2>
+                        <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pl-0 marginTop20">
+                            <div class="userProfileUpload">
+                                <img [src]="(dataService.profilePic | async) || '../assets/Profile-photo.svg'"
+                                    class="img-fluid" alt="">
+                                <div class="clickChangePhoto">
+                                  <p (click)="openImageUploadDialog()"><i class="fa fa-upload"></i></p>
+                                    <!-- <input id="imageUpload" type="file" name="profile_photo"
+                                           (click)="onSelectFile($event)"
+                                           accept="image/*"> -->
+                                    <!-- <p><i class="fa fa-upload"></i></p> -->
+                                </div>
+                              </div>
+                              <div class="invalid-feedback" *ngIf="formSubmitted && !(dataService.profilePic | async)" >
+                                Please upload profile picture
+                              </div>
+                        </div>
+
+                        <div class="col-md-10 col-sm-10 col-lg-10 col-xl-10 pr-0 marginTop20">
+                            <div class="row profileSettings">
+                                <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pl-0 marginTop20">
+                                    <label class="userDetailsLabel">First Name*</label>
+                                    <input type="text" class="form-control profileInput" formControlName="first_name"
+                                           [ngClass]="{'invalid-form-control': profileForm.get('first_name').touched && profileForm.get('first_name').invalid}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pl-0 marginTop20">
+                                    <label class="userDetailsLabel">Last Name*</label>
+                                    <input type="text" class="form-control profileInput" formControlName="last_name"
+                                           [ngClass]="{'invalid-form-control': profileForm.get('last_name').touched && profileForm.get('last_name').invalid}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3 col-lg-3 col-xl-3 pl-0 marginTop20">
+                                    <label class="userDetailsLabel">DOB*</label>
+                                    <mat-form-field appearance="fill" class="example-form-field">
+                                        <input matInput [matDatepicker]="datepicker" formControlName="date_of_birth">
+                                        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #datepicker></mat-datepicker>
+                                    </mat-form-field>
+                                    <div class="invalid-feedback"
+                                         tooltip="Date of birth is required" placement="bottom"
+                                         *ngIf="profileForm.get('date_of_birth').touched && profileForm.get('date_of_birth').invalid" >
+                                      Date of birth is required
+                                    </div>
+                                </div>
+
+                                <div *ngIf="is_edit"
+                                    class="col-md-1 col-sm-1 col-lg-1 col-xl-1 pr-0 marginTop20 text-right"
+                                    (click)="is_edit = false">
+                                    <i class="fa fa-times"></i>
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pl-0 marginTop20">
+                                    <label class="userDetailsLabel">Gender*</label>
+                                    <mat-select class="form-control profileInput" formControlName="gender"
+                                    [ngClass]="{'invalid-form-control': profileForm.get('gender').touched && profileForm.get('gender').invalid}">
+                                        <mat-option value="1">Male</mat-option>
+                                        <mat-option value="2">Female</mat-option>
+                                        <mat-option value="3">Other</mat-option>
+                                    </mat-select>
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pr-5 pl-0 marginTop20">
+                                    <label class="userDetailsLabel">Mobile Number*</label>
+                                    <input type="text" class="form-control profileInput"
+                                        formControlName="mobile_number"
+                                        [ngClass]="{'invalid-form-control': profileForm.get('mobile_number').touched && profileForm.get('mobile_number').invalid}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4  pl-0 marginTop20">
+                                    <label class="userDetailsLabel">Email ID</label>
+                                    <input type="text" class="form-control profileInput" formControlName="email_id"
+                                    [ngClass]="{'invalid-form-control': profileForm.get('email_id').touched && profileForm.get('email_id').invalid}">
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                      <div class="col-md-12 p-0" *ngIf="isHierarchySectionNecessary">
+                          <hr>
+                      </div>
+
+                        <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pl-0 marginTop20" *ngIf="showHide.state">
+                            <label class="userDetailsLabel">State/UT*</label>
+                            <mat-form-field>
+                                <mat-select class="userInput" id="state_id" formControlName='state_id'>
+                                    <mat-option *ngFor="let state of stateList" [value]="state.state_id">
+                                        {{state.state_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pr-0 marginTop20" *ngIf="showHide.district">
+                            <label class="userDetailsLabel">District*</label>
+                            <mat-form-field>
+                                <mat-select class="userInput" id="district_id" formControlName='district_id'>
+                                    <mat-option *ngFor="let district of districtList" [value]="district.district_id">
+                                        {{district.district_name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pr-0 marginTop20" *ngIf="showHide.block">
+                            <label class="userDetailsLabel">Block*</label>
+                            <mat-form-field>
+                                <mat-select class="userInput" id="block_id" formControlName='block_id'>
+                                    <mat-option *ngFor="let block of blockList" [value]="block.block_id">
+                                        {{block.block_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pr-0 marginTop20" *ngIf="showHide.village">
+                            <label class="userDetailsLabel">Village*</label>
+                            <mat-form-field>
+                                <mat-select class="userInput" id="village_id" formControlName='village_id'>
+                                    <mat-option *ngFor="let village of villageList" [value]="village.village_id">
+                                        {{village.village_name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pr-0 marginTop20" *ngIf="showHide.org">
+                            <label class="userDetailsLabel">Organization*</label>
+                            <mat-form-field>
+                                <mat-select class="userInput" id="org_id" formControlName='org_id'>
+                                    <mat-option *ngFor="let organization of organizationList"
+                                        [value]="organization.org_id">
+                                        {{organization.org_name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pr-0 marginTop20" *ngIf="showHide.hosp">
+                            <label class="userDetailsLabel">Hospital*</label>
+                            <mat-form-field>
+                                <mat-select class="userInput" id="hosp_id" formControlName='hosp_id'>
+                                    <mat-option *ngFor="let hospital of hospitalList" [value]="hospital.value">
+                                        {{hospital.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div> -->
+
+                        <div class="col-md-12 p-0" *ngIf="ROLES.DOCTOR == userInfo?.name">
+                            <hr>
+                        </div>
+                        <ng-container *ngIf="ROLES.DOCTOR == userInfo?.name">
+                          <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 pr-0 marginTop20">
+                            <label class="userDetailsLabel">Speciality*</label>
+                            <mat-form-field>
+                                <mat-select class="userInput" id="department_id" formControlName='department_ids' multiple
+                                [ngClass]="{'invalid-form-control': profileForm.get('department_ids').touched && profileForm.get('department_ids').invalid}">
+                                    <mat-option *ngFor="let department of departmentList" [value]="department.hosp_dept_map_id">
+                                        {{department.dept_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                          </div>
+
+
+                          <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 pr-0 marginTop20">
+                            <label class="userDetailsLabel">Exerience*(In Years)</label>
+                            <input formControlName="experience" class="form-control profileInput"
+                            [ngClass]="{'invalid-form-control': profileForm.get('experience').touched && profileForm.get('experience').invalid}"
+                                   type="number" [appMin]="1" [appMax]="60" matInput>
+                          </div>
+
+                          <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 pr-0 marginTop20">
+                            <label class="userDetailsLabel">Price Per Consultation*(In Rupees)</label>
+                            <input formControlName="price_of_consultation" class="form-control profileInput" type="number"
+                            [ngClass]="{'invalid-form-control': profileForm.get('price_of_consultation').touched && profileForm.get('price_of_consultation').invalid}"
+                                   [appMin]="100" [appMax]="100000" matInput>
+                          </div>
+
+                          <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 pr-0 marginTop20">
+                            <label class="userDetailsLabel">Education Degree*</label>
+                            <input formControlName="education_degree" class="form-control profileInput" type="text"
+                            [ngClass]="{'invalid-form-control': profileForm.get('education_degree').touched && profileForm.get('education_degree').invalid}"
+                                   appInputChar="street" matInput>
+                          </div>
+
+                          <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 pr-0 marginTop20">
+                            <label class="userDetailsLabel">Languages*</label>
+                            <mat-form-field>
+                              <mat-select class="userInput" id="language_ids" formControlName='language_ids' multiple
+                              [ngClass]="{'invalid-form-control': profileForm.get('language_ids').touched && profileForm.get('language_ids').invalid}">
+                                  <mat-option *ngFor="let language of languagesList" [value]="language.language_id">
+                                      {{language.language_name}} ({{language.language_name_i18n}})
+                                  </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+
+                          <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 pr-0 marginTop20">
+                            <label class="userDetailsLabel">Medical Registration No*</label>
+                            <input formControlName="medical_registration_no" class="form-control profileInput" type="text"
+                                   appInputChar="street" matInput
+                                   [ngClass]="{'invalid-form-control': profileForm.get('medical_registration_no').touched && profileForm.get('medical_registration_no').invalid}">
+                          </div>
+
+                          <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 pr-0 marginTop20">
+                            <label class="userDetailsLabel">About Me*</label>
+                            <textarea formControlName="about_me" class="form-control profileTextarea" type="text" rows="4"
+                                   appInputChar="street" matInput
+                                   [ngClass]="{'invalid-form-control': profileForm.get('about_me').touched && profileForm.get('about_me').invalid}"></textarea>
+                          </div>
+
+                          <div class="col-md-12 p-0" *ngIf="userInfo?.preferred_state_id && userInfo?.preferred_district_id && userInfo?.preferred_zipcode">
+                            <hr>
+                          </div>
+                          <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pl-0 marginTop20" *ngIf="userInfo?.preferred_state_id">
+                            <label class="userDetailsLabel">Preferred State/UT</label>
+                            <mat-form-field>
+                              <mat-select class="userInput" id="state_id" formControlName='preferred_state_id' (selectionChange)="onStateChangeDr()">
+                                  <mat-option *ngFor="let state of stateList" [value]="state.state_id">
+                                      {{state.state_name}}
+                                  </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 marginTop20" *ngIf="userInfo?.preferred_district_id">
+                              <label class="userDetailsLabel">Preferred District</label>
+                              <mat-form-field>
+                                <mat-select class="userInput" id="state_id" formControlName='preferred_district_id' (selectionChange)="onDistrictChangeDr()">
+                                    <mat-option *ngFor="let district of districtList" [value]="district.district_id">
+                                        {{district.district_name}}
+                                    </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                          </div>
+                          <div class="col-md-4 col-sm-4 col-lg-4 col-xl-4 pr-0 marginTop20" *ngIf="userInfo?.preferred_zipcode">
+                              <label class="userDetailsLabel">Preferred Pincode</label>
+                              <mat-form-field>
+                                <mat-select class="userInput" id="state_id" formControlName='preferred_zipcode'>
+                                    <mat-option *ngFor="let pincode of pincodesList" [value]="pincode.pincode">
+                                        {{pincode.pincode}}
+                                    </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                          </div>
+
+                          <div class="col-md-12 p-0">
+                            <hr>
+                          </div>
+                          <div class="col-md-2 col-sm-2 col-lg-2 col-xl-2 pl-0 marginTop20">
+                            <div class="userSignatureUpload">
+                                <img *ngIf="(dataService.signaturePic | async); else emptySignatureDiv"  [src]="(dataService.signaturePic | async) || '../assets/Profile-photo.svg'"
+                                    class="img-fluid" alt="">
+                                <div class="clickChangePhoto">
+                                  <p (click)="openImageUploadDialogForSignature()"><i class="fa fa-upload"></i></p>
+                                </div>
+                              </div>
+                            </div>
+                        </ng-container>
+
+                        <div class="col-md-12 p-0 marginTop20">
+                            <hr>
+                        </div>
+
+
+                        <div class="col-md-12 p-0 marginTop20">
+                            <div class="submitDetails">
+                                <button class="btn createRoleBtn" type="submit">Save Changes</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+
+
+            </div>
+
+
+
+            <!-- create-role section end  -->
+
+
+
+        </div>
+        <!-- Right section end  -->
+    </div>
+</div>
+<!-- </div> -->
+
+<ng-template #emptySignatureDiv>
+  <div *ngIf="!(dataService.signaturePic | async)"  class="empty-signature">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <style>
+        /* adjusting the fill, colour and transparency,
+           of the watermark text while the SVG is hovered */
+        svg:hover .watermark {
+          fill: #666f;
+          font-size: 4.1em;
+        }
+        /* defining the default style of the watermark */
+        .watermark {
+          fill: #bbbb;
+          font-size: 4em;
+          font-family: Ubuntu, Calibri, sans-serif;
+          font-weight: bold;
+          transition: all 0.3s linear;
+        }
+      </style>
+      <!-- the image that you want to be watermarked: -->
+      <!-- <image xlink:href="http://www.davidrhysthomas.co.uk/linked/astrid_avatar.png" height="200px" width="200px" /> -->
+      <!-- the watermark text: -->
+      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="watermark">Add Signature</text>
+    </svg>
+  </div>
+
+  <div class="invalid-feedback" *ngIf="formSubmitted && !(dataService.signaturePic | async)" >
+    Please upload signature
+  </div>
+</ng-template>

@@ -1,0 +1,147 @@
+<div class="wrapper">
+    <div class="row loginRow align-items-center">
+        <div class="col-md-7 p-0">
+            <div class="loginImgSection">
+                <img src="../../../../../assets/loginImg.svg" class="w-100" alt="">
+            </div>
+        </div>
+        <div class="col-md-5 p-0">
+            <div class="loginSection">
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                    <div class="form-group">
+                        <!-- <label class="labelName" for="mobile">Mobile:</label> -->
+                        <span class="phoneIcon">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                        <input type="tel" numbersOnly maxlength="10" class="form-control" id="mobile"
+                            placeholder="Enter Mobile Number"
+                            [ngClass]="{'invalid-form-control': formSubmitted && loginForm.get('user_name').invalid}"
+                            name="mobile" formControlName="user_name">
+                    </div>
+                    <div class="form-group">
+                        <!-- <label class="labelName" for="pwd">Password:</label> -->
+                        <span class="phoneIcon">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                        <input type="{{togglePassword ? 'password' : 'text'}}" class="form-control" id="pwd"
+                            [ngClass]="{'invalid-form-control': formSubmitted && loginForm.get('password').invalid}"
+                            placeholder="Enter password" name="pswd" formControlName="password">
+                        <i class="password-toggle fa "
+                            [ngClass]="{'fa-eye-slash': togglePassword, 'fa-eye': !togglePassword}"
+                            (click)="togglePassword = !togglePassword" style="cursor: pointer"></i>
+                    </div>
+                    <div class="rememberBox">
+                        <!-- <div class="form-group form-check"> -->
+
+                        <!-- <label class="form-check-label"><span class="rememberme">Remember me</span>
+                        <input type="checkbox" checked="checked">
+                        <span class="checkmark"></span>
+                      </label> -->
+
+                        <!-- </div> -->
+                        <!-- <div class="forgot">
+                            <a routerLink="forget">Forgot Password?</a>
+                        </div> -->
+
+                    </div>
+
+                    <button type="submit" class="btn loginBtn">Login</button>
+                    <div class="forgot">
+                        <a routerLink="forget">Forgot Password?</a>
+                    </div>
+                    <h6>New here? <a (click)="hospitalOnBoarding()" class="userSignUp"> Sign Up</a></h6>
+                    <!-- <h6>Don’t have an account? <a (click)="hospitalOnBoarding()">Create an account</a></h6> -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- <mat-tab-group>
+    <mat-tab label="Admin Login">
+        <div id="formContent">
+           
+            <div class="logo">
+                <img src="../../../../../assets/aemsNewLogo.png" alt="logo" />
+                <p>LOGIN</p>
+            </div> -->
+
+    <!-- Login Form -->
+    <!-- <form [formGroup]="loginForm" (ngSubmit)="login()">
+                <div class="form-group">
+                    <label class="labelName" for="mobile">Mobile:</label>
+                    <input type="tel" numbersOnly maxlength="10"
+                           class="form-control" id="mobile" placeholder="Enter Mobile Number"
+                           [ngClass]="{'invalid-form-control': formSubmitted && loginForm.get('user_name').invalid}"
+                           name="mobile" formControlName="user_name">
+                </div>
+                <div class="form-group">
+                    <label class="labelName" for="pwd">Password:</label>
+                    <input type="{{togglePassword ? 'password' : 'text'}}" class="form-control" id="pwd"
+                           [ngClass]="{'invalid-form-control': formSubmitted && loginForm.get('password').invalid}"
+                           placeholder="Enter password" name="pswd" formControlName="password">
+                    <i class="password-toggle fa " [ngClass]="{'fa-eye-slash': togglePassword, 'fa-eye': !togglePassword}" (click)="togglePassword = !togglePassword"
+                    style="cursor: pointer"></i>
+                </div>
+                <div class="rememberBox">
+                    <div class="form-group form-check"> -->
+
+    <!-- <label class="form-check-label"><span class="rememberme">Remember me</span>
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                          </label> -->
+
+    <!-- </div>
+                    <div class="forgot">
+                        <a routerLink="forget">Forgot Password?</a>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="btn loginBtn">Login</button>
+
+                <h6>Don’t have an account? <a (click)="hospitalOnBoarding()">Create an account</a></h6>
+            </form>
+
+
+
+        </div>
+    </mat-tab>
+    <mat-tab label="Patient Login">
+
+        <div id="formContent" > -->
+    <!-- Icon -->
+    <!-- <div class="logo">
+                <img src="../../../../../assets/aemsNewLogo.png" alt="logo" />
+                <p>LOGIN</p>
+            </div> -->
+
+    <!-- Login Form -->
+    <!-- <form [formGroup]="patientLoginForm">
+                <ng-container *ngIf="!verificationCodeEnable else verificationSection;">
+                  <div class="form-group">
+                    <label class="labelName" for="mobile">Mobile Number</label>
+                    <input type="tel" appIntegerInput maxlength="10" formControlName="mobile" class="form-control" placeholder="Enter Mobile Number">
+                  </div>
+                  <button type="submit" class="btn loginBtn" (click)="patientLoginMobileSubmit()" >Send Verification Code</button>
+                </ng-container>
+
+                <ng-template #verificationSection>
+                  <div class="form-group otpInputBox">
+                    <ng-otp-input [formCtrl]="otp" [config]="{length:6, allowNumbersOnly: true}"></ng-otp-input>
+                  </div>
+
+
+                  <button type="submit" (click)="patientLoginOTPSubmit()" class="btn loginBtn">Submit</button>
+                </ng-template>
+            </form>
+
+
+
+        </div>
+    </mat-tab>
+
+  </mat-tab-group> -->
+
+
+
+</div>

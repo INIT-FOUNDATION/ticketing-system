@@ -1,0 +1,44 @@
+<app-loader></app-loader>
+<div class="container-fluid mainContainer" appTheme>
+    <ng-template [ngIf]="(authService.currentUser | async)" [ngIfElse]="guest">
+        <app-header></app-header>
+        <div class="row">
+            <div class="leftSection" [ngClass]="(sideBarService.sidebarHidden | async) ? 'leftSection-collapse' : ''">
+                <app-side-bar></app-side-bar>
+            </div>
+            <div class="content-wrapper" [ngClass]="(sideBarService.sidebarHidden | async) ? 'rightSection-slide' : ''">
+                <ng-container *ngIf="true">
+                    <div class="example-sidenav-content">
+                        <div class="content">
+
+                            <div class="page">
+                                <ng-container *ngTemplateOutlet="routertemplate"></ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="false">
+                    <app-side-bar></app-side-bar>
+                    <div class="content">
+                        <app-header></app-header>
+                        <div class="page">
+                            <ng-container *ngTemplateOutlet="routertemplate"></ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+<ng-template #guest>
+    <div class="container-fluid">
+        <div class="stage wrapper before-login-content">
+            <ng-container *ngTemplateOutlet="routertemplate"></ng-container>
+        </div>
+    </div>
+</ng-template>
+<ng-template #routertemplate>
+    <router-outlet></router-outlet>
+</ng-template>

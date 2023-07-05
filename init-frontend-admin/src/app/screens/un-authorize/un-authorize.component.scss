@@ -1,0 +1,21 @@
+@import '../../../theme/custome';
+@import '../../../theme/color';
+
+.no-access.page-not-found-modal {
+  margin: 0 auto;
+  border-radius: 5px;
+  font-weight: 300;
+  color:$blue-lagoon;
+  padding: 32px;
+  text-align: center;
+  max-width:100%;
+}
+
+.no-access h3 {
+  color:$blue-lagoon;
+  font-size:16px;
+}
+
+.no-access img{
+  width:300px;
+}

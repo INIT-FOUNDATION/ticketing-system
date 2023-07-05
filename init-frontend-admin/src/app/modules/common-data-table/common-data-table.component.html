@@ -1,0 +1,106 @@
+
+<p-table #dt [columns]="colModel" [value]="data" scrollable="true" styleClass="p-datatable-striped" [lazy]="lazyLoad" [id]="gridId"
+[selectionMode]="selectType" (onRowSelect)="onCustomRowSelect($event)"
+(onPage)="onCustomPageChange($event)"
+(onHeaderCheckboxToggle)="onSelectAllEvent($event)"
+(onRowUnselect)="onCustomRowUnselect($event)"
+(onLazyLoad)='loadDataTOGrid($event)'
+(onFilter)="onCustomFilter($event, data)"
+[(selection)]="selectedRows"
+[scrollable]="scrollable" scrollHeight="{{scrollHeight}}"
+[paginator]="pagination" [paginatorPosition]='paginationpos' [rows]="rowsPerPage"
+[showCurrentPageReport]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+[totalRecords]="totalRecords" [loading]="loading" [responsive]="true"
+[sortField]="sField" [sortOrder]="sortOrderPrimeNgForm" [lazyLoadOnInit]="false" [dataKey]='idColumn' [metaKeySelection]='false' autoLayout="false">
+<ng-template pTemplate="header" let-columns>
+    <tr *ngIf="showGroupedHeader">
+      <th scope="col" *ngFor="let header of headerModel" style="text-align: center;" [attr.colspan]="header.colspan" [attr.rowspan]="header.rowspan">
+        {{header.headerName}}
+      </th>
+    </tr>
+    <tr>
+      <th scope="col" *ngIf="checkboxHeaderText !==null ; else noCheckboxHeaderText" >{{checkboxHeaderText}}</th>
+      <ng-template #noCheckboxHeaderText>
+         <th scope="col" style="width: 2em" *ngIf="selectType !== 'none'">
+            <p-tableHeaderCheckbox #selectAll *ngIf="selectType === 'multiple'"></p-tableHeaderCheckbox>
+         </th>
+      </ng-template>
+      <th scope="col" *ngFor="let col of columns" [attr.colspan]="col.colspan" [attr.rowspan]="col.rowspan" [pSortableColumn]="col.sortable? col.field : undefined" [hidden]='col.hidden' [ngStyle]="{'text-align': col.optionalParams?.align ? col.optionalParams?.align : 'left', 'cursor': col.sortable? 'pointer': 'default', 'width': col.optionalParams?.width ? col.optionalParams?.width : ''}" def>
+        <p-sortIcon [field]="col.field" *ngIf="col.sortable"  ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+        <span class="" [ngStyle]="{'text-align': col.optionalParams?.align ? col.optionalParams?.align : 'center'}" [ngClass]="{'table-actions': !col.sortable, 'thead-title': col.sortable}" [innerHTML] = "col.header">{{col.header}}</span>
+        <span [ngSwitch]="col.optionalParams?.filtertype">
+          <ng-container *ngSwitchCase="'input'">
+            <p-columnFilter *ngIf="col.filter" [showOperator]="false" [showAddButton]="false" [field]="col.field" matchMode="contains" display='menu'></p-columnFilter>
+          </ng-container>
+          <ng-container *ngSwitchCase="'dropdown'">
+            <p-columnFilter [field]="col.field" matchMode="equals" display="menu"  [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-dropdown [ngModel]="value" [options]="col.optionalParams?.auxillaryData?.data" (onChange)="filter($event.value)" placeholder="Any">
+                  <ng-template let-option pTemplate="item">
+                      <span>{{option.label}}</span>
+                  </ng-template>
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </ng-container>
+          <ng-container *ngSwitchCase="'multiselect'">
+            <p-columnFilter [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [ngModel]="value" [options]="col.optionalParams?.auxillaryData?.data" placeholder="Any" (onChange)="filter($event.value)" optionLabel="label">
+                      <ng-template let-option pTemplate="item">
+                          <div class="p-multiselect-representative-option">
+                              <span class="p-ml-1">{{option.label}}</span>
+                          </div>
+                      </ng-template>
+                  </p-multiSelect>
+              </ng-template>
+          </p-columnFilter>
+          </ng-container>
+        </span>
+      </th>
+      <th *ngIf="actionColumnRequired" scope="col" [pSortableColumn]="undefined" [hidden]='false' [ngStyle]="{'text-align': 'left', 'cursor': 'default'}" def>
+        <span class="table-actions" [ngStyle]="{'text-align': 'center'}" innerHTML = "Actions">Actions</span>
+      </th>
+    </tr>
+</ng-template>
+<ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+    <tr class="ui-selectable-row" style="cursor: default;">
+        <td *ngIf="selectType !== 'none'">
+          <p-tableCheckbox [ngClass]="{'disabled': rowData['editable'] != undefined && !rowData['editable']}" [disabled]="rowData['editable'] != undefined && !rowData['editable']" [value]="rowData"></p-tableCheckbox>
+        </td>
+        <td *ngFor="let col of columns" [hidden]='col.hidden' [ngStyle]="{'text-align': col.optionalParams?.align ? col.optionalParams?.align : 'left', 'width': col.optionalParams?.width ? col.optionalParams?.width : ''}">
+            <ng-container *ngIf="col.filtertype === 'date'" >
+              {{rowData[col.field] | date: col.auxillaryData?.data}}
+            </ng-container>
+
+            <ng-template [ngIf]="col.optionalParams?.formatterTemplateRef" [ngIfElse]="withoutFormatter">
+                <ng-container *ngTemplateOutlet='col.optionalParams?.formatterTemplateRef; context: {griddata : rowData, coldata : col}'></ng-container>
+            </ng-template>
+            <ng-template #withoutFormatter>
+              <ng-container *ngIf="col.showToolTip; else elseNoToolTipTemplate">
+                <span [innerHTML]="rowData[col.field]" pTooltip="{{rowData[col.field]}}">{{rowData[col.field]}}</span>
+              </ng-container>
+              <ng-template #elseNoToolTipTemplate>
+                <span [innerHTML]="rowData[col.field]">{{rowData[col.field]}}</span>
+              </ng-template>
+            </ng-template>
+        </td>
+        <td *ngIf="actionColumnRequired">
+          <ng-template [ngIf]="actionColumnTemplate" [ngIfElse]="withoutFormatter">
+            <ng-container *ngTemplateOutlet='actionColumnTemplate; context: {griddata : rowData, coldata : col}'></ng-container>
+          </ng-template>
+          <ng-template #withoutFormatter>
+            <span>...</span>
+          </ng-template>
+        </td>
+    </tr>
+</ng-template>
+<ng-template pTemplate="emptymessage" let-columns>
+  <tr>
+      <td [attr.colspan]="getTotalVisibleColumns">
+          No records found
+      </td>
+  </tr>
+</ng-template>
+</p-table>

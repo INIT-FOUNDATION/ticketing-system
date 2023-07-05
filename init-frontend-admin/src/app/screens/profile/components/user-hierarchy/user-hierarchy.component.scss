@@ -1,0 +1,48 @@
+@import '../../../../../theme/custome';
+@import '../../../../../theme/color';
+
+:host ::ng-deep .p-organizationchart {
+  .p-person {
+      padding: 0;
+      border: 0 none;
+  }
+
+  .node-header, .node-content {
+      padding: .5em .7rem;
+  }
+
+  .node-header {
+      background-color: $blue-lagoon;
+      color: #ffffff;
+  }
+
+  .node-content {
+      text-align: center;
+      border: 1px solid $blue-lagoon;
+  }
+
+  .node-content img {
+      border-radius: 50%;
+  }
+
+  .department-cfo {
+      background-color: #7247bc;
+      color: #ffffff;
+  }
+
+  .department-coo {
+      background-color: #a534b6;
+      color: #ffffff;
+  }
+
+  .department-cto {
+      background-color: #e9286f;
+      color: #ffffff;
+  }
+
+  .designation-span {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 500;
+  }
+}

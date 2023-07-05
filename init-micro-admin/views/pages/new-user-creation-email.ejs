@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body style="font-family: 'Poppins', sans-serif;">
+    <table
+    style="margin: auto; display: table; width: 600px; background:  #0EA59E; border-radius: 30px;  padding:3px; text-align: center;border-spacing: 0px;">
+
+        <tbody style="background: #fff;border-radius: 28px 28px;display: block; padding-bottom: 2rem; padding-top: 2rem;">
+            <tr>
+                <td style="padding: 0;">
+                    <img src="https://api.dev.aieze.in/api/v1/admin/cdn/file?file_name=public/user-creation.png" alt="" style="width: 85%;">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p
+                        style="font-weight: 500;font-size: 15px;text-align: center;color: #000000; margin: 0; margin-top: 1rem;">
+                        Dear <span style="color:#0EA59E;"><%= name %></span></p>
+                    <p style="font-weight: 500;font-size: 15px;text-align: center;color: #000000; margin: 0;">
+                        Your login for AIEZE has been created successfully
+                    </p>
+                    <p style="font-weight: 500;font-size: 15px;text-align: center;color: #000000; margin: 0;">
+                        and the password is<span style="color:#0EA59E;"> <%= password %></span>. To login, click </p>
+                    <p style="font-weight: 500;font-size: 15px;text-align: center;color: #000000; margin: 0;">
+                        <a style="color:#0EA59E; outline:none; text-decoration:none;" href="<%= link %>"><%= link %></a>- AIEZE URL
+                    </p>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+</body>
+
+</html>

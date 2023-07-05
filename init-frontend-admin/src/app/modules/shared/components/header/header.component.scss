@@ -1,0 +1,86 @@
+@import '../../../../../theme/custome';
+@import '../../../../../theme/color';
+
+.content-wrapper {
+  width: 80%;
+  @media only screen and (min-width: 320px) and (max-width: 1000px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 1000px) and (max-width: 1200px) {
+    width: 75%;
+  }
+}
+
+.rightSection-slide {
+  width: 94%;
+  @media only screen and (min-width: 320px) and (max-width: 1000px) {
+    width: 100%;
+  }
+}
+
+.mobileSideBar {
+  display: none;
+  text-align: right;
+}
+
+
+@media only screen and (min-width: 320px) and (max-width: 1000px) {
+  ul.menu-collapsed {
+    padding: 0;
+    list-style: none;
+
+    li {
+      a {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        color: $storm-gray !important;
+        padding: 20px;
+        display: block;
+        text-decoration: none;
+        img{
+            padding-right: 10px;
+        }
+      }
+    }
+  }
+
+  .mobileSideBar {
+    display: block;
+  }
+}
+
+.custom-contrast-icon,
+.custom-moon{
+  width: 25px !important;
+  height: 25px !important;
+  color: $black;
+  cursor: pointer;
+}
+
+.custom-search-icon {
+  width: 20px !important;
+  height: 20px !important;
+  color: $black;
+  position: absolute;
+  left: 19px;
+  top: 9px;
+}
+
+input#imageUpload {
+  width: 45px;
+  height: 45px;
+  padding: 5px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.desInfo{
+  color: $black !important;
+}
+.custom-back{
+  padding-right: 0.5rem;
+  width: 25px !important;
+    height: 25px !important;
+    cursor: pointer;
+}

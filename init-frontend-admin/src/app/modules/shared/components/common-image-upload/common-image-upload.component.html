@@ -1,0 +1,46 @@
+<h2 mat-dialog-title class="popupHeader"><span (click)="backUpload()" class="backIcon"><i
+      class="fa fa-long-arrow-left"></i> </span> <span class="titleText">{{data.dialog_title}}</span> <span
+    class="closeIcon" (click)="closeDialog()"><img src="../../../../../assets/close.png" alt=""></span></h2>
+<mat-dialog-content class="mat-typography">
+  <div class="row uploadImg" *ngIf="!uploadedFile">
+    <div class="col-md-12" appDnd (fileDropped)="onFileDropped($event)">
+      <div class="imageUploadBox">
+        <img src="../../../../../assets/profilePic.png" alt="">
+      </div>
+    </div>
+    <div class="dragInfo">
+      <p>Drag and drop</p>
+    </div>
+    <div class="orInfo">
+      <p>- or -</p>
+    </div>
+    <div class="chooseFileBox">
+      <input type="file" #fileDropRef id="fileDropRef" accept="image/*" (change)="fileBrowseHandler($event)"
+        class="uploadFileInput" />
+      <button class="btn uploadBtn">Upload</button>
+    </div>
+  </div>
+
+  <div class="row uploadImgCrop" *ngIf="uploadedFile">
+    <ng-container *ngIf="data.aspectRatio" >
+      <image-cropper [imageChangedEvent]="uploadedFile" [imageFile]="uploadedFile[0]"
+      [cropperMinWidth]="data.width" [cropperMinHeight]="data.height"
+        [maintainAspectRatio]="true" [aspectRatio]="data.ratio" format="png" (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+      </image-cropper>
+    </ng-container>
+
+    <ng-container *ngIf="!data.aspectRatio" >
+      <image-cropper [imageChangedEvent]="uploadedFile" [imageFile]="uploadedFile[0]"
+        [cropperStaticWidth]="data.width" [cropperStaticHeight]="data.height" format="png" (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+      </image-cropper>
+    </ng-container>
+
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="closeDialog()" class="cancelBtn">Cancel</button>
+  <button mat-button cdkFocusInitial type="button" *ngIf="uploadedFile" (click)="confirmFileUpload()" class="confirmBtn">Confirm</button>
+</mat-dialog-actions>
