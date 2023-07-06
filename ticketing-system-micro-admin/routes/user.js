@@ -307,6 +307,29 @@ router.post('/password_policy', async (req, res) => {
 // @desc     Update Password Policy based on ID
 // @access   Private / Admin role only
 
+router.post("/password_policy/:id", async (req, res) => {
+    const policyId = req.params.id;
+    const policy = new users.UpdatePasswordPolicySchema(req.body);
+
+    const { error } = users.validatePasswordPolicy(policy);
+    if (error) {
+
+        if (
+            error.details != null &&
+            error.details != "" &&
+            error.details != "undefined"
+        ) {
+            return res.status(STATUS.BAD_REQUEST).send(`{"errorCode":"PASSPOL002", "error": "${ERRORCODE.ERROR.PASSPOL002}", "body": ${error.message}}`);
+        } else return res.status(STATUS.BAD_REQUEST).send(error.message);
+    } else {
+        let results = userService.UpdatePasswordPolicy(policy, policyId);
+        res.status(STATUS.OK).send({
+            error: false,
+            data: results,
+            message: "Policy has been updated successfully."
+        });
+    }
+});
 
 
 

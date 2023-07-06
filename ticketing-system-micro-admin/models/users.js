@@ -120,15 +120,82 @@ function validateEditUsers(user) {
     return Joi.validate(user, schema);
 }
 
+
+const createPasswordPolicySchema = function (policy) {
+    this.password_expiry = policy.password_expiry;
+    this.password_history = policy.password_history;
+    this.min_password_length = policy.min_password_length;
+    this.complexity = policy.complexity;
+    this.alphabetical = policy.alphabetical;
+    this.numeric = policy.numeric;
+    this.special_chars = policy.special_chars;
+    this.allowed_special_chars = policy.allowed_special_chars;
+    this.max_invalid_attempts = policy.max_invalid_attempts;
+}
+
+const UpdatePasswordPolicySchema = function (policy) {
+    this.password_expiry = policy.password_expiry ? parseInt(policy.password_expiry) : 0;
+    this.password_history = policy.password_history ? parseInt(policy.password_history) : 0;
+    this.min_password_length = policy.min_password_length ? parseInt(policy.min_password_length) : 0;
+    this.complexity = policy.complexity ? parseInt(policy.complexity) : 0;
+    this.alphabetical = policy.alphabetical ? parseInt(policy.alphabetical) : 0;
+    this.numeric = policy.numeric ? parseInt(policy.numeric) : 0;
+    this.special_chars = policy.special_chars ? parseInt(policy.special_chars) : 0;
+    this.allowed_special_chars = policy.allowed_special_chars;
+    this.max_invalid_attempts = policy.max_invalid_attempts ? parseInt(policy.max_invalid_attempts) : 0;
+    this.date_modified = new Date();
+};
+
+
+function validatePasswordPolicy(policy) {
+
+    const schema = {
+        password_expiry: Joi.number()
+            .min(0)
+            .max(365)
+            .required(),
+        password_history: Joi.number()
+            .min(0)
+            .max(3)
+            .required(),
+        min_password_length: Joi.number()
+            .min(6)
+            .max(20)
+            .required(),
+        complexity: Joi.number()
+            .min(0)
+            .max(1)
+            .required(),
+        alphabetical: Joi.number()
+            .min(0)
+            .max(1),
+        numeric: Joi.number()
+            .min(0)
+            .max(1),
+        special_chars: Joi.number()
+            .min(0)
+            .max(1),
+        allowed_special_chars: Joi.string(),
+        max_invalid_attempts: Joi.number()
+            .min(0)
+            .max(99),
+        date_created: Joi.date(),
+        date_modified: Joi.date()
+    };
+
+    return Joi.validate(policy, schema);
+}
+
+
 module.exports = User;
 module.exports.UpdateUser = UpdateUser;
 module.exports.validateUpdateUsers = validateUpdateUsers;
 module.exports.validate = validateUsers;
 module.exports.EditUser = EditUser;
 module.exports.validateEditUsers = validateEditUsers;
-//module.exports.createPasswordPolicySchema = createPasswordPolicySchema;
-//module.exports.UpdatePasswordPolicySchema = UpdatePasswordPolicySchema;
-//module.exports.AddDepartment = AddDepartment;
+module.exports.createPasswordPolicySchema = createPasswordPolicySchema;
+module.exports.UpdatePasswordPolicySchema = UpdatePasswordPolicySchema;
+module.exports.validatePasswordPolicy = validatePasswordPolicy;
 //module.exports.validateAddDepartment = validateAddDepartment;
 
 module.exports = User;
