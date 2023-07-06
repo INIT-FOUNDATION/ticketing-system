@@ -315,7 +315,7 @@ roleService.getCombinedAccessList = (user_id, role_id) => {
   return new Promise(async (resolve, reject) => {
     let _query = {
       text: QUERY.ROLE.getCombinedAccessList,
-      values: [user_id, role_id]
+      values: [role_id]
     };
 
     await pg.executeQuery(_query, (err, rows) => {

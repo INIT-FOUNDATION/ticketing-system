@@ -226,6 +226,7 @@ router.get("/getCombinedAccessList/:user_id/:role_id", async (req, res) => {
       return res.status(STATUS.OK).send(data);
     }
   } catch (err) {
+    console.log(err);
     res.status(STATUS.INTERNAL_SERVER_ERROR).send();
   }
 });

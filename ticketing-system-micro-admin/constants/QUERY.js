@@ -150,8 +150,6 @@ exports.ROLE = {
                                         CASE 
                                             WHEN (ac.per_id) = 1 
                                             THEN 1 
-                                            WHEN (uac.per_id) = 1
-                                            THEN 1
                                             ELSE 0 
                                         END
                                     ) write_permission,
@@ -159,8 +157,6 @@ exports.ROLE = {
                                         CASE 
                                             WHEN (ac.per_id) = 2 
                                             THEN 1 
-                                            WHEN (uac.per_id) = 2
-                                            THEN 1
                                             ELSE 0 
                                         END
                                     ) read_permission,
@@ -168,16 +164,11 @@ exports.ROLE = {
                                         CASE 
                                             WHEN sum(COALESCE(ac.per_id, 0)) > 0 
                                             THEN 1 
-                                            WHEN sum(COALESCE(uac.per_id, 0)) > 0
-                                            THEN 1
                                             ELSE 0 
                                         END
                                     ) display_permission
                                 FROM m_menus mm 
-                                LEFT OUTER JOIN user_access_control uac ON mm.menu_id = uac.menu_id AND uac.user_id=$1
-                                LEFT OUTER JOIN access_control ac ON mm.menu_id = ac.menu_id AND ac.role_id=$2
-                                LEFT OUTER JOIN m_permissions mp ON ac.per_id = mp.per_id
-                                LEFT OUTER JOIN m_permissions mp1 ON uac.per_id = mp1.per_id
+                                LEFT OUTER JOIN access_control ac ON mm.menu_id = ac.menu_id AND ac.role_id=$1
                                 WHERE mm.is_active=1
                                 GROUP BY mm.menu_id
                                 ORDER BY mm.menu_order ASC`,
