@@ -8,7 +8,8 @@ const {
     CONST,
     s3Util,
     JSONUTIL,
-    redis
+    redis,
+    getModulesbyLocation
 } = require("ticketing-system-micro-common");
 const AWS = require("aws-sdk");
 const fileUpload = require("express-fileupload");
@@ -524,9 +525,8 @@ router.post("/getUserdataGridCount", async (req, res) => {
     let page_size = req.body.page_size ? req.body.page_size : PAGESIZE.pagesize.PAGE_SIZE;
     let current_page = req.body.current_page ? req.body.current_page : 0;
     let search = req.body.search;
-    console.log("token ---------- ", token);
-    console.log("requets body ---------- ", req.body);
 
+    console.log(req.initPayload);
     if (current_page != 0 && current_page != 1) {
         current_page = ((current_page - 1) * page_size)
     } else {
@@ -535,9 +535,9 @@ router.post("/getUserdataGridCount", async (req, res) => {
 
     try {
 
-        let data = await userService.getUserdataGridNew(token, [page_size, current_page, search], req.body);
+        let data = await userService.getUserdataGridNew(token, [page_size, current_page, search, req.initPayload.role_access], req.body);
         data = await addCDNImages(data);
-        let count = await userService.getUserdataGridCount(token, [search], req.body);
+        let count = await userService.getUserdataGridCount(token, [search, req.initPayload.role_access], req.body);
         res.status(STATUS.OK).send({ data: data, count: parseInt(count) });
 
     } catch (error) {

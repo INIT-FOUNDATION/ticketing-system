@@ -40,6 +40,7 @@ export class CommonDataTableComponent extends Table implements OnInit {
   @Input() checkboxHeaderText?: string = null;
   @Input() actionColumnRequired = true;
   @Input() actionColumnTemplate: TemplateRef<any> = null;
+  @Input() colFormatterTemplate: {[key:string]: TemplateRef<any>} = null;
   @Output() onCustomrowSelect = new EventEmitter<{ data: any, index: any, originalEvent: MouseEvent, type: string }>();
   @Output() onCustomrowunselect = new EventEmitter<{ data: any, index: any, originalEvent: MouseEvent, type: string }>();
   @Output() onSelectAllRows = new EventEmitter<{ affectedRows: any, checked: any, originalEvent: MouseEvent }>();
@@ -254,7 +255,7 @@ export class CommonDataTableComponent extends Table implements OnInit {
               case 'contains':
                 filteredData = filteredData.filter(obj => {
                   if(obj[key]){
-                  if (parseInt(obj[key]) == NaN) {
+                  if (Number.isNaN(parseInt(obj[key]))) {
                       return obj[key]?.indexOf(filter.value) != -1;
                     }
                     else {
@@ -267,7 +268,7 @@ export class CommonDataTableComponent extends Table implements OnInit {
               case 'equals':
                 filteredData = filteredData.filter(obj =>{
                   if(obj[key]){
-                    if (parseInt(obj[key]) == NaN) {
+                    if (Number.isNaN(parseInt(obj[key]))) {
                       return obj[key] == filter.value
                     }
                     else{
@@ -281,7 +282,7 @@ export class CommonDataTableComponent extends Table implements OnInit {
               case 'notEquals':
                 filteredData = filteredData.filter(obj => {
                   if(obj[key]){
-                    if (parseInt(obj[key]) == NaN) {
+                    if (Number.isNaN(parseInt(obj[key]))) {
                       return obj[key] != filter.value
                     }
                     else{

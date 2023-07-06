@@ -46,7 +46,7 @@ exports.ADMIN = {
     viewLFGridGetStateId: "select state_id from vw_m_location_facility",
     viewLFGridbyUpdatedate: "select * from vw_m_location_facility where date_created >= NOW() - INTERVAL 1 MINUTE or date_modified >= NOW() - INTERVAL 1 MINUTE;",
     insertIntoQuery: "INSERT INTO ",
-    getUserMobileQuery: "SELECT mobile_number, display_name,state_id, email_id FROM m_users WHERE user_id = $1 LIMIT 1",
+    getUserMobileQuery: "SELECT mobile_number, display_name, email_id FROM m_users WHERE user_id = $1 LIMIT 1",
     updateUserPasswordbyAdminQuery: "UPDATE m_users SET password=$1 WHERE user_id = $2",
     updateUserProfilePicQuery: "UPDATE m_users SET profile_picture_url=$1 WHERE user_id = $2",
     getUserProfilePicQuery: "SELECT * FROM m_users WHERE user_id = $1",

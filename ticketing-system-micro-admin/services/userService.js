@@ -769,53 +769,32 @@ User.getUserdataGridNew = async (token, locObj, reqData) => {
             let page_size = locObj[0];
             let current_page = locObj[1];
             let search = locObj[2];
-            let state_id = reqData.state_id ? reqData.state_id : token.state_id;
-            let district_id = reqData.district_id ? reqData.district_id : token.district_id;
-            let sub_district_id = reqData.sub_district_id ? reqData.sub_district_id : token.sub_district_id;
-            let block_id = reqData.block_id ? reqData.block_id : token.block_id;
-            let village_id = reqData.village_id ? reqData.village_id : token.village_id;
+            let role_access = locObj[3];
             let role_id = token.role;
             let key = "User-Data";
             let access = ` `;
             let addUpdateCheck = 0;
             let acccessString;
 
-            console.log("tokentokentoken");
-            console.log(token);
-            console.log("tokentokentoken");
-
-            if (state_id) {
-                key = `User-Data|State:${state_id}`;
-                access = ` and state_id = ${state_id} and role_id not in (${role_id}, 1)`;
+            
+            if (role_access && role_access.length > 0) {
+                let role_access_string = '';
+                for(let level of role_access) {
+                    role_access_string += `'${level}',`;
+                }
+                role_access_string = role_access_string.substring(0, role_access_string.lastIndexOf(','));
+                access += ` and user_level IN (${role_access_string}) `;
+                // key += `|USER_LEVEL:${role_access_string}`;
             }
 
-            if (state_id && district_id) {
-                key = `User-Data|District:${district_id}`;
-                access = ` and district_id = ${district_id} and role_id not in (${role_id}, 1)`;
-            }
-
-            if (state_id && district_id && sub_district_id) {
-                key = `User-Data|SubDistrict:${sub_district_id}`;
-                access = ` and sub_district_id = ${district_id} and role_id not in (${role_id}, 1)`;
-            }
-
-            if (state_id && district_id && block_id) {
-                key = `User-Data|Block:${block_id}`;
-                access = ` and block_id = ${block_id} and role_id not in (${role_id}, 1)`;
-            }
-
-            if (state_id && district_id && block_id && village_id) {
-                key = `User-Data|Village:${village_id}`;
-                access = ` and village_id = ${village_id} and role_id not in (${role_id}, 1)`;
-            }
-
-            console.log("search -------- ", search);
             if (search) {
                 let mobile_number = Number(search);
                 console.log("----- mobile number ------ ", mobile_number);
                 access += ` and and role_id !=1 and CAST(mobile_number AS text) like '${mobile_number}%'`
-                key += `|Mobile:${mobile_number}`
+                key += `|Mobile:${mobile_number}`;
             }
+
+            
 
 
             if (role_id == 1) {
@@ -932,54 +911,29 @@ User.getUserdataGridCount = async (token, locObj, reqData) => {
         try {
             let role_id = token.role;
             let search = locObj[0];
-            let state_id = reqData.state_id ? reqData.state_id : token.state_id;
-            let district_id = reqData.district_id ? reqData.district_id : token.district_id;
-            let sub_district_id = reqData.sub_district_id ? reqData.sub_district_id : token.sub_district_id;
-            let block_id = reqData.block_id ? reqData.block_id : token.block_id;
-            let village_id = reqData.village_id ? reqData.village_id : token.village_id;
+            let role_access = locObj[1];
 
             let access = ` `;
-            let key = "User-Data"
+            let key = "User-Data";
 
-            console.log("tokentokentoken");
-            console.log(token);
-            console.log("tokentokentoken");
 
-            if (state_id) {
-                key = `User-Data|State:${state_id}`;
-                access = ` and state_id = ${state_id} and role_id not in (${role_id}, 1)`;
+            if (role_access && role_access.length > 0) {
+                let role_access_string = '';
+                for(let level of role_access) {
+                    role_access_string += `'${level}',`;
+                }
+                role_access_string = role_access_string.substring(0, role_access_string.lastIndexOf(','));
+                access += ` and user_level IN (${role_access_string})`
+                // key += `|USER_LEVEL:${role_access.join(',')}`
             }
 
-            if (state_id && district_id) {
-                key = `User-Data|District:${district_id}`;
-                access = ` and district_id = ${district_id} and role_id not in (${role_id}, 1)`;
-            }
-
-            if (state_id && district_id && sub_district_id) {
-                key = `User-Data|SubDistrict:${sub_district_id}`;
-                access = ` and sub_district_id = ${district_id} and role_id not in (${role_id}, 1)`;
-            }
-
-            if (state_id && district_id && block_id) {
-                key = `User-Data|Block:${block_id}`;
-                access = ` and block_id = ${block_id} and role_id not in (${role_id}, 1)`;
-            }
-
-            if (state_id && district_id && block_id && village_id) {
-                key = `User-Data|Village:${village_id}`;
-                access = ` and village_id = ${village_id} and role_id not in (${role_id}, 1)`;
-            }
-
-            console.log("search -------- ", search);
             if (search) {
                 let mobile_number = Number(search);
                 console.log("----- mobile number ------ ", mobile_number);
                 access += ` and mobile_number = '${mobile_number}'`
                 key += `|Mobile:${mobile_number}`
             }
-            console.log("keykeykeykeykeykeykeykey");
-            console.log(key);
-            console.log("keykeykeykeykeykeykeykey");
+            
 
             if (role_id == 1) {
                 key += "|Count";
@@ -1059,6 +1013,45 @@ User.getUserdataGridCount = async (token, locObj, reqData) => {
     }); // Promise
 };
 
+
+User.getUserAccessList = (user_id) => {
+    return new Promise(async (resolve, reject) => {
+      let _query = {
+        text: QUERY.USER.getUserAccessControl,
+        values: [user_id]
+      };
+    
+      await pg.executeQuery(_query, (err, rows) => {
+        if (err) {
+          logger.error(err);
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      }); // query
+    }); // Promise
+  };
+
+  User.getUserMobile = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        let _query = {
+            text: QUERY.ADMIN.getUserMobileQuery,
+            values: [userId]
+        };
+
+        await pg.executeQuery(_query,
+            (err, res) => {
+                if (err) {
+                    logger.error("error: ", err);
+                    reject(err);
+                } else {
+                    logger.info("res: ", res);
+                    resolve(res);
+                }
+            }
+        );
+    }); // Promise
+}; // getUserMobile
 
 
 

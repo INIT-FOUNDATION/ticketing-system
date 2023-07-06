@@ -3,6 +3,58 @@ const User = {};
 let QUERY = require('../constants/QUERY')
 const config = require("../config/config");
 
+User.getProfileDtls = async (id, result) => {
+    const _query = {
+        text: QUERY.USER.selectProfileDtlsQuery,
+        values: [id]
+    };
+    var querySQL = await pg.executeQuery(_query, (err, res) => {
+            if (err) {
+                logger.error("error: ", err);
+                result(err, null);
+            } else {
+                result(null, res);
+            }
+        }
+    );
+};
+
+User.updateUser = async (req, userId, result) => {
+    let setQuery = queryUtility.convertObjectIntoUpdateQuery(req);
+    let updateQuery = `${QUERY.USER.updateUserQuery} ${setQuery} WHERE user_id = $1`;
+
+
+    console.log(updateQuery);
+    
+    const _query = {
+        text: updateQuery,
+        values: [userId]
+    };
+    var querySQL = await pg.executeQuery(_query, async (err, res) => {
+        if (err) {
+            logger.error("error: " + err);
+            result(err, null);
+        } else {
+            result(null, res);
+        }
+    });
+};
+
+User.getUserDtlsPro = async (id, cb) => {
+    const _query = {
+        text: QUERY.USER.selectProfileDtlsQuery,
+        values: [id]
+    };
+    var querySQL = await pg.executeQuery(_query, (err, res) => {
+        if (err) {
+            logger.error("error: ", err);
+            cb(err, null)
+        } else {
+            let r = res && res[0] ? res[0] : [];
+            cb(null, r);
+        }
+    });
+};
 
 User.getProfileDtlsbyMob = async (id, result) => {
     const _query = {

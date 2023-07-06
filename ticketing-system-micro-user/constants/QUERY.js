@@ -33,7 +33,7 @@ exports.USER = {
     selectProfileDtlsQuery:
         "SELECT m.user_id as user_id,m.profile_picture_url as profile_picture_url, m.user_name as user_name,m.display_name as display_name,m.gender AS gender,m.date_of_birth AS date_of_birth,m.mobile_number as mobile_number," +
         "m.role_id as role_id, " +
-        "m.state_id as state,m.district_id as district, m.password as current_password," +
+        "m.password as current_password," +
         "m.date_created as date_created, m.is_active as isActive FROM m_users m WHERE m.user_id =$1",
     setPasswordHistory:"INSERT INTO m_users_history ",
     getUserPermissions: `select role_id, menu_id, per_id from access_control where role_id = $1

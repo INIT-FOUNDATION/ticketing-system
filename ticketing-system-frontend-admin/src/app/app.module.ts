@@ -19,7 +19,7 @@ import { ForbiddenComponent } from './screens/forbidden/forbidden.component';
     AppComponent,
     UnAuthorizeComponent,
     NotFoundComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
   ],
   imports: [
     BrowserModule,

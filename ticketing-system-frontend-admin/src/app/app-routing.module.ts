@@ -13,7 +13,7 @@ const routes: Routes = [
     loadChildren: () => import('./screens/auth/auth.module').then(m => m.AuthModule),
     canActivate: [AuthGuard],
     data: { permission: 'Login' }
-  }, 
+  },
   {
     path: 'profile',
     loadChildren: () => import('./screens/profile/profile.module').then(m => m.ProfileModule),
@@ -31,12 +31,18 @@ const routes: Routes = [
     loadChildren: () => import('./screens/user-management/user-management.module').then(m => m.UserManagementModule),
     canActivate: [AuthGuard, RoleGuard],
     data: { permission: 'User Management' }
-  }, 
+  },
   {
     path: 'passwordpolicy',
     loadChildren: () => import('./screens/password-policy/password-policy.module').then(m => m.PasswordPolicyModule),
     canActivate: [AuthGuard, RoleGuard],
     data: { permission: 'Password Policy' }
+  },
+  {
+    path: 'tickets',
+    loadChildren: () => import('./screens/tickets/tickets.module').then(m => m.TicketsModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { permission: 'Tickets' }
   },
   { path: 'unauthorized', component: UnAuthorizeComponent },
   { path: 'notfound', component: NotFoundComponent },

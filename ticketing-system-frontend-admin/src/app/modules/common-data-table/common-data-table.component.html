@@ -74,8 +74,11 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
               {{rowData[col.field] | date: col.auxillaryData?.data}}
             </ng-container>
 
-            <ng-template [ngIf]="col.optionalParams?.formatterTemplateRef" [ngIfElse]="withoutFormatter">
+            <!-- <ng-template [ngIf]="col.optionalParams?.formatterTemplateRef" [ngIfElse]="withoutFormatter">
                 <ng-container *ngTemplateOutlet='col.optionalParams?.formatterTemplateRef; context: {griddata : rowData, coldata : col}'></ng-container>
+            </ng-template> -->
+            <ng-template [ngIf]="colFormatterTemplate && colFormatterTemplate[col.field]" [ngIfElse]="withoutFormatter">
+              <ng-container *ngTemplateOutlet='colFormatterTemplate[col.field]; context: {griddata : rowData, coldata : col}'></ng-container>
             </ng-template>
             <ng-template #withoutFormatter>
               <ng-container *ngIf="col.showToolTip; else elseNoToolTipTemplate">
