@@ -169,7 +169,7 @@ exports.admin_secret_key = {
     secret: '30c85dc9-a5e2-422b-9028-d83378597497'
 }
 
-exports.APP_CATEGORY_LEVELS = ["National", "State", "District", "Block", "Village"]
+exports.APP_CATEGORY_LEVELS = ["Admin", "Auditor"]
 exports.GENDER = {
     1: 'Male',
     2: 'Female',
