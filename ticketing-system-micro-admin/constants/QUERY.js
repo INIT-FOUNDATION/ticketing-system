@@ -139,7 +139,6 @@ exports.ROLE = {
                             (CASE WHEN sum(COALESCE(ac.per_id, 0)) > 0 THEN 1 ELSE 0 END) display_permission
                         FROM m_menus mm 
                         LEFT OUTER JOIN access_control ac ON mm.menu_id = ac.menu_id AND ac.role_id=$1
-                        LEFT OUTER JOIN m_permissions mp ON ac.per_id = mp.per_id
                         WHERE mm.is_active=1
                         GROUP BY mm.menu_id
                         ORDER BY mm.menu_order ASC`,

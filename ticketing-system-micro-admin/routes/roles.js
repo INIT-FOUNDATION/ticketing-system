@@ -101,6 +101,7 @@ router.get("/getRoleAccessList/:role_id", async (req, res) => {
     let data = await roleService.getRoleAccessList(role_id);
     res.status(STATUS.OK).send(data);
   } catch (err) {
+    console.log(err);
     res.status(STATUS.INTERNAL_SERVER_ERROR).send();
   }
 });
