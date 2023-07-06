@@ -282,7 +282,7 @@ roleService.getMenuList = (isActive) => {
 roleService.getLevels = async (conf) => {
   try {
 
-    const result = CONST.APP_CATEGORY_LEVELS[conf];
+    const result = CONST.APP_CATEGORY_LEVELS;
     return result;
 
   } catch (error) {
