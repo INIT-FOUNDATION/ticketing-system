@@ -1,4 +1,4 @@
-const { db, pg, redis, logger, queryUtility, s3Util } = require("init-micro-common");
+const { db, pg, redis, logger, queryUtility, s3Util } = require("ticketing-system-micro-common");
 const QUERY = require('../constants/QUERY');
 const ERRORCODE = require('../constants/ERRORCODE');
 const fileConfig = require('../constants/config');

@@ -1,6 +1,6 @@
 exports.AUTH = {
     selectProfileDtlsQuery:
-        "SELECT m.user_id as user_id,m.profile_picture_url as profile_picture_url, m.user_name as username,m.display_name as display_name,m.gender AS gender,m.date_of_birth AS date_of_birth,m.mobile_number as mobile_number, m.role_id as role_id, m.state_id as state,m.district_id as district, m.password as current_password, m.password_last_updated as password_last_updated, m.invalid_attempts as invalid_attempts, m.date_created as date_created, m.is_active as is_active FROM m_users m WHERE m.user_id = $1 AND m.is_deleted <> 1",
+        "SELECT m.user_id as user_id,m.profile_picture_url as profile_picture_url, m.user_name as username,m.display_name as display_name,m.gender AS gender,m.date_of_birth AS date_of_birth,m.mobile_number as mobile_number, m.role_id as role_id, m.password as current_password, m.password_last_updated as password_last_updated, m.invalid_attempts as invalid_attempts, m.date_created as date_created, m.is_active as is_active FROM m_users m WHERE m.user_id = $1 AND m.is_deleted <> 1",
     getPasswordComplexityQuery:
         "SELECT * from password_complexity WHERE id=(SELECT max(id) FROM password_complexity)",
     getPasswordHistory:

@@ -2,7 +2,7 @@ let {
     db,
     redis,
     logger, pg
-} = require("init-micro-common");
+} = require("ticketing-system-micro-common");
 
 let locations = function () {
     // do nothing

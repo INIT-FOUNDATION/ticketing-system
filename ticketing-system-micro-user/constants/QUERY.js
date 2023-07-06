@@ -14,32 +14,14 @@ exports.USER = {
                         U.last_name AS last_name,
                         U.mobile_number AS mobile_number,
                         U.display_name AS display_name,
-                        UM.state_id AS state_id,
-                        UM.district_id AS district_id,
-                        UM.sub_district_id AS sub_district_id,
-                        SD.sub_district_name as sub_district_name,
-                        UM.block_id AS block_id,
-                        B.block_name AS block_name,
-                        UM.village_id AS village_id,
-                        V.village_name AS village_name,
                         U.role_id AS role_id,
                         U.profile_picture_url AS profile_picture_url,
-                        UM.state_id AS state,
-                        S.state_name AS state_name,
-                        D.district_id AS district,
-                        D.district_name AS district_name,
                         R.role_id AS role,
                         R.role_name AS name, 
                         U.password AS password,
                         U.is_active AS is_active,
                         U.account_locked AS account_locked
                     FROM m_users U 
-                    LEFT OUTER JOIN m_user_mapping UM ON U.user_id = UM.user_id
-                    LEFT OUTER JOIN m_state S ON UM.state_id = S.state_id
-                    LEFT OUTER JOIN m_district D ON UM.district_id = D.district_id
-                    LEFT OUTER JOIN m_sub_district SD ON UM.sub_district_id = SD.sub_district_id
-                    LEFT OUTER JOIN m_block B ON UM.block_id = B.block_id
-                    LEFT OUTER JOIN m_village V ON UM.village_id = V.village_id
                     LEFT OUTER JOIN m_roles R ON U.role_id = R.role_id
                     WHERE U.user_name= $1 AND U.is_active=1`,
     updateUsername:

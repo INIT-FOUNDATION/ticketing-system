@@ -9,7 +9,7 @@ const {
     s3Util,
     JSONUTIL,
     redis
-} = require("init-micro-common");
+} = require("ticketing-system-micro-common");
 const AWS = require("aws-sdk");
 const fileUpload = require("express-fileupload");
 const bodyParser = require("body-parser");
@@ -23,7 +23,7 @@ const dateformat = require("dateformat");
 const RandExp = require('randexp');
 let async = require('async');
 const PAGESIZE = require('../constants/CONST');
-
+const userListService = require('../services/userListService');
 // Set region
 AWS.config.update({
     region: process.env.REGION_NAME
@@ -119,14 +119,6 @@ router.post("/createUser", async (req, res) => {
         newUser.password = randExp;
         logger.debug(`PASSWORD FOR  ${newUser.display_name}  :  ${newUser.password}`);
 
-        // Send SMS
-
-        // users.getConfig(CONST.SERVICES.newUser_sms, async (err, result3) => {
-        // if (err) res.status(STATUS.INTERNAL_SERVER_ERROR).send(err);
-        // let smsValue = result3[0].value;
-        // var bodySub = smsValue.replace("[password]", newUser.password);
-        // var passwdNew = newUser.password;
-
         const salt = await bcrypt.genSalt(10);
         newUser.password = await bcrypt.hash(newUser.password, salt);
         newUser.rand_password = randExp;
@@ -139,9 +131,6 @@ router.post("/createUser", async (req, res) => {
 
             const userData = await userService.createUsers(newUser);
             newUser.user_id = userData[0].user_id;
-            await userService.createUserMapping(newUser);
-            await userService.shareNewUserDetails(newUser);
-
 
             if (newUser.user_module_json && newUser.user_module_json.length > 0) {
                 async.forEachOfSeries(newUser.user_module_json, async function (per, cb2) {
@@ -452,7 +441,7 @@ router.post("/uploadProfilePic", async (req, res) => {
     }
 
     const params = {
-        Bucket: process.env.INIT_S3_BUCKET,
+        Bucket: process.env.TS_S3_BUCKET,
         Key: `profile-pictures/${fileData.file_name}`,
         Body: req.files.file.data
     };
@@ -480,7 +469,7 @@ router.post("/download/profilePic", async (req, res) => {
         } else {
             if (file_name) {
                 let options = {
-                    Bucket: process.env.INIT_S3_BUCKET,
+                    Bucket: process.env.TS_S3_BUCKET,
                     Key: `profile-pictures/${file_name}`
                 };
 
@@ -538,7 +527,7 @@ router.post("/getUserdataGridCount", async (req, res) => {
 const addCDNImages = async (result) => {
     return new Promise((resolve, reject) => {
         async.forEachOfSeries(result, async function (user, cb) {
-            let aws_s3_prefix_url = `https://${process.env.INIT_S3_BUCKET}.s3.ap-south-1.amazonaws.com/`;
+            let aws_s3_prefix_url = `https://${process.env.TS_S3_BUCKET}.s3.ap-south-1.amazonaws.com/`;
             if (user.profile_picture_url) {
                 let logo_path = user.profile_picture_url.replace(aws_s3_prefix_url, '');
                 user.profile_pic = `${process.env.CDN_CONTEXT_PATH}/api/v1/admin/cdn/file?file_name=${logo_path}`;
@@ -562,7 +551,7 @@ router.get("/user/:user_id", async (req, res) => {
 
     if (user_id) {
         let userData = await userService.getUserById(user_id);
-        let aws_s3_prefix_url = `https://${process.env.INIT_S3_BUCKET}.s3.ap-south-1.amazonaws.com/`;
+        let aws_s3_prefix_url = `https://${process.env.TS_S3_BUCKET}.s3.ap-south-1.amazonaws.com/`;
         if (userData.profile_picture_url) {
             let profile_pic_cdn = userData.profile_picture_url.replace(aws_s3_prefix_url, '');
             userData.profile_pic_cdn = `${process.env.CDN_CONTEXT_PATH}/api/v1/admin/cdn/file?file_name=${profile_pic_cdn}`;
@@ -631,5 +620,37 @@ router.get("/getUserFullHierarchy/:user_id", async (req, res) => {
         res.status(STATUS.INTERNAL_SERVER_ERROR).send();
     }
 });
+
+
+
+router.post('/getUserList', async (req, res) => {
+    try {
+
+        const reqUserDetails = req.plainToken;
+        let pageSize = req.body.pageSize ? req.body.pageSize : 50;
+        pageSize = pageSize > 50 ? 50 : pageSize;
+        let currentPage = req.body.currentPage ? req.body.currentPage : 0;
+        currentPage = (currentPage == 1 || currentPage == 0) ? 0 : ((currentPage - 1) * pageSize);
+        const search = req.body.search ? req.body.search : null;
+        const role_id = req.body.role_id ? req.body.role_id : null;
+        const user_role = reqUserDetails.role ? reqUserDetails.role : null
+
+        const reqParams = {
+            pageSize,
+            currentPage,
+            search,
+            role_id,
+            user_role
+        };
+
+        const userData = await userListService.getUserList(reqParams)
+
+        res.send(userData)
+
+    } catch (error) {
+        console.log("catch error", error);
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).send(`{"errorCode":"COMMON0000", "error":"${ERRORCODE.ERROR.COMMON0000}"}`);
+    }
+})
 
 module.exports = router;

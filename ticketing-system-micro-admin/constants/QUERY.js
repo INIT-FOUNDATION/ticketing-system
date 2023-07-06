@@ -22,8 +22,8 @@ exports.ADMIN = {
     updateUserStatusQuery: "UPDATE m_users SET is_active = $1, date_modified=NOW() WHERE user_id = $2",
     checkRoleStatusQuery: "SELECT count(1) as isRoleInActive from m_users inner join m_roles on m_users.role_id = m_roles.role_id where m_users.user_id = $1 and m_roles.is_active = 0 and m_users.is_active = 0",
     insertUserQuery: `INSERT INTO public.m_users(
-        user_name, first_name, last_name, display_name, mobile_number, password, role_id, country_id, state_id, district_id, created_by, account_locked, email_id, is_active, date_created)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, 1, now()) returning user_id;`,
+        user_name, first_name, last_name, display_name, mobile_number, password, role_id, created_by, account_locked, email_id, is_active, date_created)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 1, now()) returning user_id;`,
     selectConfigQuery: "SELECT c.key ,c.value FROM m_config c WHERE c.key=$1",
     selectStateDataQuery: "SELECT state_name, latitude,longitude,state_id AS state, country_id AS country FROM m_state WHERE state_id = $1",
     getPasswordComplexityQuery: "SELECT id, password_expiry, password_history, min_password_length, complexity, alphabetical, numeric, special_chars, allowed_special_chars, max_invalid_attempts FROM password_complexity",
@@ -60,7 +60,7 @@ exports.ADMIN = {
     insertUserMappingQuery: `INSERT INTO public.m_user_mapping(
         user_id, country_id, state_id, district_id, sub_district_id, block_id, village_id, date_created, date_modified)
         VALUES ($1, $2, $3, $4, $5, $6, $7, now(), now()) returning user_id;`,
-     addPermissions: "INSERT INTO user_access_control(user_id,menu_id,per_id,date_created, created_by) values($1, $2, $3, now(), $4)",
+    addPermissions: "INSERT INTO user_access_control(user_id,menu_id,per_id,date_created, created_by) values($1, $2, $3, now(), $4)",
     deletePermissions: "DELETE from user_access_control where user_id = $1",
     getSpecIDs: `select spec_id from m_user_speciality_mapping where user_id = $1`,
     updateUserMappingQuery: `UPDATE m_user_mapping SET reporting_to = $1, date_modified = now() where user_id = $2`,
@@ -89,6 +89,18 @@ exports.ADMIN = {
     WHERE U.user_id= $1`,
     getPincodeByDistrictId: `select distinct pincode from m_pincodes where district_id = $1 order by pincode`
 };
+
+
+exports.USER_QUERY = {
+    getUserCount: `SELECT COUNT(*) AS count FROM m_users U 
+	LEFT JOIN m_roles R ON U.role_id = R.role_id #WHERE_CLAUSE#`,
+    getAllUsers1: `SELECT * FROM vw_m_users #WHERE_CLAUSE# ORDER BY date_modified DESC #LIMIT_CLAUSE# #OFFSET_CLAUSE#;`,
+    getAllUsers: `SELECT U.user_id, U.user_name, U.display_name, U.first_name, U.last_name, U.mobile_number, U.email_id, U.gender, U.date_of_birth, 
+    U.address, U.role_id, R.role_name, R.level AS user_level, U.profile_picture_url, 
+    U.date_created, U.date_modified, U.is_deleted
+    FROM m_users U LEFT JOIN m_roles R ON U.role_id = R.role_id
+    #WHERE_CLAUSE# ORDER BY U.date_modified DESC  #LIMIT_CLAUSE# #OFFSET_CLAUSE#`,
+}
 
 exports.ROLE = {
     selectRoleDetails: "SELECT m_roles.role_id, role_name, role_description, level, m_roles.is_active, count(m_users.user_id) as userCount FROM m_roles LEFT JOIN m_users ON m_roles.role_id = m_users.role_id and m_users.is_active = 1 where m_roles.role_id != 1 group by m_roles.role_id",

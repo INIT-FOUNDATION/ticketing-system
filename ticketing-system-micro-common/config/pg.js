@@ -2,11 +2,11 @@ const pg = require('pg');
 
 const PG_TIMEOUT = process.env.INIT_PG_TIMEOUT ? parseInt(process.env.INIT_PG_TIMEOUT) : 10000;
 const params = {
-    "user": process.env.INIT_MASTER_USER,
-    "database": process.env.INIT_MASTER_DATABASE,
-    "password": process.env.INIT_MASTER_PASSWORD,
-    "host": process.env.INIT_MASTER_HOST,
-    "port": process.env.INIT_MASTER_PORT,
+    "user": process.env.TS_MASTER_USER,
+    "database": process.env.TS_MASTER_DATABASE,
+    "password": process.env.TS_MASTER_PASSWORD,
+    "host": process.env.TS_MASTER_HOST,
+    "port": process.env.TS_MASTER_PORT,
     "max": 1,
     "idleTimeoutMillis": PG_TIMEOUT
 }

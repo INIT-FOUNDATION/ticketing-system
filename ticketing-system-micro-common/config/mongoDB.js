@@ -8,7 +8,7 @@ const connectionRequired = process.env.INIT_NOSQL_DB_REQUIRED
 
 let url = ""
 if (process.env.INIT_DOCDB_CA_BUNDLE && user && password) {
-    url = `mongodb://${user}:${password}@${host}:${port}/${database}?tls=true&tlsCAFile=/usr/src/app/init-micro-common/config/rds-combined-ca/rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=primary&retryWrites=false`
+    url = `mongodb://${user}:${password}@${host}:${port}/${database}?tls=true&tlsCAFile=/usr/src/app/ticketing-system-micro-common/config/rds-combined-ca/rds-combined-ca-bundle.pem&replicaSet=rs0&readPreference=primary&retryWrites=false`
 } else if (user && password) {
     url = `mongodb://${user}:${password}@${host}:${port}/?readPreference=primary&directConnection=true&ssl=false&authSource=${database}`
 } else {

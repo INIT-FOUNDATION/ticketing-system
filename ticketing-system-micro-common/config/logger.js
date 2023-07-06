@@ -12,10 +12,10 @@ const loggerRoutes = loggerApiLists.map(parse);
 
 var auditPool = mysql.createPool({
     connectionLimit: 100,
-    host: process.env.INIT_AUDIT_HOST,
-    database: process.env.INIT_AUDIT_DATABASE,
-    user: process.env.INIT_AUDIT_USER,
-    password: process.env.INIT_AUDIT_PASSWORD
+    host: process.env.TS_AUDIT_HOST,
+    database: process.env.TS_AUDIT_DATABASE,
+    user: process.env.TS_AUDIT_USER,
+    password: process.env.TS_AUDIT_PASSWORD
 });
 
 var descriptionArray = {

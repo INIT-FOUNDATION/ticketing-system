@@ -1,9 +1,9 @@
 let AWS = require('aws-sdk');
 let aws_region = process.env.REGION_NAME;
-let applicationId = process.env.INIT_PINPOINT;
+let applicationId = process.env.TS_PINPOINT;
 let messageType = "TRANSACTIONAL";
 let senderId = "AIEZEH";
-// let entityId = process.env.INIT_PINPOINT_ENTITY_ID;
+// let entityId = process.env.TS_PINPOINT_ENTITY_ID;
 
 function sendSMS(destinationNumber, message, templateId) {
   AWS.config.update({ region: aws_region });

@@ -8,7 +8,7 @@ const {
   logger,
   appVersionMiddleWare,
   getModulesbyLocation
-} = require("init-micro-common");
+} = require("ticketing-system-micro-common");
 
 var resolveCrossDomain = function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');

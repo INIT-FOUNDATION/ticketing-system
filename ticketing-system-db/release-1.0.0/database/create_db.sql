@@ -1,1 +1,1 @@
-CREATE DATABASE hmis;
+CREATE DATABASE ticketing_system;

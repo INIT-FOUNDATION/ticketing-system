@@ -7,7 +7,7 @@ const user = require("../routes/user");
 const location = require("../routes/location");
 const languages = require('../routes/languages');
 const s3CDN = require('../routes/s3-cdn');
-const { STATUS } = require('init-micro-common');
+const { STATUS } = require('ticketing-system-micro-common');
 
 module.exports = function (app, server) {
     app.use(express.json());

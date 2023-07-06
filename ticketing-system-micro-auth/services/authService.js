@@ -1,4 +1,4 @@
-const { redis, logger, pg } = require("init-micro-common");
+const { redis, logger, pg } = require("ticketing-system-micro-common");
 let QUERY = require('../constants/QUERY');
 let config = require('../constants/config');
 const ejs = require('ejs')
@@ -40,6 +40,7 @@ User.selectUser = async (username) => {
         return queryResult
 
     } catch (error) {
+        console.log(error);
         throw new Error(error.message)
     }
 

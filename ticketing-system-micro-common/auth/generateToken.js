@@ -37,7 +37,7 @@ const generate = async (userName, userData, roleDetails, req) => {
         throw new Error('UserName is Missing!')
     }
 
-    const _appConf = await getApplicationConfig();
+   // const _appConf = await getApplicationConfig();
 
     const userArray = {
         user_id: userData.user_id,
@@ -49,17 +49,6 @@ const generate = async (userName, userData, roleDetails, req) => {
         roleModifiedDate: roleDetails.date_modified,
         role_name: roleDetails.role_name,
         user_level: roleDetails.level,
-        app_conf: _appConf,
-        country_id: userData.country_id,
-        state_id: userData.state_id,
-        district_id: userData.district_id,
-        sub_district_id: userData.sub_district_id,
-        block_id: userData.block_id,
-        village_id: userData.village_id,
-        org_id: userData.org_id,
-        hosp_id: userData.hosp_id,
-        hosp_name: userData.hospital_name,
-        hosp_mobile_number: userData.contact_mobile_number,
         ua: req.headers["user-agent"],
         date_modified: new Date()
     };

@@ -5,7 +5,7 @@ const AWS = require("aws-sdk");
 const fs = require('fs');
 let _ = require('underscore');
 const router = express.Router();
-const { redis, STATUS, pg } = require("init-micro-common");
+const { redis, STATUS, pg } = require("ticketing-system-micro-common");
 let locations = require('../services/locationsService');
 let QUERY = require('../constants/QUERY');
 router.use(fileUpload());;

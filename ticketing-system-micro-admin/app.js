@@ -10,7 +10,7 @@ const {
   logger,
   appVersionMiddleWare,
   getModulesbyLocation
-} = require("init-micro-common");
+} = require("ticketing-system-micro-common");
 
 let workers = [];
 

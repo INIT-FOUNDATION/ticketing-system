@@ -1,8 +1,8 @@
-const { logger } = require("init-micro-common");
+const { logger } = require("ticketing-system-micro-common");
 
 var AWS = require('aws-sdk');
 var aws_region = process.env.REGION_NAME;
-var applicationId = process.env.INIT_PINPOINT;
+var applicationId = process.env.TS_PINPOINT;
 var messageType = "TRANSACTIONAL";
 var senderId = "AIEZE";
 

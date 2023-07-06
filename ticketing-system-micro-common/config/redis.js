@@ -1,14 +1,14 @@
 let logger = require('../config/logger'),
     redis = require("redis");
 
-let client = redis.createClient(process.env.INIT_REDIS_PORT, process.env.INIT_REDIS_HOST, {});
+let client = redis.createClient(process.env.TS_REDIS_PORT, process.env.TS_REDIS_HOST, {});
 
 let clientReader;
 if (process.env.INIT_REDIS_HOST_READER) {
-    clientReader = redis.createClient(process.env.INIT_REDIS_PORT, process.env.INIT_REDIS_HOST_READER, {});
+    clientReader = redis.createClient(process.env.TS_REDIS_PORT, process.env.INIT_REDIS_HOST_READER, {});
 } else {
     logger.info("Redis replica host not found. falling back to the primary redis host");
-    clientReader = redis.createClient(process.env.INIT_REDIS_PORT, process.env.INIT_REDIS_HOST, {});
+    clientReader = redis.createClient(process.env.TS_REDIS_PORT, process.env.TS_REDIS_HOST, {});
 }
 
 isRedis = false;

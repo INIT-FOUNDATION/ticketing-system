@@ -19,9 +19,9 @@ const params = {
       Data: 'Test email',
     },
   },
-  Source: process.env.INIT_FROM_EMAIL,
+  Source: process.env.TS_FROM_EMAIL,
   ReplyToAddresses: [
-    process.env.INIT_FROM_EMAIL,
+    process.env.TS_FROM_EMAIL,
   ],
 };
 
@@ -72,7 +72,7 @@ const send = (to, cc, bcc, html, subject, done) => {
 
   temp.Message.Body.Html.Data = html;
   temp.Message.Subject.Data = subject;
-  temp.Source = process.env.INIT_FROM_EMAIL;
+  temp.Source = process.env.TS_FROM_EMAIL;
 
   const sendPromise = new AWS.SES().sendEmail(temp).promise();
 
@@ -91,8 +91,8 @@ const send = (to, cc, bcc, html, subject, done) => {
 const sendAttachmentMail = (to_email, subject, textBody, attachments) => {
 
   const mail = mailcomposer({
-    from: process.env.INIT_FROM_EMAIL,
-    replyTo: process.env.INIT_FROM_EMAIL,
+    from: process.env.TS_FROM_EMAIL,
+    replyTo: process.env.TS_FROM_EMAIL,
     to: to_email,
     subject: subject,
     html: textBody,

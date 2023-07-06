@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { STATUS, logger, CONST, passwordPolicy, redis, SMS } = require("init-micro-common");
+const { STATUS, logger, CONST, passwordPolicy, redis, SMS } = require("ticketing-system-micro-common");
 const bcrypt = require("bcryptjs");
 let ERRORCODE = require('../constants/ERRRORCODE');
 let userService = require('../services/userService');
@@ -219,7 +219,7 @@ router.get("/getLoggedInUserInfo", async (req, res) => {
                     console.log(userDetailsDB);
                     console.log("=================================");
 
-                    let aws_s3_prefix_url = `https://${process.env.INIT_S3_BUCKET}.s3.ap-south-1.amazonaws.com/`;
+                    let aws_s3_prefix_url = `https://${process.env.TS_S3_BUCKET}.s3.ap-south-1.amazonaws.com/`;
                     if (userDetailsDB.profile_picture_url) {
                         let profile_pic_cdn = userDetailsDB.profile_picture_url.replace(aws_s3_prefix_url, '');
                         userDetailsDB.profile_pic_cdn = `${process.env.CDN_CONTEXT_PATH}/api/v1/admin/cdn/file?file_name=${profile_pic_cdn}`;

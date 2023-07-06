@@ -3,7 +3,7 @@ const express = require("express");
 
 const helmet = require("helmet");
 require("dotenv").config();
-const { SECURITY, logger, appVersionMiddleWare } = require("init-micro-common");
+const { SECURITY, logger, appVersionMiddleWare } = require("ticketing-system-micro-common");
 const app = express();
 
 var resolveCrossDomain = function (req, res, next) {

@@ -15,7 +15,7 @@ const getFileFromS3 = async (file_name) => {
     }
 
     const options = {
-      Bucket: process.env.INIT_S3_BUCKET,
+      Bucket: process.env.TS_S3_BUCKET,
       Key: file_name
     };
 

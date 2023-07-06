@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { STATUS, CONST, redis, generateToken, passwordPolicy, logger, SECRET_KEY, SMS } = require("init-micro-common");
+const { STATUS, CONST, redis, generateToken, passwordPolicy, logger, SECRET_KEY, SMS } = require("ticketing-system-micro-common");
 const ERRORCODE = require('../constants/ERRORCODE.js');
 const User = require("../services/authService");
 const bcrypt = require("bcryptjs");
@@ -54,37 +54,42 @@ router.post('/login', async (req, res) => {
         }
 
         const userId = userResponse[0].user_id;
-
         const userRoleModuleData = await User.getRoleModuleList(userResponse[0].role_id)
         const userData = userResponse[0];
         const type = 1;
+
+        console.log('userRoleModuleData', userRoleModuleData);
 
         req.body.password = CONST.decryptPayload(req.body.password);
 
         const validPassword = await bcrypt.compare(req.body.password, userData.password);
         const policy = await passwordPolicy.validate_password(userId, req.body.password, type);
 
-        if (validPassword && policy.status == true) {
-            const getConfig = await generateToken.getApplicationConfig();
+        console.log('userResponse');
 
-            if (!getConfig) {
-                if (userId == 1) {
-                    return res.status(STATUS.BAD_REQUEST).send({
-                        "errorCode": "CONFIG0001",
-                        "error": ERRORCODE.ERROR.CONFIG0001,
-                        "user_name": CONST.encryptPayload(req.body.user_name)
-                    });
-                } else {
-                    return res.status(STATUS.BAD_REQUEST).send({
-                        "errorCode": "CONFIG0004",
-                        "error": ERRORCODE.ERROR.CONFIG0004
-                    });
-                }
-            }
+        if (validPassword && policy.status == true) {
+            // const getConfig = await generateToken.getApplicationConfig();
+
+            // if (!getConfig) {
+            //     if (userId == 1) {
+            //         return res.status(STATUS.BAD_REQUEST).send({
+            //             "errorCode": "CONFIG0001",
+            //             "error": ERRORCODE.ERROR.CONFIG0001,
+            //             "user_name": CONST.encryptPayload(req.body.user_name)
+            //         });
+            //     } else {
+            //         return res.status(STATUS.BAD_REQUEST).send({
+            //             "errorCode": "CONFIG0004",
+            //             "error": ERRORCODE.ERROR.CONFIG0004
+            //         });
+            //     }
+            // }
             const token = await generateToken.generate(userData.user_name, userData, userRoleModuleData, req)
             res.status(STATUS.OK).send(token.encoded);
             return;
         }
+
+        console.log('you are here');
 
         const invalidAttemptsData = await User.getInvalidLoginAttempts(req.body.user_name);
         const invalidAttempts = invalidAttemptsData.invalid_attempts;

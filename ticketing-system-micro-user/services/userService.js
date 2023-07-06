@@ -1,4 +1,4 @@
-const { pg, redis, logger, queryUtility } = require("init-micro-common");
+const { pg, redis, logger, queryUtility } = require("ticketing-system-micro-common");
 const User = {};
 let QUERY = require('../constants/QUERY')
 const config = require("../config/config");

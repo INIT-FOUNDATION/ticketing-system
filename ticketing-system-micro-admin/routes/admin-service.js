@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require("body-parser");
-// const {initKafkaProducer, initKafkaConsumer} = require("init-micro-common")
+// const {initKafkaProducer, initKafkaConsumer} = require("ticketing-system-micro-common")
 
 router.use(bodyParser.json({ limit: "5mb" }));
 router.use(bodyParser.urlencoded({ extended: true, limit: "5mb" }));

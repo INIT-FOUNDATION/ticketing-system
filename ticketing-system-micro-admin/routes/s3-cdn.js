@@ -3,7 +3,7 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 
 const ERRORCODE = require('../constants/ERRORCODE');
-const { STATUS, logger, CONST, JSONUTIL, redis } = require("init-micro-common");
+const { STATUS, logger, CONST, JSONUTIL, redis } = require("ticketing-system-micro-common");
 const s3CdnService = require('../services/s3-cdnService');
 
 router.use(bodyParser.json({ limit: "5mb" }));
@@ -18,7 +18,7 @@ router.get('/download', async (req, res) => {
         }
 
         const options = {
-            Bucket: process.env.INIT_S3_BUCKET,
+            Bucket: process.env.TS_S3_BUCKET,
             Key: file_name
         };
 

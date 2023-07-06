@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { STATUS } = require("init-micro-common");
+const { STATUS } = require("ticketing-system-micro-common");
 
 let async = require('async');
 

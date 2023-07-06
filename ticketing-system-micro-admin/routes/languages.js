@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const fileUpload = require("express-fileupload");
-const { STATUS, logger, DB_STATUS, s3Util } = require("init-micro-common");
+const { STATUS, logger, DB_STATUS, s3Util } = require("ticketing-system-micro-common");
 const bodyParser = require("body-parser");
 let ERRORCODE = require('../constants/ERRORCODE');
 let languageService = require('../services/languageService');

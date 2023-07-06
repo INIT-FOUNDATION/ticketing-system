@@ -1,4 +1,4 @@
-const { db, pg, redis, logger, CONST, SMS, whatsAppUtil, STATUS } = require("init-micro-common");
+const { db, pg, redis, logger, CONST, SMS, whatsAppUtil, STATUS } = require("ticketing-system-micro-common");
 let ERRORCODE = require('../constants/ERRORCODE');
 let QUERY = require('../constants/QUERY');
 const email = require("../utility/mail");
@@ -71,15 +71,13 @@ User.createUsers = async (userDetails) => {
                 userDetails.mobile_number,
                 userDetails.password,
                 userDetails.role_id,
-                userDetails.country_id,
-                userDetails.state_id,
-                userDetails.district_id,
                 userDetails.created_by,
                 userDetails.account_locked,
                 userDetails.email_id
             ]
         };
 
+        console.log(_query);
         const queryResult = await pg.executeQueryPromise(_query);
 
         if (queryResult && queryResult[0].user_id) {
@@ -1060,6 +1058,8 @@ User.getUserdataGridCount = async (token, locObj, reqData) => {
 
     }); // Promise
 };
+
+
 
 
 module.exports = User;
