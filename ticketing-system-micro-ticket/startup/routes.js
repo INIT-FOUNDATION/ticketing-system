@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const sanitizeRequest = require('express-sanitize-middleware');
 const ticket = require("../routes/ticket");
+const visits = require("../routes/visits");
 
 module.exports = function (app) {
     app.use(express.json());
@@ -47,6 +48,9 @@ module.exports = function (app) {
         next()
     }
 
+    console.log('rotes');
+
     app.use(removeCSVInjection);
     app.use("/api/v1/ticket", ticket);
+    app.use("/api/v1/ticket/visits", visits);
 };

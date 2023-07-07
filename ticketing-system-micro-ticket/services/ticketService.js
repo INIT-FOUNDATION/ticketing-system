@@ -135,28 +135,85 @@ const getAllTicketCount = async (whereClause) => {
     }
 }
 
-
-
 const getTicket = async (ticket_id) => {
     try {
-  
-      const _query = {
-        text: TICKET_QUERIES.getTicket,
-        values: [ticket_id]
-      }
-  
-      console.log(_query);
-      const data = await pg.executeQueryPromise(_query);
-      return data;
-  
+
+        const _query = {
+            text: TICKET_QUERIES.getTicket,
+            values: [ticket_id]
+        }
+
+        console.log(_query);
+        const data = await pg.executeQueryPromise(_query);
+        return data[0];
+
     } catch (error) {
-      throw error
+        throw error
     }
-  }
+}
+
+const checkTicketIdExists = async (ticket_id) => {
+    try {
+
+        const _query = {
+            text: TICKET_QUERIES.checkTicketIdExists,
+            values: [ticket_id]
+        }
+
+        const queryResult = await pg.executeQueryPromise(_query);
+        return parseInt(queryResult[0].count) > 0 ? true : false;
+
+    } catch (error) {
+        throw error
+    }
+}
+
+
+const getDocument = async (ticket_id) => {
+    try {
+
+        const _query = {
+            text: TICKET_QUERIES.getDocuments,
+            values: [ticket_id]
+        }
+
+        console.log(_query);
+        const data = await pg.executeQueryPromise(_query);
+        return data;
+
+    } catch (error) {
+        throw error
+    }
+}
+
+const insertDocuments = async (docData) => {
+    try {
+        // survey_id, file_name, file_path, survey_type, created_by, updated_by
+        console.log("asdasdsa");
+        let _query = {
+            text: TICKET_QUERIES.insertDocuments,
+            values: [docData.ticket_id, docData.doc_title, docData.doc_url, docData.user_id]
+        };
+
+        console.log(_query);
+
+        const result = await pg.executeQueryPromise(_query);
+        console.log('result', result);
+        return result[0]
+
+    } catch (error) {
+        console.log(error);
+        throw error
+    }
+}
+
 
 module.exports = {
     generateTicketNumber,
     createTicket,
     getTicketList,
-    getTicket
+    getTicket,
+    checkTicketIdExists,
+    insertDocuments,
+    getDocument
 }
