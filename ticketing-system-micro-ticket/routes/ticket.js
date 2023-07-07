@@ -50,6 +50,31 @@ router.post("/createTicket", async (req, res) => {
     }
 });
 
+router.post('/updateTicket', async (req, res) => {
+    try {
+        const reqUser = req.plainToken;
+        const ticketDetails = new ticketModel.UpdateTicket(req.body);
+        ticketDetails.updated_by = reqUser.user_id;
+
+        const { error } = ticketModel.validateUpdateTicket(ticketDetails);
+
+        if (error) {
+            if (error.details != null && error.details != "" && error.details != "undefined")
+                return res.status(STATUS.BAD_REQUEST).send(error.details[0].message);
+            else return res.status(STATUS.BAD_REQUEST).send(error.message);
+        }
+        const data = await ticketService.updateTicket(ticketDetails);
+        const response = {
+            message : 'Ticket updated successfully'
+        }
+        return res.status(STATUS.OK).send(response);
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).send(`{"errorCode":"CMNERR0000", "error":"${COMMON_ERR.CMNERR0000}"}`);
+    }
+})
+
 router.post("/getTicketList", async (req, res) => {
     try {
 

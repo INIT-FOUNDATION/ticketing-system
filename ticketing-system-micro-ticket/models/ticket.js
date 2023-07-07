@@ -28,9 +28,31 @@ const validateCreateTicket = (ticketData) => {
     return Joi.validate(ticketData, schema);
 }
 
+const UpdateTicket = function (ticketData) {
+    this.ticket_id = ticketData.ticket_id ? ticketData.ticket_id : null;
+    this.description = ticketData.description ? ticketData.description : null;
+    this.opening_date = ticketData.opening_date ? ticketData.opening_date : null;
+    this.closing_date = ticketData.closing_date ? ticketData.closing_date : null;
+    this.remarks = ticketData.remarks ? ticketData.remarks : null;
+    this.status = ticketData.status ? parseInt(ticketData.status) : 1;
+};
 
+const validateUpdateTicket = (ticketData) => {
+    const schema = {
+        ticket_id: Joi.number().required(),
+        description: Joi.string().allow("", null),
+        opening_date: Joi.date().allow("", null),
+        closing_date: Joi.date().allow("", null),
+        remarks: Joi.string().allow("", null),
+        status: Joi.number().allow("", null),
+        updated_by: Joi.number()
+    };
+    return Joi.validate(ticketData, schema);
+}
 
 module.exports = {
     CreateTicket,
-    validateCreateTicket
+    validateCreateTicket,
+    UpdateTicket,
+    validateUpdateTicket
 }

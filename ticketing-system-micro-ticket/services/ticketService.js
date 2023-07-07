@@ -37,6 +37,21 @@ const createTicket = async (ticketData) => {
     }
 }
 
+
+const updateTicket = async (ticketData) => {
+    try {
+        const ticket_id = ticketData.ticket_id;
+        delete ticketData.ticket_id;
+        const setQuery = queryUtility.convertObjectIntoUpdateQuery(ticketData)
+        const query = `UPDATE m_tickets SET ${setQuery}, date_modified = NOW() WHERE ticket_id = ${ticket_id}`;
+        console.log(query);
+        const result = await pg.executeQueryPromise(query);
+        return result
+    } catch (error) {
+        throw error
+    }
+}
+
 const getTicketList = async (reqParams) => {
     try {
 
@@ -211,6 +226,7 @@ const insertDocuments = async (docData) => {
 module.exports = {
     generateTicketNumber,
     createTicket,
+    updateTicket,
     getTicketList,
     getTicket,
     checkTicketIdExists,
