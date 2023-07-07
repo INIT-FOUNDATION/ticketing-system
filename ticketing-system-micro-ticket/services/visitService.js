@@ -1,37 +1,14 @@
 const { pg, redis, logger, queryUtility, JSONUTIL } = require("ticketing-system-micro-common");
-const { TICKET_QUERIES } = require('../constants/QUERY');
+const { VISIT_QUERIES } = require('../constants/QUERY');
 
-const generateTicketNumber = async () => {
-    let isUniqueId = false;
-
-    while (!isUniqueId) {
-        const ticket_number = Math.floor(
-            100000000000 + Math.random() * 900000000000
-        );
-        const _query = {
-            text: TICKET_QUERIES.checkTicketNumberExists,
-            values: [ticket_number],
-        };
-        const ticketNumberCount = await pg.executeQueryPromise(_query);
-
-        if (!ticketNumberCount[0].count == 0) {
-            isUniqueId = true;
-            return ticket_number;
-        }
-    }
-};
-
-const createTicket = async (ticketData) => {
+const createVisit = async (visitData) => {
     try {
-
         const query = {
-            text: TICKET_QUERIES.createTicket,
-            values: [ticketData.ticket_number, ticketData.ticket_mode, ticketData.product_id, ticketData.description, ticketData.opening_date, ticketData.closing_date, ticketData.remarks, ticketData.status, ticketData.created_by, ticketData.updated_by]
+            text: VISIT_QUERIES.createVisit,
+            values: [visitData.ticket_id, visitData.visit_type, visitData.visit_date, visitData.visit_by, visitData.remarks, visitData.created_by, visitData.updated_by]
         }
-
         const result = await pg.executeQueryPromise(query);
         return result
-
     } catch (error) {
         throw error
     }
@@ -150,18 +127,15 @@ const getAllTicketCount = async (whereClause) => {
     }
 }
 
-const getTicket = async (ticket_id) => {
+const getVisit = async (visit_id) => {
     try {
-
         const _query = {
-            text: TICKET_QUERIES.getTicket,
-            values: [ticket_id]
+            text: VISIT_QUERIES.getVisit,
+            values: [visit_id]
         }
-
         console.log(_query);
         const data = await pg.executeQueryPromise(_query);
         return data[0];
-
     } catch (error) {
         throw error
     }
@@ -224,11 +198,10 @@ const insertDocuments = async (docData) => {
 
 
 module.exports = {
-    generateTicketNumber,
-    createTicket,
+    createVisit,
+    getVisit,
     updateTicket,
     getTicketList,
-    getTicket,
     checkTicketIdExists,
     insertDocuments,
     getDocument

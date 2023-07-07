@@ -269,10 +269,11 @@ CREATE TABLE m_ticket_documents (
 
 CREATE TABLE tr_visits (
   visit_id SERIAL PRIMARY KEY,
+  ticket_id INTEGER NOT NULL,
   visit_type SMALLINT NOT NULL,
   visit_date TIMESTAMP,
-  visit_by VARCHAR(100) NOT NULL,
-  remarks VARCHAR(500) NOT NULL,
+  visit_by VARCHAR(100),
+  remarks VARCHAR(500),
   status SMALLINT DEFAULT 1,
   date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
