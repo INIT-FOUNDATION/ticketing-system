@@ -12,7 +12,6 @@ const ticketService = require('../services/ticketService')
 const { validateDocuments } = require('../utility/doc.util')
 
 router.use(fileUpload());
-console.log('ticket');
 
 router.get('/health', async (req, res) => {
     try {

@@ -1,25 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const { STATUS, logger, CONST, passwordPolicy, redis, SMS } = require("ticketing-system-micro-common");
-
-const bcrypt = require("bcryptjs");
 const { COMMON_ERR } = require('../constants/ERRRORCODE');
-let userService = require('../services/userService');
 let moment = require('moment');
 
-const ticketModel = require('../models/ticket')
-const ticketService = require('../services/ticketService')
+const visitModel = require('../models/visit')
+const visitService = require('../services/visitService')
 
 
-router.post("/addVisits", async (req, res) => {
+router.post("/addVisit", async (req, res) => {
 
     try {
 
         const reqUser = req.plainToken;
-        req.body.ticket_number = await ticketService.generateTicketNumber();
-        const ticketDetails = new ticketModel.CreateTicket(req.body);
+        const visitDetails = new visitModel.Visit(req.body);
 
-        const { error } = ticketModel.validateCreateTicket(ticketDetails);
+        const { error } = visitModel.validateVisit(visitDetails);
 
         if (error) {
             if (error.details != null && error.details != "" && error.details != "undefined")
@@ -27,10 +23,10 @@ router.post("/addVisits", async (req, res) => {
             else return res.status(STATUS.BAD_REQUEST).send(error.message);
         }
 
-        ticketDetails.created_by = reqUser.user_id;
-        ticketDetails.updated_by = reqUser.user_id;
+        visitDetails.created_by = reqUser.user_id;
+        visitDetails.updated_by = reqUser.user_id;
 
-        const data = await ticketService.createTicket(ticketDetails);
+        const data = await visitService.createVisit(visitDetails);
         return res.status(STATUS.OK).send(data);
 
     } catch (error) {
@@ -39,8 +35,18 @@ router.post("/addVisits", async (req, res) => {
     }
 });
 
+router.post("/getVisit", async (req, res) => {
+    try {
+        const visit_id = req.body.visit_id ? req.body.visit_id : null;
+        const visitData = await visitService.getVisit(visit_id)
+        res.send(visitData)
+    } catch (error) {
+        console.log("catch error", error);
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).send(`{"errorCode":"CMNERR0000", "error":"${COMMON_ERR.CMNERR0000}"}`);
+    }
+});
 
-router.post("/getTicketList", async (req, res) => {
+router.post("/getAllVisits", async (req, res) => {
     try {
 
         const reqUserDetails = req.plainToken;
@@ -58,7 +64,7 @@ router.post("/getTicketList", async (req, res) => {
             product_id
         };
 
-        const productData = await ticketService.getTicketList(reqParams)
+        const productData = await visitService.getTicketList(reqParams)
         res.send(productData)
 
     } catch (error) {
@@ -67,18 +73,5 @@ router.post("/getTicketList", async (req, res) => {
     }
 });
 
-router.post("/getTicket", async (req, res) => {
-    try {
-
-        const ticket_id = req.body.ticket_id ? req.body.ticket_id : null;
-
-        const ticketData = await ticketService.getTicket(ticket_id)
-        res.send(ticketData)
-
-    } catch (error) {
-        console.log("catch error", error);
-        return res.status(STATUS.INTERNAL_SERVER_ERROR).send(`{"errorCode":"CMNERR0000", "error":"${COMMON_ERR.CMNERR0000}"}`);
-    }
-});
 
 module.exports = router;

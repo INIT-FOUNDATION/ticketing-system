@@ -11,3 +11,9 @@ exports.TICKET_QUERIES = {
     getDocuments: `SELECT * FROM m_ticket_documents WHERE ticket_id = $1`,
 }
 
+
+exports.VISIT_QUERIES = {
+    createVisit: `INSERT INTO public.tr_visits(ticket_id, visit_type, visit_date, visit_by, remarks, date_created, date_modified, created_by, updated_by)
+        VALUES ($1, $2, $3, $4, $5, NOW(), NOW(), $6, $7) RETURNING visit_id;`,
+    getVisit: `SELECT * FROM tr_visits WHERE visit_id = $1`,
+}
