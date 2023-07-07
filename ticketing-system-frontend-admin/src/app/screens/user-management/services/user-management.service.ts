@@ -14,7 +14,7 @@ export class UserManagementService {
               private encDecService: EncDecService) {}
 
   getUserdataGridWithCount(payload) {
-    return this.http.post<any>(`${environment.admin_prefix_direct_url}/user/getUserdataGridCount`, payload);
+    return this.http.post<any>(`${environment.admin_prefix_url}/user/getUserdataGridCount`, payload);
   }
 
   getActiveRoles(){

@@ -12,8 +12,6 @@ import { LoaderService } from '../modules/shared/services/loader.service';
 import { environment } from 'src/environments/environment';
 
 const noLoaderApis: string | string[] = [
-  `${environment.patient_registration_prefix_url}/patient/getPatientDetails`,
-  `${environment.patient_registration_prefix_url}/patient/getLatestAppointment`,
 ];
 const loaderRequireGetApi: string | string[] = [
 ]

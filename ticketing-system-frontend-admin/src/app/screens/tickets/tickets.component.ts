@@ -1,3 +1,4 @@
+import { TicketService } from './services/ticket.service';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Colmodel } from 'src/app/modules/common-data-table/model/colmodel.model';
@@ -30,7 +31,8 @@ export class TicketsComponent implements OnInit {
     private router: Router,
     private encDecService: EncDecService,
     private utilService: UtilsService,
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private ticketService: TicketService) { }
 
   ngOnInit(): void {
     this.pageHeaderService.pageHeaderSet = this.header;
@@ -45,10 +47,10 @@ export class TicketsComponent implements OnInit {
 
   prepareAppointmentGridCols() {
     this.cols = [
-      new Colmodel('ticket_id', 'Ticket ID', false, false, true),
-      new Colmodel('department_type_name', 'Department', false, false, false),
-      new Colmodel('assigned_to_name', 'Doctor', false, false, false),
-      new Colmodel('appointment_status_name', 'Status', false, false, false),
+      new Colmodel('ticket_number', 'Ticket No', false, false, false),
+      new Colmodel('ticket_mode', 'Ticket Mode', false, false, false),
+      new Colmodel('opening_date', 'Opening Date', false, false, false),
+      new Colmodel('status', 'Status', false, false, false),
     ]
   }
 
@@ -57,7 +59,10 @@ export class TicketsComponent implements OnInit {
     let pageSize = this.ticketsGrid && this.ticketsGrid.rows ? this.ticketsGrid.rows : 50;
     payload["current_page"] = this.currentPage;
     payload["page_size"] = pageSize;
-    payload["search"] = this.contactNumber;
+    this.ticketService.getTicketList(payload).subscribe((res: {data: any[], count: number}) => {
+      this.ticketsGrid.data = res.data;
+      this.ticketsGrid.totalRecords = res.count;
+    })
   }
 
   onPageChangeEvent(event) {
@@ -70,5 +75,9 @@ export class TicketsComponent implements OnInit {
 
   addTicket() {
     this.router.navigate(['tickets/add-ticket'])
+  }
+
+  editTicket(gridData) {
+    this.router.navigate([`tickets/edit-ticket/${gridData.ticket_id}`])
   }
 }
