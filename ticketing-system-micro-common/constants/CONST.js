@@ -25,7 +25,7 @@ exports.SERVICES = {
     verify_mobno_sms: "verify_sms",
     register_sms: "register_sms",
     session_sms: "session_sms",
-    default_pass: "INIT_123",
+    default_pass: "TICKETING_SYSTEM_123",
     campaign_id: "3737373",
     INIT_audit_logs_localFile_maxSize: 1
 };

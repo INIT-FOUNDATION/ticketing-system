@@ -25,13 +25,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
   buttonLabel = 'Create New Member'
   userForm: FormGroup;
   roleList;
-  stateList;
-  districtList;
-  blockList;
-  villageList;
-  hospitalList;
-  organizationList;
-  departmentList;
   usersList;
   usersListFilterControl: FormControl = new FormControl();
   activeRoles;
@@ -199,39 +192,12 @@ export class UserFormComponent implements OnInit, OnDestroy {
         mobile_number: res.mobile_number,
         email_id: res?.email_id,
         role_id: res.role_id,
-        is_active: ''+res.is_active,
-      
-        state_id: res.state_id,
-        district_id: res.district_id,
-        block_id: res.block_id,
-        village_id: res.village_id,
+        is_active: ''+res.is_active
       });
       this.setLocationValidatorsByRole(res.role_id);
       await this.getAccessControlList(res.role_id);
       this.disableFields();
-      const hierarchy = this.dataService.userDetails.hierarchy;
-      if (hierarchy == 'GOVT') {
-        this.callHierarchyDropDownsGovt(res.user_level);
-      } 
     })
-  }
-
-
-  callHierarchyDropDownsGovt(user_level: any) {
-    switch(user_level) {
-      case 'District':
-        this.onStateChange();
-      break;
-      case 'Block':
-        this.onStateChange();
-        this.onDistrictChange();
-      break;
-      case 'Village':
-        this.onStateChange();
-        this.onDistrictChange();
-        this.onBlockChange();
-      break;
-    }
   }
 
   disableFields() {
@@ -241,104 +207,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
     this.userForm.get('email_id').enable();
     this.userForm.get('is_active').enable();
     this.userForm.get('access_control').enable();
-    // this.userForm.get('hosp_dept_id').enable();
-    this.userForm.get('reporting_to').enable();
   }
 
   setLocationValidatorsByRole(role_id) {
-    const hierarchy = this.dataService.userDetails.hierarchy;
-
     if (this.roleList) {
       const role = this.roleList.find(e => e.role_id === role_id);
       if (!role) { return; }
-      if (hierarchy == 'GOVT') {
-        this.setValidationsAccordingToGovt(role.level);
-      } 
     }
   }
 
-
-  setValidationsAccordingToGovt(level) {
-    
-    const state = this.userForm.get('state_id');
-    const district = this.userForm.get('district_id');
-    const block = this.userForm.get('block_id');
-    const village = this.userForm.get('village_id');
-    let stateValidator = null;
-    let districtValidator = null;
-    let blockValidator = null;
-    let villageValidator = null;
-    this.mandatory = { state: false, district: false, block: false, village: false , hosp: false, department: false, reporting_to: false };
-    this.showHide = { state: false, district: false, block: false, village: false , hosp: false, department: false, reporting_to: false };
-    switch (level) {
-      case 'National':
-        this.mandatory = { state: false, district: false, block: false, village: false , hosp: false, department: false, reporting_to: false };
-        this.showHide = { state: false, district: false, block: false, village: false , hosp: false, department: false, reporting_to: false };
-        stateValidator = null;
-        districtValidator = null;
-        blockValidator = null;
-        villageValidator = null;
-      break;
-
-      case 'State':
-        
-        this.getStates();
-        this.mandatory = { state: true, district: false, block: false, village: false , hosp: false, department: false, reporting_to: false };
-        this.showHide = { state: true, district: false, block: false, village: false , hosp: false, department: false, reporting_to: false };
-        stateValidator = [Validators.required];
-        districtValidator = null;
-        blockValidator = null;
-        villageValidator = null;
-      break;
-
-      case 'District':
-        this.getStates();
-        this.mandatory = { state: true, district: true, block: false, village: false , hosp: false, department: false, reporting_to: false };
-        this.showHide = { state: true, district: true, block: false, village: false , hosp: false, department: false, reporting_to: false };
-        stateValidator = [Validators.required];
-        districtValidator = [Validators.required];
-        blockValidator = null;
-        villageValidator = null;
-       
-      break;
-
-      case 'Block':
-        this.getStates();
-        this.mandatory = { state: true, district: true, block: true, village: false , hosp: false, department: false, reporting_to: false };
-        this.showHide = { state: true, district: true, block: true, village: false , hosp: false, department: false, reporting_to: false };
-        stateValidator = [Validators.required];
-        districtValidator = [Validators.required];
-        blockValidator = [Validators.required];
-        villageValidator = null;
-      break;
-
-      case 'Village':
-        this.getStates();
-        this.mandatory = { state: true, district: true, block: true, village: true , hosp: false, department: false, reporting_to: false };
-        this.showHide = { state: true, district: true, block: true, village: true , hosp: false, department: false, reporting_to: false };
-        stateValidator = [Validators.required];
-        districtValidator = [Validators.required];
-        blockValidator = [Validators.required];
-        villageValidator = [Validators.required];
-        
-      break;
-
-    
-     
-    
-    }
-
-    state.setValidators(stateValidator);
-    district.setValidators(districtValidator);
-    block.setValidators(blockValidator);
-    village.setValidators(villageValidator);
-    // department.setValidators(departmentValidator);
-    state.updateValueAndValidity();
-    district.updateValueAndValidity();
-    block.updateValueAndValidity();
-    village.updateValueAndValidity();
-    // department.updateValueAndValidity();
-  }
 
   initForm() {
     this.userForm = new FormGroup({
@@ -348,100 +225,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
       email_id: new FormControl('',),
       role_id: new FormControl('', [Validators.required]),
       is_active: new FormControl('1', [Validators.required]),
-     
-      state_id: new FormControl(null),
-      district_id: new FormControl(null),
-      block_id: new FormControl(null),
-      village_id: new FormControl(null),
-     
       access_control: new FormArray([])
     });
-  }
-
-  getOrganizationsList() {
-    this.locationService.getOrganization().subscribe(res => {
-      this.organizationList = res;
-    });
-  }
-
-  getStates() {
-    this.locationService.getStates().subscribe(res => {
-      this.stateList = res;
-    });
-  }
-
-  onStateChange() {
-   let state_id = this.userForm.get('state_id').value;
-   this.makeBlankOnLocationChange('STATE');
-   
-   if(state_id) {
-    this.locationService.getDistricts(state_id).subscribe(res => {
-      this.districtList = res;
-    })
-   }
-  }
-
-  onDistrictChange() {
-    let state_id = this.userForm.get('state_id').value;
-    let district_id = this.userForm.get('district_id').value;
-    this.makeBlankOnLocationChange('DISTRICT');
-    if(state_id && district_id) {
-      this.locationService.getBlocks(district_id).subscribe(res => {
-        this.blockList = res;
-      });
-
-   //   this.fetchHospital()
-    }
-  }
-
-  onBlockChange() {
-    let state_id = this.userForm.get('state_id').value;
-    let district_id = this.userForm.get('district_id').value;
-    let block_id = this.userForm.get('block_id').value;
-    this.makeBlankOnLocationChange('BLOCK');
-    if(state_id && district_id && block_id) {
-      this.locationService.getVillages(block_id).subscribe(res => {
-        this.villageList = res;
-      });
-
-    //  this.fetchHospital();
-    }
-  }
-
-  onVillageChange() {
-    let state_id = this.userForm.get('state_id').value;
-    let district_id = this.userForm.get('district_id').value;
-    let block_id = this.userForm.get('block_id').value;
-    let village_id = this.userForm.get('village_id').value;
-    this.makeBlankOnLocationChange('VILLAGE');
-    if(state_id && district_id && block_id && village_id) {
-    // this.fetchHospital();
-    }
-  }
-
-
-  makeBlankOnLocationChange(location) {
-    if (this.formType != 'edit') {
-      let district = this.userForm.get('district_id');
-      let block = this.userForm.get('block_id');
-      let village = this.userForm.get('village_id');
-      switch (location) {
-        case 'STATE':
-          district.setValue(null);
-          block.setValue(null);
-          village.setValue(null);
-          break;
-        case 'DISTRICT':
-          block.setValue(null);
-          village.setValue(null);
-          break;
-        case 'BLOCK':
-          village.setValue(null);
-          break;
-        default:
-          break;
-      }
-    }
   }
 
   submit() {
@@ -503,17 +288,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
   backToGrid() {
     // this.router.navigate(['/usermanagement']);
     this._location.back();
-  }
-
-  get isHierarchySectionNecessary() {
-    let returnValue = false;
-    _.each(this.showHide, (value,key) => {
-      if (this.showHide[key]) {
-        returnValue = true;
-        return false;
-      }
-    })
-    return returnValue;
   }
 
   openCustomScreenAccessDialog() {

@@ -13,8 +13,6 @@ const UpdateUser = function (users) {
     this.zip_code = users.zip_code;
     this.updated_by = users.updated_by;
     this.email_id = users.email_id;
-    this.experience = users.experience ? moment().subtract(users.experience, 'years').format("YYYY") : null;
-    this.about_me = users.about_me ? users.about_me : null;
 };
 
 function validateUpdateUsers(user) {
@@ -36,9 +34,7 @@ function validateUpdateUsers(user) {
         date_of_birth: Joi.date().allow("", null),
         date_modified: Joi.date(),
         updated_by: Joi.number(),
-        email_id: Joi.string().allow("", null),
-        experience: Joi.number().allow(null),
-        about_me: Joi.string().allow(null),
+        email_id: Joi.string().allow("", null)
     };
 
     return Joi.validate(user, schema);

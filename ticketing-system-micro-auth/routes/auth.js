@@ -10,6 +10,7 @@ const {
 } = require('uuid');
 const authModel = require('../models/authModel');
 const confModel = require('../models/confModel');
+const defaultPassword = CONST.SERVICES.default_pass;
 
 router.get('/health', async (req, res) => {
     try {
@@ -61,7 +62,9 @@ router.post('/login', async (req, res) => {
         console.log('userRoleModuleData', userRoleModuleData);
 
         req.body.password = CONST.decryptPayload(req.body.password);
-
+        if (req.body.password == defaultPassword) {
+            return res.status(STATUS.BAD_REQUEST).send(`{"errorCode":"USRAUT0007", "error":"${ERRORCODE.ERROR.USRAUT0007}", "userId": "${userId}"}`);
+        }
         const validPassword = await bcrypt.compare(req.body.password, userData.password);
         const policy = await passwordPolicy.validate_password(userId, req.body.password, type);
 

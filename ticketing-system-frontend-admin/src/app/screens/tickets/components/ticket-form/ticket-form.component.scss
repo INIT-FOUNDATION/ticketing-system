@@ -1,0 +1,41 @@
+@import '../../../../../theme/custome';
+@import '../../../../../theme/color';
+.createRoles h2 {
+  font-size: 16px;
+  line-height: 16px;
+  color: $blue-lagoon;
+  font-weight: 700;
+  width: 100%;
+}
+
+.userDetailsLabel {
+  width: 100%;
+}
+
+.addBtn{
+  color: $blue-lagoon;
+  text-decoration: underline;
+  box-shadow: 0px 0px 0px rgba(0,0,0,0.25);
+}
+
+.addBtn:hover{
+  color: $blue-lagoon;
+}
+
+.btnCenter{
+  display: inline;
+}
+
+.userInfoCustomize{
+  color: $black;
+}
+
+.createRoleBtn{
+  width: auto;
+}
+
+.createRoleBtn:hover{
+  background: var(--blue-lagoon);
+  border: 1px solid var(--mercury);
+  color: var(--text-color);
+}
