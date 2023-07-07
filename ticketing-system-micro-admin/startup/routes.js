@@ -7,6 +7,8 @@ const user = require("../routes/user");
 const location = require("../routes/location");
 const languages = require('../routes/languages');
 const s3CDN = require('../routes/s3-cdn');
+const sites = require('../routes/sites');
+const product = require('../routes/product');
 const { STATUS } = require('ticketing-system-micro-common');
 
 module.exports = function (app, server) {
@@ -67,4 +69,6 @@ module.exports = function (app, server) {
     app.use("/api/v1/admin/location", location);
     app.use("/api/v1/admin/languages", languages);
     app.use("/api/v1/admin/cdn", s3CDN);
+    app.use("/api/v1/admin/site", sites);
+    app.use("/api/v1/admin/product", product);
 };

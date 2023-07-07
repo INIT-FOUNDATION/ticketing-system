@@ -102,6 +102,13 @@ exports.USER_QUERY = {
     #WHERE_CLAUSE# ORDER BY U.date_modified DESC  #LIMIT_CLAUSE# #OFFSET_CLAUSE#`,
 }
 
+
+exports.PRODUCT_QUERY = {
+    getProductCount: `SELECT COUNT(*) AS count FROM vw_m_products #WHERE_CLAUSE#`,
+    getProductList: `SELECT * FROM vw_m_products #WHERE_CLAUSE# ORDER BY date_modified DESC #LIMIT_CLAUSE# #OFFSET_CLAUSE#;`,
+    getProduct: `SELECT * FROM vw_m_products #WHERE_CLAUSE#`
+}
+
 exports.ROLE = {
     selectRoleDetails: "SELECT m_roles.role_id, role_name, role_description, level, m_roles.is_active, count(m_users.user_id) as userCount FROM m_roles LEFT JOIN m_users ON m_roles.role_id = m_users.role_id and m_users.is_active = 1 where m_roles.role_id != 1 group by m_roles.role_id",
     selectSpecificRoleDetails: "SELECT role_id, role_name, role_description, level, is_active from m_roles where role_id = $1",

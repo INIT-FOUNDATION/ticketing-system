@@ -9,6 +9,7 @@ exports.API = {
         "/api/v1/user/health",
         "/api/v1/auth/health",
         "/api/v1/admin/health",
+        "/api/v1/ticket/health",
         "/api/v1/auth/login",
         "/api/v1/communication/health",
         "/api/v1/crm/health",

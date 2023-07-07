@@ -1,0 +1,70 @@
+{
+  "name": "ticketing-system-micro-user",
+  "version": "1.0.0",
+  "description": "User Services",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "prod": "node app.js"
+  },
+  "author": "Chalukya Mohanraj",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.949.0",
+    "bcryptjs": "^2.4.3",
+    "crypto-js": "^4.0.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.8",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
+    "express-sanitize-middleware": "^1.0.3",
+    "helmet": "^3.22.0",
+    "ticketing-system-micro-common": "../ticketing-system-micro-common",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "8.5.1",
+    "mailcomposer": "^4.0.2",
+    "moment": "^2.29.1",
+    "nodemon": "^1.19.2",
+    "randexp": "^0.5.3",
+    "request": "^2.88.2",
+    "winston": "^3.3.3"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2000",
+    "env": {
+      "NODE_ENV": "Development",
+      "PORT": 9005,
+      "HOST": "localhost",
+      "MODULE": "ticketing-system-micro-ticket",
+      "TS_MASTER_HOST": "localhost",
+      "TS_MASTER_PORT": "5432",
+      "TS_MASTER_DATABASE": "ticketing_system",
+      "TS_MASTER_USER": "postgres",
+      "TS_MASTER_PASSWORD": "password",
+      "TS_AUDIT_HOST": "localhost",
+      "TS_AUDIT_PORT": "5432",
+      "TS_AUDIT_DATABASE": "ticketing_system",
+      "TS_AUDIT_USER": "postgres",
+      "TS_AUDIT_PASSWORD": "password",
+      "TS_PINPOINT": "a24e29f3e9044384b688733cd7e76157",
+      "TS_REDIS_HOST": "localhost",
+      "TS_REDIS_PORT": 6379,
+      "AWS_ACCESS_KEY_ID": "AKIASNNVWZ52YAAWZQVO",
+      "AWS_SECRET_ACCESS_KEY": "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",
+      "TS_S3_BUCKET": "hmis-dev",
+      "TS_PINPOINT_APP_ID": "a24e29f3e9044384b688733cd7e76157",
+      "TS_PINPOINT_ENTITY_ID": "AIEZE VERTEX PRIVATE LIMITED",
+      "TS_PINPOINT_SENDER_ID": "AIEZE",
+      "REGION_NAME": "ap-south-1",
+      "WHATSAPP_API_KEY": "7603639047c29611b",
+      "WHATSAPP_API_HOST": "162.241.114.66",
+      "TS_FROM_EMAIL": "no-reply@aieze.in",
+      "CDN_CONTEXT_PATH": "http://localhost:9001"
+    }
+  }
+}
