@@ -7,3 +7,9 @@ exports.TICKET_ERR = {
     TCKTERR0002: "Ticket Id is Required",
     TCKTERR0003: "Invalid Ticket Id",
 }
+
+exports.VISIT_ERR = {
+    VISITERR0001: "Please select valid document type",
+    VISITERR0002: "Visit Id is Required",
+    VISITERR0003: "Invalid Visit Id",
+}
