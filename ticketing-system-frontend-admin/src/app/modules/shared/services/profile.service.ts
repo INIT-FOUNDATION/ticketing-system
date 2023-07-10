@@ -177,11 +177,11 @@ export class ProfileService {
   }
 
   saveProfilePic(id, data: any) {
-    return this.http.post(`${environment.admin_prefix_direct_url}/user/uploadProfilePic`, data);
+    return this.http.post(`${environment.admin_prefix_url}/user/uploadProfilePic`, data);
   }
 
   savesignaturePic(data:any){
-    return this.http.post<any>(`${environment.admin_prefix_direct_url}/user/updateSignature`, data);
+    return this.http.post<any>(`${environment.admin_prefix_url}/user/updateSignature`, data);
   }
 
   updatePassword(id, data) {
@@ -195,10 +195,6 @@ export class ProfileService {
 
   updateMobileNo(postData: any): Observable<any> {
     return this.http.post(`${environment.user_prefix_url}/updateMobileNumber/`, postData);
-  }
-
-  getGenderList(): Observable<any> {
-    return this.http.get<any>(`${environment.beneficiary_registration_prefix_url}/beneficiary/getGender`);
   }
 
   parseMsgWithSanitize(item) {
@@ -256,7 +252,7 @@ export class ProfileService {
 
   getAllLanguages() {
     return this.http.get(
-      `${environment.admin_prefix_direct_url}/languages/list`
+      `${environment.admin_prefix_url}/languages/list`
     )
   }
 }

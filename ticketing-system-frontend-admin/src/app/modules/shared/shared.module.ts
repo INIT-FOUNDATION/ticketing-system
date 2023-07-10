@@ -75,7 +75,6 @@ import {PopoverModule} from "ngx-smart-popover";
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
-import { CcDurationPipePipe } from './pipes/cc-duration-pipe.pipe';
 import {ContextMenuModule} from 'primeng/contextmenu';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { DndDirective } from './directives/dnd.directive';
@@ -84,14 +83,11 @@ import { DndDirective } from './directives/dnd.directive';
 
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
-import { WardNamePipePipe } from './pipes/ward-name-pipe.pipe';
 
-import { SpecialityNamePipe } from './pipes/speciality-name-pipe.pipe';
-import { LanguageNamePipe } from './pipes/languages-name.pipe';
 import { ImageCropperModule } from "ngx-image-cropper";
 import { CommonImageUploadComponent } from './components/common-image-upload/common-image-upload.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
-import { TranslationPrescriptionPipe } from './pipes/translation-prescription.pipe'
+import { UploadDocumentComponent } from './components/upload-document/upload-document.component';
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -120,8 +116,9 @@ const exportComponents = [
   SideBarComponent,
   CommonDataViewComponent,
   ProgressBarComponent,
- 
-  CommonImageUploadComponent
+
+  CommonImageUploadComponent,
+  UploadDocumentComponent
 ];
 
 const exportDirectives = [
@@ -147,11 +144,6 @@ const exportDirectives = [
 
 const exportPipes = [
   TitleCaseCustomPipe,
-  CcDurationPipePipe,
-  WardNamePipePipe,
-  SpecialityNamePipe,
-  LanguageNamePipe,
-  TranslationPrescriptionPipe
 ];
 
 
@@ -213,7 +205,7 @@ const exportModules = [
     ...exportComponents,
     ...exportDirectives,
     ...exportPipes,
-   
+
   ],
   imports: [
     ...exportModules,

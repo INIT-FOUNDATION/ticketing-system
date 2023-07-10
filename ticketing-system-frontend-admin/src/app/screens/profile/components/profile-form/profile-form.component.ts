@@ -28,9 +28,6 @@ export class ProfileFormComponent implements OnInit {
     iVBORw0KGgo: 'image/png'
   };
   uploadedFileNameValidation = /^[ A-Za-z0-9_\-]*$/;
-  ROLES = environment.ROLES;
-  departmentList = [];
-  languagesList: any;
   formSubmitted = false;
   constructor(private profileService: ProfileService,
     public dataService: DataService,

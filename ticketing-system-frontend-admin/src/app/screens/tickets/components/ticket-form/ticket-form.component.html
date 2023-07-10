@@ -2,11 +2,456 @@
   <div class="row createRoles ">
       <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 pl-0">
           <h2>Ticket Details</h2>
-          <form class=" marginTop20">
+          <form class=" marginTop20" [formGroup]="ticketForm" (ngSubmit)="submit()">
               <div class="row">
-                  <div class="col-md-6 text-end">
-                      <button class="btn createRoleBtn btnCenter" type="submit">Submit</button>
-                  </div>
+                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 marginTop20">
+                  <label class="userDetailsLabel" for="ticket_mode">Complaint Mode*</label>
+                  <mat-form-field>
+                      <mat-select class="userInput" id="ticket_mode" formControlName='ticket_mode'>
+                          <mat-option *ngFor="let mode of ticket_mode" [value]="mode.id">{{mode.label}}
+                          </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                </div>
+                <mat-accordion>
+                  <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Product Details
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="product_serial_no">Serial no*</label>
+                      <input type="text" class="form-control userInput" id="product_serial_no" formControlName="product_serial_no"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['product_serial_no']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='street' (blur)="getProductDetails()">
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['product_serial_no']).hasError('inputcharvalidator') && !ticketForm.get(['product_serial_no']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['product_serial_no']).hasError('rangeLength') || ticketForm.get(['product_serial_no']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['product_serial_no']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Serial no is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="product_hw_name">Hardware name*</label>
+                      <input type="text" class="form-control userInput" id="product_hw_name" formControlName="product_hw_name"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['product_hw_name']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='username'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['product_hw_name']).hasError('inputcharvalidator') && !ticketForm.get(['product_hw_name']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['product_hw_name']).hasError('rangeLength') || ticketForm.get(['product_hw_name']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['product_hw_name']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Hardware name is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="product_model_number">Model number*</label>
+                      <input type="text" class="form-control userInput" id="product_model_number" formControlName="product_model_number"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['product_model_number']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='street'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['product_model_number']).hasError('inputcharvalidator') && !ticketForm.get(['product_model_number']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['product_model_number']).hasError('rangeLength') || ticketForm.get(['product_model_number']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['product_model_number']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Model number is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="product_brand_name">Brand name*</label>
+                      <input type="text" class="form-control userInput" id="product_brand_name" formControlName="product_brand_name"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['product_brand_name']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='username'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['product_brand_name']).hasError('inputcharvalidator') && !ticketForm.get(['product_brand_name']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['product_brand_name']).hasError('rangeLength') || ticketForm.get(['product_brand_name']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['product_brand_name']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Brand name is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="product_installation_date">Installation date*</label>
+                      <input type="text" class="form-control userInput" id="product_installation_date" formControlName="product_installation_date"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['product_installation_date']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='street'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['product_installation_date']).hasError('inputcharvalidator') && !ticketForm.get(['product_installation_date']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['product_installation_date']).hasError('rangeLength') || ticketForm.get(['product_installation_date']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['product_installation_date']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Installation date is required
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                  <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Vendor Details
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="vendor_name">Company name*</label>
+                      <input type="text" class="form-control userInput" id="vendor_name" formControlName="vendor_name"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['vendor_name']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='username'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['vendor_name']).hasError('inputcharvalidator') && !ticketForm.get(['vendor_name']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['vendor_name']).hasError('rangeLength') || ticketForm.get(['vendor_name']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['vendor_name']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Vendor name is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="vendor_contact_person_name">Contact person name*</label>
+                      <input type="text" class="form-control userInput" id="vendor_contact_person_name" formControlName="vendor_contact_person_name"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['vendor_contact_person_name']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='username'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['vendor_contact_person_name']).hasError('inputcharvalidator') && !ticketForm.get(['vendor_contact_person_name']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['vendor_contact_person_name']).hasError('rangeLength') || ticketForm.get(['vendor_contact_person_name']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['vendor_contact_person_name']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Contact person name is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="vendor_contact_no">Mobile no*</label>
+                      <input type="text" class="form-control userInput" id="vendor_contact_no" formControlName="vendor_contact_no"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['vendor_contact_no']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='street'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['vendor_contact_no']).hasError('inputcharvalidator') && !ticketForm.get(['vendor_contact_no']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['vendor_contact_no']).hasError('rangeLength') || ticketForm.get(['vendor_contact_no']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['vendor_contact_no']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Mobile number is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="vendor_email_id">Email id*</label>
+                      <input type="text" class="form-control userInput" id="vendor_email_id" formControlName="vendor_email_id"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['vendor_email_id']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='email'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['vendor_email_id']).hasError('inputcharvalidator') && !ticketForm.get(['vendor_email_id']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['vendor_email_id']).hasError('rangeLength') || ticketForm.get(['vendor_email_id']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['vendor_email_id']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Email id is required
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+
+                  <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Site Details
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="site_name">Site name*</label>
+                      <input type="text" class="form-control userInput" id="site_name" formControlName="site_name"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['site_name']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='username'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['site_name']).hasError('inputcharvalidator') && !ticketForm.get(['site_name']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['site_name']).hasError('rangeLength') || ticketForm.get(['site_name']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['site_name']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Site name is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="site_udise_code">UDISE Code*</label>
+                      <input type="text" class="form-control userInput" id="site_udise_code" formControlName="site_udise_code"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['site_udise_code']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='street'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['site_udise_code']).hasError('inputcharvalidator') && !ticketForm.get(['site_udise_code']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['site_udise_code']).hasError('rangeLength') || ticketForm.get(['site_udise_code']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['site_udise_code']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Site UDISE code is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="site_block_id">Block*</label>
+                      <mat-form-field>
+                        <mat-select class="userInput" id="site_block_id" formControlName='site_block_id'>
+                            <mat-option *ngFor="let block of blockList" [value]="block.block_id">{{block.block_name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="site_address">Address*</label>
+                      <input type="text" class="form-control userInput" id="site_address" formControlName="site_address"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['site_address']).hasError('required')}"
+                          [appRangeLength]="[2, 500]" appInputChar='street'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['site_address']).hasError('inputcharvalidator') && !ticketForm.get(['site_address']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['site_address']).hasError('rangeLength') || ticketForm.get(['site_address']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['site_address']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Site Address code is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="site_contact_person_name">Contact person name*</label>
+                      <input type="text" class="form-control userInput" id="site_contact_person_name" formControlName="site_contact_person_name"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['site_contact_person_name']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='username'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['site_contact_person_name']).hasError('inputcharvalidator') && !ticketForm.get(['site_contact_person_name']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['site_contact_person_name']).hasError('rangeLength') || ticketForm.get(['site_contact_person_name']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['site_contact_person_name']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Contact person name is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="site_contact_no">Contact no*</label>
+                      <input type="text" class="form-control userInput" id="site_contact_no" formControlName="site_contact_no"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['site_contact_no']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='street'>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['site_contact_no']).hasError('inputcharvalidator') && !ticketForm.get(['site_contact_no']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['site_contact_no']).hasError('rangeLength') || ticketForm.get(['site_contact_no']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['site_contact_no']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Contact no is required
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+
+                  <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Issue Details
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="issue_description">Description*</label>
+                      <textarea type="text" class="form-control userInput" id="issue_description" formControlName="issue_description"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['issue_description']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='username'></textarea>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['issue_description']).hasError('inputcharvalidator') && !ticketForm.get(['issue_description']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['issue_description']).hasError('rangeLength') || ticketForm.get(['issue_description']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['issue_description']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Description is required
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                      <label class="userDetailsLabel" for="issue_remarks">Remarks*</label>
+                      <textarea type="text" class="form-control userInput" id="issue_remarks" formControlName="issue_remarks"
+                          appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['issue_remarks']).hasError('required')}"
+                          [appRangeLength]="[2, 30]" appInputChar='username'></textarea>
+
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['issue_remarks']).hasError('inputcharvalidator') && !ticketForm.get(['issue_remarks']).hasError('rangeLength')"
+                          [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                          placement="bottom">
+                          {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="ticketForm.get(['issue_remarks']).hasError('rangeLength') || ticketForm.get(['issue_remarks']).hasError('trimError')"
+                          [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                          Must be between 2-30 characters
+                      </div>
+                      <div class="invalid-feedback"
+                          *ngIf="formSubmitted && ticketForm.get(['issue_remarks']).hasError('required')"
+                          tooltip="User Name is required" placement="bottom">
+                          Remarks is required
+                      </div>
+                    </div>
+                  </mat-expansion-panel>
+                  <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Documents
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                      <div class="col-md-12 marginBtm2rem text-end">
+                        <button type="button" (click)="uploadDocumentDialog()" class="btn createRole marginBtm1Rem"><i
+                            class="fa fa-upload"></i> Upload Document</button>
+                      </div>
+                    </div>
+                    <div class="patientDetailsTable">
+                      <app-common-data-table #documentsGrid [colModel]='documentcols' gridId='documentsGrid' sField='updatedDate'
+                        sOrder='desc' [lazyLoad]="false" selectType='none' [localData]="[]" idColumn='patient_document_id'
+                        paginationpos='none' [actionColumnTemplate]="patientDocuemntTemplate" [actionColumnRequired]="true">
+                        <ng-template #patientDocuemntTemplate let-gridData='griddata'>
+                          <button (click)="downloadDocument(gridData)" class="butonclover edit" data-toggle="tooltip"
+                            data-placement="top" title="View Prescription">
+                            <span class="actionicons iconscls text-warning">
+                              <i class="fa fa-download"></i>
+                            </span>
+                          </button>
+                        </ng-template>
+                      </app-common-data-table>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+
+                <div class="col-md-6 text-end">
+                    <button class="btn createRoleBtn btnCenter" type="submit">Submit</button>
+                </div>
               </div>
           </form>
       </div>

@@ -14,8 +14,19 @@
           sOrder='desc' [lazyLoad]="false" selectType='none' [localData]="[]" idColumn='ticket_id'
           [rowsPerPage]='rowsPerPage' paginationpos='bottom' (onCustomPageAndFilterEvent)="onPageChangeEvent($event)"
           [actionColumnTemplate]="ticketActionTemplate"
-          [actionColumnRequired]="true">
+          [actionColumnRequired]="true" [colFormatterTemplate]="{'ticket_mode': ticketModeFormatter, 'status': ticketStatusFormatter}">
   <ng-template #ticketActionTemplate let-gridData='griddata'>
-
+    <button (click)="editTicket(gridData)"
+      class="butonclover edit" data-toggle="tooltip" data-placement="top" title="Edit Ticket">
+      <span class="actionicons iconscls text-warning">
+        <i class="fa fa-pencil"></i>
+      </span>
+    </button>
+  </ng-template>
+  <ng-template #ticketModeFormatter let-gridData='griddata'>
+    {{gridData.ticket_mode == 2 ? 'By Auditor' : 'Self'}}
+  </ng-template>
+  <ng-template #ticketStatusFormatter let-gridData='griddata'>
+    {{gridData.status == 1 ? 'Pending' : 'Pending'}}
   </ng-template>
 </app-common-data-table>

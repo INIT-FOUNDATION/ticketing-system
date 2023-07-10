@@ -10,11 +10,11 @@ export class RoleManagementService {
   constructor(private http: HttpClient) {}
 
   getRoles() {
-    return this.http.get(`${environment.admin_prefix_direct_url}/role/getRoles`);
+    return this.http.get(`${environment.admin_prefix_url}/role/getRoles`);
   }
 
   getLevels() {
-    return this.http.get(`${environment.admin_prefix_direct_url}/role/getLevels`);
+    return this.http.get(`${environment.admin_prefix_url}/role/getLevels`);
   }
 
   getMenuList() {
@@ -26,7 +26,7 @@ export class RoleManagementService {
   }
 
   getSpecificRole(role_id) {
-    return this.http.get(`${environment.admin_prefix_direct_url}/role/getRole/${role_id}`);
+    return this.http.get(`${environment.admin_prefix_url}/role/getRole/${role_id}`);
   }
 
   updateRoleDetailsRequest(roleObj) {
