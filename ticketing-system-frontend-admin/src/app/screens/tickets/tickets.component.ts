@@ -80,4 +80,8 @@ export class TicketsComponent implements OnInit {
   editTicket(gridData) {
     this.router.navigate([`tickets/edit-ticket/${gridData.ticket_id}`])
   }
+
+  addVisit(gridData) {
+    this.router.navigate([`tickets/add-visit/${gridData.ticket_id}`])
+  }
 }

@@ -1,6 +1,6 @@
 
-const BASE_URL = 'https://api-lb.aieze.in';
-const DIRECT_BASE_URL = 'https://api-lb.aieze.in';
+const BASE_URL = 'https://apitc.dev.aieze.in';
+const DIRECT_BASE_URL = 'https://apitc.dev.aieze.in';
 const API_ADMIN_PORT = ``;
 const API_AUTH_PORT = ``;
 const API_USER_PORT = ``;

@@ -10,6 +10,7 @@ import { Colmodel } from 'src/app/modules/common-data-table/model/colmodel.model
 import { MatDialog } from '@angular/material/dialog';
 import { UploadDocumentComponent } from 'src/app/modules/shared/components/upload-document/upload-document.component';
 import {v4 as uuidv4} from 'uuid';
+import { forkJoin, of, switchMap } from 'rxjs';
 @Component({
   selector: 'app-ticket-form',
   templateUrl: './ticket-form.component.html',
@@ -26,6 +27,7 @@ export class TicketFormComponent implements OnInit {
   blockList;
   ticket_id;
   documentcols: Colmodel[] = [];
+  visitscols: Colmodel[] = [];
   rowsPerPage = 50;
   rows = [
     {value: 5, label: '5'},
@@ -34,7 +36,9 @@ export class TicketFormComponent implements OnInit {
     {value: 20, label: '20'},
   ];
   @ViewChild("documentsGrid") documentsGrid: CommonDataTableComponent;
+  @ViewChild("visitsGrid") visitsGrid: CommonDataTableComponent;
   documents: {document_id: string, form_data: FormData }[] = [];
+  visitsData: any[] = [];
   constructor(private ticketService: TicketService,
               private utilsService: UtilsService,
               private router: Router,
@@ -44,7 +48,8 @@ export class TicketFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.prepareAppointmentGridCols();
+    this.prepareDocumentsGridCols();
+    this.prepareVisitsGridCols();
 
     if (this.formType == 'edit') {
       this.ticket_id = this.activatedRoute.snapshot.params.ticket_id;
@@ -57,20 +62,35 @@ export class TicketFormComponent implements OnInit {
     }
   }
 
-  prepareAppointmentGridCols() {
+  prepareDocumentsGridCols() {
     this.documentcols = [
       new Colmodel('document_id', 'Document ID', false, false, true),
       new Colmodel('file_name', 'File Name', false, false, false),
+      new Colmodel('document_type', 'Document Type', false, false, false),
       new Colmodel('date_created', 'Date of Upload', false, false, false),
       new Colmodel('unsaved', 'Unsaved', false, false, true)
     ];
   }
 
-  getTicket() {
-    this.ticketService.getTicket({ticket_id: this.ticket_id}).subscribe((res: any) => {
+  prepareVisitsGridCols() {
+    this.visitscols = [
+      new Colmodel('visit_id', 'Visit ID', false, false, true),
+      new Colmodel('visit_no', 'Visit No', false, false, false),
+      new Colmodel('visit_type', 'Visit Type', false, false, false),
+      new Colmodel('visit_by', 'Visited By', false, false, false),
+      new Colmodel('remarks', 'Remarks', false, false, false),
+      new Colmodel('visit_date', 'Visited Date', false, false, true)
+    ];
+  }
+
+  async getTicket() {
+    forkJoin({
+      ticket: this.ticketService.getTicket({ticket_id: this.ticket_id}),
+      visits: this.ticketService.getAllVisits({ticket_id: this.ticket_id}),
+    }).subscribe(async (res: any) => {
       let ticketDetails;
-      if (res && res.length > 0) {
-        ticketDetails = res[0];
+      if (res.ticket) {
+        ticketDetails = res.ticket;
         this.ticketForm.patchValue({
           ticket_id: ticketDetails.ticket_id,
           ticket_no: ticketDetails.ticket_number,
@@ -81,7 +101,7 @@ export class TicketFormComponent implements OnInit {
           product_model_number: ticketDetails.model_number,
           product_hw_name: ticketDetails.product_name,
           product_brand_name: ticketDetails.product_name,
-          product_installation_date: ticketDetails.installation_date,
+          product_installation_date: moment(ticketDetails.installation_date).format('DD-MM-YYYY'),
           vendor_id: ticketDetails.vendor_id,
           vendor_name: ticketDetails.vendor_name,
           vendor_contact_person_name: ticketDetails.vendor_contact_name,
@@ -93,6 +113,7 @@ export class TicketFormComponent implements OnInit {
           site_state_id: ticketDetails.state_id,
           site_district_id: ticketDetails.district_id,
           site_block_id: ticketDetails.block_id,
+          site_block_name: ticketDetails.block_name,
           site_address: ticketDetails.address,
           site_contact_person_name: ticketDetails.primary_contact_name,
           site_contact_no: ticketDetails.primary_contact_number,
@@ -100,9 +121,49 @@ export class TicketFormComponent implements OnInit {
           issue_remarks: ticketDetails.remarks
         });
         this.getBlocks(ticketDetails.district_id);
+
+
+        if (ticketDetails.documents && ticketDetails.documents.length > 0) {
+          for(let doc of ticketDetails.documents) {
+            let blob: any = await this.ticketService.downloadDocument({doc_id: doc.doc_id}).toPromise();
+            blob = (blob as Blob);
+            let [type, ext] = blob.type.split('/')
+            let fileObj = new File([blob], `${doc.doc_title}.${ext}`, {type: blob.type});
+            let formData = new FormData();
+            formData.append('file_name', doc.doc_title);
+            formData.append('file', fileObj);
+            formData.append('date_created', doc.date_created);
+            this.documents.push({document_id: doc.doc_id, form_data: formData});
+          }
+          this.prepareRemoteGridData();
+        }
+
+        this.ticketForm.get('product_serial_no').disable();
+      }
+
+      if (res.visits && res.visits.length > 0) {
+        res.visits.forEach((visit, index) => {
+          visit.visit_no = `${this.ordinal_suffix_of((index+1))} Visit`
+        })
+        this.visitsData = res.visits;
       }
     })
   }
+
+  ordinal_suffix_of(i) {
+    var j = i % 10,
+        k = i % 100;
+    if (j == 1 && k != 11) {
+        return i + "st";
+    }
+    if (j == 2 && k != 12) {
+        return i + "nd";
+    }
+    if (j == 3 && k != 13) {
+        return i + "rd";
+    }
+    return i + "th";
+ }
 
   initForm() {
     this.ticketForm = new FormGroup({
@@ -127,6 +188,7 @@ export class TicketFormComponent implements OnInit {
       site_state_id: new FormControl({value:null, disabled: true}, [Validators.required]),
       site_district_id: new FormControl({value:null, disabled: true}, [Validators.required]),
       site_block_id: new FormControl({value:null, disabled: true}, [Validators.required]),
+      site_block_name: new FormControl({value:null, disabled: true}, [Validators.required]),
       site_address: new FormControl({value:null, disabled: true}, [Validators.required]),
       site_contact_person_name: new FormControl({value:null, disabled: true}, [Validators.required]),
       site_contact_no: new FormControl({value:null, disabled: true}, [Validators.required]),
@@ -157,7 +219,7 @@ export class TicketFormComponent implements OnInit {
             product_model_number: productDetails.model_number,
             product_hw_name: productDetails.product_name,
             product_brand_name: productDetails.product_name,
-            product_installation_date: productDetails.installation_date,
+            product_installation_date: moment(productDetails.installation_date).format('DD-MM-YYYY'),
             vendor_id: productDetails.vendor_id,
             vendor_name: productDetails.vendor_name,
             vendor_contact_person_name: productDetails.vendor_contact_name,
@@ -169,6 +231,7 @@ export class TicketFormComponent implements OnInit {
             site_state_id: productDetails.state_id,
             site_district_id: productDetails.district_id,
             site_block_id: productDetails.block_id,
+            site_block_name: productDetails.block_name,
             site_address: productDetails.address,
             site_contact_person_name: productDetails.primary_contact_name,
             site_contact_no: productDetails.primary_contact_number
@@ -189,12 +252,31 @@ export class TicketFormComponent implements OnInit {
         product_id: formData.product_id,
         description: formData.issue_description,
         opening_date: formData.ticket_raised_date,
-        remarks: formData.remarks
+        remarks: formData.issue_remarks
       }
-      this.ticketService.createTicket(payload).subscribe(res => {
-        this.utilsService.showSuccessToast('Ticket has been raised successfully');
-        this.back();
-      })
+      if (this.documents.length > 0) {
+        let formData = new FormData();
+        formData.append('ticket_mode', payload.ticket_mode);
+        formData.append('product_id', payload.product_id);
+        formData.append('description', payload.description);
+        formData.append('opening_date', payload.opening_date);
+        formData.append('remarks', payload.remarks);
+        for (let doc of this.documents) {
+          let file = (doc.form_data.get('file') as File);
+          let name = file.name;
+          let actualName = doc.form_data.get('file_name');
+          let ext = name.split('.')[1];
+          let filename = `${actualName}.${ext}`;
+          formData.append('doc_files', file, filename);
+        }
+
+        this.ticketService.createTicket(formData).subscribe(res => {
+          this.utilsService.showSuccessToast('Ticket has been raised successfully');
+          this.back();
+        })
+      } else {
+        this.utilsService.showErrorToast('Please upload documents');
+      }
     }
   }
 
@@ -224,59 +306,67 @@ export class TicketFormComponent implements OnInit {
   prepareLocalGridData() {
     this.documentsGrid.data = [];
     this.documents.forEach(data => {
+      let file = (data.form_data.get('file') as File);
+      let document_type = this.getDocumentType(file.type);
       this.documentsGrid.data.push({
         document_id: data.document_id,
         file_name: data.form_data.get('file_name'),
         date_created: moment().format('DD-MM-YYYY'),
+        document_type: document_type,
         unsaved: true,
+      });
+    })
+  }
+
+
+  getDocumentType(type: string) {
+    let document_type = ''
+    if (type.indexOf('image/') != -1) {
+      document_type = 'Image';
+    } else if (type.indexOf('application/pdf') != -1) {
+      document_type = 'PDF';
+    }
+    return document_type;
+  }
+
+  prepareRemoteGridData() {
+    this.documentsGrid.data = [];
+    this.documents.forEach(data => {
+      let file = (data.form_data.get('file') as File);
+      let document_type = this.getDocumentType(file.type);
+      this.documentsGrid.data.push({
+        document_id: data.document_id,
+        file_name: data.form_data.get('file_name'),
+        date_created: moment((data.form_data.get('date_created') as string)).format('DD-MM-YYYY'),
+        document_type: document_type,
+        unsaved: false,
       });
     })
   }
 
   downloadDocument(gridData) {
     let filename
-    // let payload = {
-    //   patient_document_id: gridData.patient_document_id,
-    // }
-
-    if (gridData.unsaved) {
-      let formData = (this.documents.find(doc => doc.document_id == gridData.document_id).form_data);
-      let file = (formData.get('file') as File);
-      let name = file.name;
-      let ext = name.split('.')[1];
-      filename = `${gridData.file_name}.${ext}`;
-      const blob: any = new Blob([file], { type: file.type });
-      const link = document.createElement('a');
-      if (link.download !== undefined) {
-        const url = URL.createObjectURL(blob);
-        link.setAttribute('href', url);
-        link.setAttribute('download', filename);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
+    let formData = (this.documents.find(doc => doc.document_id == gridData.document_id).form_data);
+    let file = (formData.get('file') as File);
+    let name = file.name;
+    let ext = name.split('.')[1];
+    filename = `${gridData.file_name}.${ext}`;
+    const blob: any = new Blob([file], { type: file.type });
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
+  }
 
-    // this.appointmentService.downloadPatientDocument(payload).subscribe((res: any) => {
-    //   let file_name = gridData.file_name.split(".");
-
-    //   filename = file_name[0]
-    //   if (!res || res?.size <= 0) {
-    //     this.utilService.showInfoToast('Receipt Not Yet Generated');
-    //   }
-    //   else {
-    //     const blob: any = new Blob([res], { type: res.type });
-    //     const link = document.createElement('a');
-    //     if (link.download !== undefined) {
-    //       const url = URL.createObjectURL(blob);
-    //       link.setAttribute('href', url);
-    //       link.setAttribute('download', filename);
-    //       document.body.appendChild(link);
-    //       link.click();
-    //       document.body.removeChild(link);
-    //     }
-    //   }
-    // })
+  removeDocument(gridData) {
+    let document_id = gridData.document_id;
+    this.documents = this.documents.filter(data => data.document_id != document_id);
+    this.prepareLocalGridData();
   }
 
   back() {
