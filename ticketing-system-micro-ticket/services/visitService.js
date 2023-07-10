@@ -28,7 +28,6 @@ const getVisit = async (visit_id) => {
     }
 }
 
-
 const getAllVisits = async (ticket_id) => {
     try {
         const cacheKey = `Visits|${ticket_id}`;
@@ -99,7 +98,6 @@ const getAllVisits = async (ticket_id) => {
         throw error
     }
 }
-
 
 const visitAddUpdateCheck = async (ticket_id) => {
 
