@@ -25,6 +25,16 @@ router.post("/createTicket", async (req, res) => {
 
     try {
 
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(STATUS.BAD_REQUEST).send({ errorCode: "TCKTERR0004", error: TICKET_ERR.TCKTERR0004 });
+        }
+
+        const docsArr = Array.isArray(req.files.doc_files) ? req.files.doc_files : [req.files.doc_files];
+        const isValidDocuments = validateDocuments(docsArr);
+        if (!isValidDocuments) {
+            return res.status(STATUS.BAD_REQUEST).send({ errorCode: "TCKTERR0001", error: TICKET_ERR.TCKTERR0001 });
+        }
+
         const reqUser = req.plainToken;
         req.body.ticket_number = await ticketService.generateTicketNumber();
         const ticketDetails = new ticketModel.CreateTicket(req.body);
@@ -41,6 +51,31 @@ router.post("/createTicket", async (req, res) => {
         ticketDetails.updated_by = reqUser.user_id;
 
         const data = await ticketService.createTicket(ticketDetails);
+        const ticket_id = data[0].ticket_id;
+
+        const bucketName = process.env.TS_S3_BUCKET;
+        const docData = [];
+
+        for (const [idx, doc] of docsArr.entries()) {
+            const [doc_title, fileExt] = doc.name.split(".");
+            const fileName = `${ticket_id}_${Date.now()}_${idx}.${fileExt}`
+            const filePath = `TICKET_DOCS/${ticket_id}/${fileName}`
+            console.log(fileExt, fileName, filePath);
+            const docUploadResult = await s3Util.uploadFile(filePath, doc.data, bucketName);
+            console.log(docUploadResult);
+            const params = {
+                ticket_id,
+                doc_title,
+                doc_url: filePath,
+                user_id: reqUser.user_id
+            }
+            console.log(params);
+            const result = await ticketService.insertDocuments(params);
+            result.doc_url = docUploadResult
+            result.doc_title = doc_title
+            docData.push(result)
+        }
+
         return res.status(STATUS.OK).send(data);
 
     } catch (error) {
