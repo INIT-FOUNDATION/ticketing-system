@@ -90,6 +90,8 @@ router.post("/getAllVisits", async (req, res) => {
 
         const ticket_id = req.body.ticket_id ? req.body.ticket_id : null;
         const visits = await visitService.getAllVisits(ticket_id)
+
+        
         res.send(visits)
 
     } catch (error) {
