@@ -122,13 +122,13 @@
                     paginationpos='none' [actionColumnTemplate]="patientDocuemntTemplate" [actionColumnRequired]="true">
                     <ng-template #patientDocuemntTemplate let-gridData='griddata'>
                       <button (click)="downloadDocument(gridData)" type="button" class="butonclover edit" data-toggle="tooltip"
-                        data-placement="top" title="View Prescription">
+                        data-placement="top" title="Download Document">
                         <span class="actionicons iconscls text-warning">
                           <i class="fa fa-download"></i>
                         </span>
                       </button>
                       <button (click)="removeDocument(gridData)" *ngIf="gridData.unsaved"  type="button" class="butonclover edit" data-toggle="tooltip"
-                        data-placement="top" title="View Prescription">
+                        data-placement="top" title="Remove Document">
                         <span class="actionicons iconscls text-warning">
                           <i class="fa fa-trash"></i>
                         </span>
@@ -143,14 +143,15 @@
                   <div class="patientDetailsTable">
                     <app-common-data-table #visitsGrid [colModel]='visitscols' gridId='visitsGrid' sField='visit_date'
                       sOrder='desc' [lazyLoad]="false" selectType='none' [localData]="visitsData" idColumn='visit_id'
-                      paginationpos='none' [actionColumnTemplate]="visitActionTemplate" [actionColumnRequired]="false" [colFormatterTemplate]="{'visit_type': visitTypeTemplate}">
-                      <ng-template #visitActionTemplate let-gridData='griddata'>
-                        <button type="button" class="butonclover edit" data-toggle="tooltip"
-                          data-placement="top" title="View Prescription">
-                          <span class="actionicons iconscls text-warning">
-                            <i class="fa fa-download"></i>
-                          </span>
+                      paginationpos='none' [actionColumnTemplate]="" [actionColumnRequired]="false"
+                      [colFormatterTemplate]="{'visit_type': visitTypeTemplate, 'document_download': visitDownloadTemplate, 'visit_date': visitDateTemplate}">
+                      <ng-template #visitDownloadTemplate let-gridData='griddata'>
+                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                          <mat-icon>more_vert</mat-icon>
                         </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item *ngFor="let item of gridData.documents" type="button" (click)="downloadVisitsDocument(item.visit_doc_id, item.new_title)">{{item.new_title}}</button>
+                        </mat-menu>
                       </ng-template>
                       <ng-template #visitTypeTemplate let-gridData='griddata'>
                         <span>{{gridData.visit_type == 1 ? 'Aieze Member' : 'Vendor\'s Engineer'}}</span>
