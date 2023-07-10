@@ -35,9 +35,42 @@ export class TicketService {
     )
   }
 
+  addDocuments(payload) {
+    return this.http.post(
+      `${environment.ticket_prefix_url}/addDocuments`,
+      payload
+    )
+  }
+
   getTicket(payload) {
     return this.http.post(
       `${environment.ticket_prefix_url}/getTicket`,
+      payload
+    )
+  }
+
+  downloadDocument(payload) {
+    const requestOptions: Object = {
+      responseType: 'blob' as 'blob'
+    };
+    return this.http.post(
+      `${environment.ticket_prefix_url}/downloadDocument`,
+      payload,
+      requestOptions
+    )
+  }
+
+  addVisit(payload) {
+    return this.http.post(
+      `${environment.ticket_prefix_url}/visits/addVisit`,
+      payload
+    )
+  }
+
+
+  getAllVisits(payload) {
+    return this.http.post(
+      `${environment.ticket_prefix_url}/visits/getAllVisits`,
       payload
     )
   }

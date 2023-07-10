@@ -14,6 +14,7 @@ export interface DialogData {
 export class UploadDocumentComponent implements OnInit {
   uploadedFile: any;
   uploadDocumentForm: FormGroup;
+  allowed_types = ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'];
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData,
   private matDialogRef: MatDialogRef<UploadDocumentComponent>,
   private utilService: UtilsService) { }
@@ -94,12 +95,21 @@ export class UploadDocumentComponent implements OnInit {
    * @param files (Files List)
    */
   prepareFilesList(files: Array<any>) {
+    let validFile = false;
     for (const item of files) {
-      item.progress = 0;
-      this.uploadedFile = item;
+      if (this.allowed_types.indexOf(item.type) != -1) {
+        item.progress = 0;
+        this.uploadedFile = item;
+        validFile = true;
+      }
       // this.uploadDocumentForm.get('document').setValue(item.name);
     }
-    this.uploadFilesSimulator(0);
+
+    if (validFile) {
+      this.uploadFilesSimulator(0);
+    } else {
+      this.utilService.showErrorToast('Only PNG, JPG, JPEG and PDF are allowed');
+    }
   }
 
   /**

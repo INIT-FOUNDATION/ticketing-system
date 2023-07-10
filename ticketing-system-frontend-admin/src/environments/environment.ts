@@ -1,9 +1,18 @@
-const BASE_URL = 'http://localhost';
-const DIRECT_BASE_URL = 'http://localhost';
-const API_ADMIN_PORT = `:9001`;
-const API_AUTH_PORT = `:9002`;
-const API_USER_PORT = `:9003`;
-const API_TICKET_PORT = `:9005`;
+// const BASE_URL = 'http://localhost';
+// const DIRECT_BASE_URL = 'http://localhost';
+// const API_ADMIN_PORT = `:9001`;
+// const API_AUTH_PORT = `:9002`;
+// const API_USER_PORT = `:9003`;
+// const API_TICKET_PORT = `:9005`;
+
+
+
+const BASE_URL = 'https://apitc.dev.aieze.in';
+const DIRECT_BASE_URL = 'https://apitc.dev.aieze.in';
+const API_ADMIN_PORT = ``;
+const API_AUTH_PORT = ``;
+const API_USER_PORT = ``;
+const API_TICKET_PORT = ``;
 
 
 export const environment = {

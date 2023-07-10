@@ -14,7 +14,7 @@
     <!-- </div> -->
     <div class="col-md-12">
       <div class="container" appDnd (fileDropped)="onFileDropped($event)">
-        <input type="file" formControlName="document" #fileDropRef id="fileDropRef" accept="image/*,application/pdf"
+        <input type="file" formControlName="document" #fileDropRef id="fileDropRef" accept="image/png,image/jpg,image/jpeg,application/pdf"
           (change)="fileBrowseHandler($event.target.files)" />
         <svg xmlns="http://www.w3.org/2000/svg" width="63" height="64" viewBox="0 0 63 64">
           <g fill="#3B454F" fill-rule="nonzero">

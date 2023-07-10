@@ -14,12 +14,18 @@
           sOrder='desc' [lazyLoad]="false" selectType='none' [localData]="[]" idColumn='ticket_id'
           [rowsPerPage]='rowsPerPage' paginationpos='bottom' (onCustomPageAndFilterEvent)="onPageChangeEvent($event)"
           [actionColumnTemplate]="ticketActionTemplate"
-          [actionColumnRequired]="true" [colFormatterTemplate]="{'ticket_mode': ticketModeFormatter, 'status': ticketStatusFormatter}">
+          [actionColumnRequired]="true" [colFormatterTemplate]="{'ticket_mode': ticketModeFormatter, 'status': ticketStatusFormatter, 'opening_date': ticketOpeningDateFormatter}">
   <ng-template #ticketActionTemplate let-gridData='griddata'>
-    <button (click)="editTicket(gridData)"
+    <button (click)="editTicket(gridData)" type="button"
       class="butonclover edit" data-toggle="tooltip" data-placement="top" title="Edit Ticket">
       <span class="actionicons iconscls text-warning">
         <i class="fa fa-pencil"></i>
+      </span>
+    </button>
+    <button (click)="addVisit(gridData)" type="button"
+      class="butonclover edit" data-toggle="tooltip" data-placement="top" title="Add Visit">
+      <span class="actionicons iconscls text-warning">
+        <i class="fa fa-clipboard"></i>
       </span>
     </button>
   </ng-template>
@@ -28,5 +34,8 @@
   </ng-template>
   <ng-template #ticketStatusFormatter let-gridData='griddata'>
     {{gridData.status == 1 ? 'Pending' : 'Pending'}}
+  </ng-template>
+  <ng-template #ticketOpeningDateFormatter let-gridData='griddata'>
+    {{gridData.opening_date | date: 'dd-MM-YYYY'}}
   </ng-template>
 </app-common-data-table>

@@ -1,0 +1,141 @@
+<div class="col-md-12">
+  <div class="row createRoles ">
+      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 pl-0">
+          <h2>Issue Details</h2>
+          <label class="userDetailsLabel" for="product_name">Hardware name: {{ticketDetails?.product_name}}</label>
+          <label class="userDetailsLabel" for="product_hw_name">Model Number: {{ticketDetails?.model_number}}</label>
+          <label class="userDetailsLabel" for="product_hw_name">Installation date: {{ticketDetails?.installation_date | date:'dd-MM-YYYY'}}</label>
+          <label class="userDetailsLabel" for="vendor_name">Company name: {{ticketDetails?.vendor_name}}</label>
+          <label class="userDetailsLabel" for="vendor_contact_person_name">Contact person name: {{ticketDetails?.vendor_contact_name}}</label>
+          <label class="userDetailsLabel" for="vendor_contact_person_name">Mobile no: {{ticketDetails?.vendor_contact_number}}</label>
+          <label class="userDetailsLabel" for="site_name">Site name: {{ticketDetails?.state_name}}</label>
+          <label class="userDetailsLabel" for="site_udise_code">UDISE Code: {{ticketDetails?.site_code}}</label>
+          <label class="userDetailsLabel" for="primary_contact_name">Contact person name: {{ticketDetails?.primary_contact_name}}</label>
+          <label class="userDetailsLabel" for="primary_contact_number">Contact no: {{ticketDetails?.primary_contact_number}}</label>
+          <label class="userDetailsLabel" for="description">Issue description: {{ticketDetails?.description}}</label>
+          <label class="userDetailsLabel" for="remarks">Issue remarks: {{ticketDetails?.remarks}}</label>
+          <h2>Visit Details</h2>
+          <form class=" marginTop20" [formGroup]="visitForm" (ngSubmit)="submit()">
+              <div class="row">
+                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 marginTop20">
+                  <label class="userDetailsLabel" for="visit_type">Visit type*</label>
+                  <mat-form-field>
+                      <mat-select class="userInput" id="visit_type" formControlName='visit_type' (selectionChange)="onVisitTypeChange()">
+                          <mat-option *ngFor="let mode of visit_type" [value]="mode.value">{{mode.label}}
+                          </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 marginTop20">
+                  <label class="userDetailsLabel" for="visit_date">Visit date*</label>
+                  <span>{{visitForm.get(['visit_date']).value | date:'dd-MM-YYYY'}}</span>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                  <label class="userDetailsLabel" for="visit_by">Visit by*</label>
+                  <input type="text" class="form-control userInput" id="visit_by" formControlName="visit_by"
+                      appInputTrim [ngClass]="{'invalid-field': formSubmitted && visitForm.get(['visit_by']).hasError('required')}"
+                      [appRangeLength]="[2, 30]" appInputChar='street'>
+
+                  <div class="invalid-feedback"
+                      *ngIf="visitForm.get(['visit_by']).hasError('inputcharvalidator') && !visitForm.get(['visit_by']).hasError('rangeLength')"
+                      [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                      placement="bottom">
+                      {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                  </div>
+                  <div class="invalid-feedback"
+                      *ngIf="visitForm.get(['visit_by']).hasError('rangeLength') || visitForm.get(['visit_by']).hasError('trimError')"
+                      [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                      Must be between 2-30 characters
+                  </div>
+                  <div class="invalid-feedback"
+                      *ngIf="formSubmitted && visitForm.get(['visit_by']).hasError('required')"
+                      tooltip="Visit by is required" placement="bottom">
+                      Visit by is required
+                  </div>
+                </div>
+
+                <!-- <ng-container>
+                  <h2>Product Details</h2>
+                  <label class="userDetailsLabel" for="product_hw_name">Hardware name: {{visitForm.get(['product_hw_name']).value}}</label>
+                  <label class="userDetailsLabel" for="product_model_number">Model number: {{visitForm.get(['product_model_number']).value}}</label>
+                  <label class="userDetailsLabel" for="product_brand_name">Brand name: {{visitForm.get(['product_brand_name']).value}}</label>
+                  <label class="userDetailsLabel" for="product_installation_date">Installation date: {{visitForm.get(['product_installation_date']).value}}</label>
+
+                  <h2>Vendor Details</h2>
+                  <label class="userDetailsLabel" for="vendor_name">Company name: {{visitForm.get(['vendor_name']).value}}</label>
+                  <label class="userDetailsLabel" for="vendor_contact_person_name">Contact person name: {{visitForm.get(['vendor_contact_person_name']).value}}</label>
+                  <label class="userDetailsLabel" for="vendor_contact_no">Mobile no: {{visitForm.get(['vendor_contact_no']).value}}</label>
+                  <label class="userDetailsLabel" for="vendor_email_id">Email id: {{visitForm.get(['vendor_email_id']).value}}</label>
+
+
+                  <h2>Site Details</h2>
+                  <label class="userDetailsLabel" for="site_name">Site name: {{visitForm.get(['site_name']).value}}</label>
+                  <label class="userDetailsLabel" for="site_udise_code">UDISE Code: {{visitForm.get(['site_udise_code']).value}}</label>
+                  <label class="userDetailsLabel" for="site_block_id">Block: {{visitForm.get(['site_block_name']).value}}</label>
+                  <label class="userDetailsLabel" for="site_address">Address: {{visitForm.get(['site_address']).value}}</label>
+                  <label class="userDetailsLabel" for="site_contact_person_name">Contact person name: {{visitForm.get(['site_contact_person_name']).value}}</label>
+                  <label class="userDetailsLabel" for="site_contact_no">Contact no: {{visitForm.get(['site_contact_no']).value}}</label>
+                </ng-container>
+
+                <h2>Issue Details</h2> -->
+                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+                  <label class="userDetailsLabel" for="remarks">Remarks*</label>
+                  <textarea type="text" class="form-control userInput" id="remarks" formControlName="remarks"
+                      appInputTrim [ngClass]="{'invalid-field': formSubmitted && visitForm.get(['remarks']).hasError('required')}"
+                      [appRangeLength]="[2, 30]" appInputChar='username'></textarea>
+
+                  <div class="invalid-feedback"
+                      *ngIf="visitForm.get(['remarks']).hasError('inputcharvalidator') && !visitForm.get(['remarks']).hasError('rangeLength')"
+                      [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+                      placement="bottom">
+                      {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
+                  </div>
+                  <div class="invalid-feedback"
+                      *ngIf="visitForm.get(['remarks']).hasError('rangeLength') || visitForm.get(['remarks']).hasError('trimError')"
+                      [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+                      Must be between 2-30 characters
+                  </div>
+                  <div class="invalid-feedback"
+                      *ngIf="formSubmitted && visitForm.get(['remarks']).hasError('required')"
+                      tooltip="User Name is required" placement="bottom">
+                      Remarks is required
+                  </div>
+                </div>
+
+                <h2>Documents</h2>
+                <div class="row" *ngIf="formType == 'add'" >
+                  <div class="col-md-12 marginBtm2rem text-end">
+                    <button type="button" (click)="uploadDocumentDialog()" class="btn createRole marginBtm1Rem"><i
+                        class="fa fa-upload"></i> Upload Document</button>
+                  </div>
+                </div>
+                <div class="patientDetailsTable">
+                  <app-common-data-table #documentsGrid [colModel]='documentcols' gridId='documentsGrid' sField='updatedDate'
+                    sOrder='desc' [lazyLoad]="false" selectType='none' [localData]="[]" idColumn='patient_document_id'
+                    paginationpos='none' [actionColumnTemplate]="patientDocuemntTemplate" [actionColumnRequired]="true">
+                    <ng-template #patientDocuemntTemplate let-gridData='griddata'>
+                      <button (click)="downloadDocument(gridData)" type="button" class="butonclover edit" data-toggle="tooltip"
+                        data-placement="top" title="View Prescription">
+                        <span class="actionicons iconscls text-warning">
+                          <i class="fa fa-download"></i>
+                        </span>
+                      </button>
+                      <button (click)="removeDocument(gridData)" *ngIf="gridData.unsaved"  type="button" class="butonclover edit" data-toggle="tooltip"
+                        data-placement="top" title="View Prescription">
+                        <span class="actionicons iconscls text-warning">
+                          <i class="fa fa-trash"></i>
+                        </span>
+                      </button>
+                    </ng-template>
+                  </app-common-data-table>
+                </div>
+                <div class="col-md-6 text-end">
+                    <button class="btn createRoleBtn btnCenter" type="submit">Submit</button>
+                </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
