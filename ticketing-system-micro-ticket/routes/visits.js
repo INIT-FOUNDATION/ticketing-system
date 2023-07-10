@@ -13,6 +13,17 @@ router.post("/addVisit", async (req, res) => {
 
     try {
 
+        // if (!req.files || Object.keys(req.files).length === 0) {
+        //     return res.status(STATUS.BAD_REQUEST).send({ errorCode: "VISITERR0004", error: VISIT_ERR.VISITERR0004 });
+        // }
+
+        const docsArr = Array.isArray(req.files.doc_files) ? req.files.doc_files : [req.files.doc_files];
+        const isValidDocuments = validateDocuments(docsArr);
+        if (!isValidDocuments) {
+            return res.status(STATUS.BAD_REQUEST).send({ errorCode: "VISITERR0001", error: VISIT_ERR.VISITERR0001 });
+        }
+
+
         const reqUser = req.plainToken;
         const visitDetails = new visitModel.Visit(req.body);
 
@@ -28,6 +39,30 @@ router.post("/addVisit", async (req, res) => {
         visitDetails.updated_by = reqUser.user_id;
 
         const data = await visitService.createVisit(visitDetails);
+        const visit_id = data[0].visit_id;
+
+        const bucketName = process.env.TS_S3_BUCKET;
+        const docData = [];
+
+        for (const [idx, doc] of docsArr.entries()) {
+            const [doc_title, fileExt] = doc.name.split(".");
+            const fileName = `${visit_id}_${Date.now()}_${idx}.${fileExt}`
+            const filePath = `VISIT_DOCS/${visit_id}/${fileName}`
+            console.log(fileExt, fileName, filePath);
+            const docUploadResult = await s3Util.uploadFile(filePath, doc.data, bucketName);
+            console.log(docUploadResult);
+            const params = {
+                visit_id,
+                doc_title,
+                doc_url: filePath,
+                user_id: reqUser.user_id
+            }
+            const result = await visitService.insertDocuments(params);
+            result.doc_url = docUploadResult
+            result.doc_title = doc_title
+            docData.push(result)
+        }
+
         return res.status(STATUS.OK).send(data);
 
     } catch (error) {
@@ -133,5 +168,42 @@ router.post("/addDocuments", async (req, res) => {
         return res.status(STATUS.INTERNAL_SERVER_ERROR).send(`{"errorCode":"CMNERR0000", "error":"${COMMON_ERR.CMNERR0000}"}`);
     }
 });
+
+
+router.post('/downloadDocument', async (req, res) => {
+    try {
+
+        const visit_doc_id = req.body.visit_doc_id;
+        if (!visit_doc_id) {
+            return res.status(STATUS.BAD_REQUEST).send({ errorCode: "VISITERR0005", error: VISIT_ERR.VISITERR0005 });
+        }
+
+        const docDetails = await visitService.getDocumentDetails(visit_doc_id);
+
+        if (!docDetails) {
+            return res.status(STATUS.BAD_REQUEST).send({ errorCode: "VISITERR0006", error: VISIT_ERR.VISITERR0006 });
+        }
+
+        const options = {
+            Bucket: process.env.TS_S3_BUCKET,
+            Key: docDetails.doc_url
+        };
+
+        const [filePath, fileExt] = docDetails.doc_url.split(".");
+        const fileName = filePath.split('/')[2]
+        console.log(fileName, fileExt);
+        res.setHeader("Content-Type", "image/" + fileExt);
+        res.setHeader("Content-disposition", "filename=" + fileName);
+        s3.getObject(options).createReadStream()
+            .on("error", function (err) {
+                res.status(500).json({ error: "Error -> " + err });
+            })
+            .pipe(res);
+    } catch (error) {
+        console.log(error);
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).send(`{"errorCode":"CMNERR0000", "error":"${COMMON_ERR.CMNERR0000}"}`);
+    }
+})
+
 
 module.exports = router;

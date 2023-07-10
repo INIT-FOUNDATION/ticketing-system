@@ -21,4 +21,5 @@ exports.VISIT_QUERIES = {
     insertDocuments: `INSERT INTO public.tr_visit_documents(visit_id, doc_title, doc_url, date_created, date_modified, created_by, updated_by)
     VALUES ($1, $2, $3, NOW(), NOW(), $4, $4) RETURNING visit_doc_id;`,
     getDocuments: `SELECT * FROM tr_visit_documents WHERE visit_id = $1`,
+    getDocumentDetails: `SELECT * FROM tr_visit_documents WHERE visit_doc_id = $1`,
 }

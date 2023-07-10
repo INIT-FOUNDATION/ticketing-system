@@ -78,11 +78,31 @@ const insertDocuments = async (docData) => {
     }
 }
 
+const getDocumentDetails = async (visit_doc_id) => {
+    try {
+
+        const _query = {
+            text: VISIT_QUERIES.getDocumentDetails,
+            values: [visit_doc_id]
+        };
+
+        console.log(_query);
+
+        const result = await pg.executeQueryPromise(_query);
+        console.log('result', result);
+        return result[0]
+
+    } catch (error) {
+        console.log(error);
+        throw error
+    }
+}
 
 module.exports = {
     createVisit,
     getVisit,
     checkVisitIdExists,
     insertDocuments,
-    getDocument
+    getDocument,
+    getDocumentDetails
 }
