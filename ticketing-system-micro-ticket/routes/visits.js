@@ -88,23 +88,9 @@ router.post("/getVisit", async (req, res) => {
 router.post("/getAllVisits", async (req, res) => {
     try {
 
-        const reqUserDetails = req.plainToken;
-        let pageSize = req.body.pageSize ? req.body.pageSize : 0;
-        let currentPage = req.body.currentPage ? req.body.currentPage : 0;
-        currentPage = (currentPage == 1 || currentPage == 0) ? 0 : ((currentPage - 1) * pageSize);
-
-        const ticket_mode = req.body.ticket_mode ? req.body.ticket_mode : null;
-        const product_id = req.body.product_id ? req.body.product_id : null;
-
-        const reqParams = {
-            pageSize,
-            currentPage,
-            ticket_mode,
-            product_id
-        };
-
-        const productData = await visitService.getTicketList(reqParams)
-        res.send(productData)
+        const ticket_id = req.body.ticket_id ? req.body.ticket_id : null;
+        const visits = await visitService.getAllVisits(ticket_id)
+        res.send(visits)
 
     } catch (error) {
         console.log("catch error", error);

@@ -28,6 +28,21 @@ const getVisit = async (visit_id) => {
     }
 }
 
+
+const getAllVisits = async (ticket_id) => {
+    try {
+        const _query = {
+            text: VISIT_QUERIES.getAllVisits,
+            values: [ticket_id]
+        }
+        console.log(_query);
+        const data = await pg.executeQueryPromise(_query);
+        return data;
+    } catch (error) {
+        throw error
+    }
+}
+
 const checkVisitIdExists = async (visit_id) => {
     try {
         const _query = {
@@ -104,5 +119,6 @@ module.exports = {
     checkVisitIdExists,
     insertDocuments,
     getDocument,
-    getDocumentDetails
+    getDocumentDetails,
+    getAllVisits
 }

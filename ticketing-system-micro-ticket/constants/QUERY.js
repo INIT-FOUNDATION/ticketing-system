@@ -17,6 +17,7 @@ exports.VISIT_QUERIES = {
     createVisit: `INSERT INTO public.tr_visits(ticket_id, visit_type, visit_date, visit_by, remarks, date_created, date_modified, created_by, updated_by)
         VALUES ($1, $2, $3, $4, $5, NOW(), NOW(), $6, $7) RETURNING visit_id;`,
     getVisit: `SELECT * FROM tr_visits WHERE visit_id = $1`,
+    getAllVisits: `SELECT visit_id, ticket_id, visit_type, visit_date, visit_by, remarks, status  FROM tr_visits WHERE ticket_id = $1`,
     checkVisitIdExists: `SELECT COUNT(*) AS count FROM tr_visits WHERE visit_id = $1`,
     insertDocuments: `INSERT INTO public.tr_visit_documents(visit_id, doc_title, doc_url, date_created, date_modified, created_by, updated_by)
     VALUES ($1, $2, $3, NOW(), NOW(), $4, $4) RETURNING visit_doc_id;`,
