@@ -9,6 +9,7 @@ exports.TICKET_QUERIES = {
     insertDocuments: `INSERT INTO public.m_ticket_documents(ticket_id, doc_title, doc_url, date_created, date_modified, created_by, updated_by)
         VALUES ($1, $2, $3, NOW(), NOW(), $4, $4) RETURNING doc_id;`,
     getDocuments: `SELECT * FROM m_ticket_documents WHERE ticket_id = $1`,
+    getDocumentDetails: `SELECT * FROM m_ticket_documents WHERE doc_id = $1`,
 }
 
 

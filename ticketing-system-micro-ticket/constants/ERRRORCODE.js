@@ -7,6 +7,9 @@ exports.TICKET_ERR = {
     TCKTERR0002: "Ticket Id is Required",
     TCKTERR0003: "Invalid Ticket Id",
     TCKTERR0004: "Documents are missing",
+    TCKTERR0005: "Doc Id is Required",
+    TCKTERR0006: "Doc Id is Invalid",
+
 }
 
 exports.VISIT_ERR = {

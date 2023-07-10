@@ -203,8 +203,6 @@ const getDocument = async (ticket_id) => {
 
 const insertDocuments = async (docData) => {
     try {
-        // survey_id, file_name, file_path, survey_type, created_by, updated_by
-        console.log("asdasdsa");
         let _query = {
             text: TICKET_QUERIES.insertDocuments,
             values: [docData.ticket_id, docData.doc_title, docData.doc_url, docData.user_id]
@@ -222,6 +220,25 @@ const insertDocuments = async (docData) => {
     }
 }
 
+const getDocumentDetails = async (doc_id) => {
+    try {
+
+        const _query = {
+            text: TICKET_QUERIES.getDocumentDetails,
+            values: [doc_id]
+        };
+
+        console.log(_query);
+
+        const result = await pg.executeQueryPromise(_query);
+        console.log('result', result);
+        return result[0]
+
+    } catch (error) {
+        console.log(error);
+        throw error
+    }
+}
 
 module.exports = {
     generateTicketNumber,
@@ -231,5 +248,6 @@ module.exports = {
     getTicket,
     checkTicketIdExists,
     insertDocuments,
-    getDocument
+    getDocument,
+    getDocumentDetails
 }

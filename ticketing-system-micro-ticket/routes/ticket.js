@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const fileUpload = require('express-fileupload')
 const moment = require('moment');
+const AWS = require("aws-sdk");
 
 const { STATUS, logger, CONST, redis, SMS, s3Util } = require("ticketing-system-micro-common");
 const { COMMON_ERR, TICKET_ERR } = require('../constants/ERRRORCODE');
@@ -10,6 +11,11 @@ const ticketModel = require('../models/ticket')
 const ticketService = require('../services/ticketService')
 
 const { validateDocuments } = require('../utility/doc.util')
+
+AWS.config.update({
+    region: process.env.REGION_NAME
+});
+const s3 = new AWS.S3({});
 
 router.use(fileUpload());
 
@@ -99,10 +105,10 @@ router.post('/updateTicket', async (req, res) => {
         }
         const data = await ticketService.updateTicket(ticketDetails);
         const response = {
-            message : 'Ticket updated successfully'
+            message: 'Ticket updated successfully'
         }
         return res.status(STATUS.OK).send(response);
-        
+
     } catch (error) {
         console.log(error);
         return res.status(STATUS.INTERNAL_SERVER_ERROR).send(`{"errorCode":"CMNERR0000", "error":"${COMMON_ERR.CMNERR0000}"}`);
@@ -210,6 +216,41 @@ router.post("/addDocuments", async (req, res) => {
         return res.status(STATUS.INTERNAL_SERVER_ERROR).send(`{"errorCode":"CMNERR0000", "error":"${COMMON_ERR.CMNERR0000}"}`);
     }
 });
+
+router.post('/downloadDocument', async (req, res) => {
+    try {
+
+        const doc_id = req.body.doc_id;
+        if (!doc_id) {
+            return res.status(STATUS.BAD_REQUEST).send({ errorCode: "TCKTERR0005", error: TICKET_ERR.TCKTERR0005 });
+        }
+
+        const docDetails = await ticketService.getDocumentDetails(doc_id);
+
+        if (!docDetails) {
+            return res.status(STATUS.BAD_REQUEST).send({ errorCode: "TCKTERR0006", error: TICKET_ERR.TCKTERR0006 });
+        }
+
+        const options = {
+            Bucket: process.env.TS_S3_BUCKET,
+            Key: docDetails.doc_url
+        };
+
+        const [filePath, fileExt] = docDetails.doc_url.split(".");
+        const fileName = filePath.split('/')[2]
+        console.log(fileName, fileExt);
+        res.setHeader("Content-Type", "image/" + fileExt);
+        res.setHeader("Content-disposition", "filename=" + fileName);
+        s3.getObject(options).createReadStream()
+            .on("error", function (err) {
+                res.status(500).json({ error: "Error -> " + err });
+            })
+            .pipe(res);
+    } catch (error) {
+        console.log(error);
+        return res.status(STATUS.INTERNAL_SERVER_ERROR).send(`{"errorCode":"CMNERR0000", "error":"${COMMON_ERR.CMNERR0000}"}`);
+    }
+})
 
 
 module.exports = router;
