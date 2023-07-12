@@ -1,175 +1,229 @@
 <div class="col-md-12">
   <div class="row createRoles ">
-      <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 pl-0">
-          <h2>Ticket Details</h2>
-          <form class=" marginTop20" [formGroup]="ticketForm" (ngSubmit)="submit()">
-              <div class="row">
-                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 ">
-                  <label class="userDetailsLabel" for="ticket_mode">Complaint Mode*</label>
-                  <mat-form-field>
-                      <mat-select class="userInput" id="ticket_mode" formControlName='ticket_mode'>
-                          <mat-option *ngFor="let mode of ticket_mode" [value]="mode.id">{{mode.label}}
-                          </mat-option>
-                      </mat-select>
-                  </mat-form-field>
-                </div>
+    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 pl-0">
+      <h2>Ticket Details</h2>
+      <form class=" marginTop20" [formGroup]="ticketForm" (ngSubmit)="submit()">
+        <div class="row">
+          <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 ">
+            <label class="userDetailsLabel" for="ticket_mode">Complaint Mode*</label>
+            <mat-form-field>
+              <mat-select class="userInput" id="ticket_mode" formControlName='ticket_mode'>
+                <mat-option *ngFor="let mode of ticket_mode" [value]="mode.id">{{mode.label}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
-                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
-                  <label class="userDetailsLabel" for="product_serial_no">Serial no*</label>
-                  <input type="text" class="form-control userInput" id="product_serial_no" formControlName="product_serial_no"
-                      appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['product_serial_no']).hasError('required')}"
-                      [appRangeLength]="[2, 30]" appInputChar='street' (blur)="getProductDetails()">
+          <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+            <label class="userDetailsLabel" for="product_serial_no">Serial no*</label>
+            <input type="text" class="form-control userInput" id="product_serial_no" formControlName="product_serial_no"
+              appInputTrim
+              [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['product_serial_no']).hasError('required')}"
+              [appRangeLength]="[2, 30]" appInputChar='street' (blur)="getProductDetails()">
 
-                  <div class="invalid-feedback"
-                      *ngIf="ticketForm.get(['product_serial_no']).hasError('inputcharvalidator') && !ticketForm.get(['product_serial_no']).hasError('rangeLength')"
-                      [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
-                      placement="bottom">
-                      {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
-                  </div>
-                  <div class="invalid-feedback"
-                      *ngIf="ticketForm.get(['product_serial_no']).hasError('rangeLength') || ticketForm.get(['product_serial_no']).hasError('trimError')"
-                      [tooltip]="'Must be between 2-30 characters'" placement="bottom">
-                      Must be between 2-30 characters
-                  </div>
-                  <div class="invalid-feedback"
-                      *ngIf="formSubmitted && ticketForm.get(['product_serial_no']).hasError('required')"
-                      tooltip="User Name is required" placement="bottom">
-                      Serial no is required
-                  </div>
-                </div>
+            <div class="invalid-feedback"
+              *ngIf="ticketForm.get(['product_serial_no']).hasError('inputcharvalidator') && !ticketForm.get(['product_serial_no']).hasError('rangeLength')"
+              [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+              placement="bottom">
+              {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and
+              Close parenthesis “)”'}}
+            </div>
+            <div class="invalid-feedback"
+              *ngIf="ticketForm.get(['product_serial_no']).hasError('rangeLength') || ticketForm.get(['product_serial_no']).hasError('trimError')"
+              [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+              Must be between 2-30 characters
+            </div>
+            <div class="invalid-feedback"
+              *ngIf="formSubmitted && ticketForm.get(['product_serial_no']).hasError('required')"
+              tooltip="User Name is required" placement="bottom">
+              Serial no is required
+            </div>
+          </div>
 
-                <ng-container *ngIf="ticketForm.get(['product_hw_name']).value" >
-                  <h2>Product Details</h2>
-                  <label class="userDetailsLabel" for="product_hw_name">Hardware name: {{ticketForm.get(['product_hw_name']).value}}</label>
-                  <label class="userDetailsLabel" for="product_model_number">Model number: {{ticketForm.get(['product_model_number']).value}}</label>
-                  <label class="userDetailsLabel" for="product_brand_name">Brand name: {{ticketForm.get(['product_brand_name']).value}}</label>
-                  <label class="userDetailsLabel" for="product_installation_date">Installation date: {{ticketForm.get(['product_installation_date']).value}}</label>
+          <ng-container *ngIf="ticketForm.get(['product_hw_name']).value">
+            <h2>Product Details</h2>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Hardware name</th>
+                  <th>Model number</th>
+                  <th>Brand name</th>
+                  <th>Installation date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ticketForm.get(['product_hw_name']).value}}</td>
+                  <td>{{ticketForm.get(['product_model_number']).value}}</td>
+                  <td>{{ticketForm.get(['product_brand_name']).value}}</td>
+                  <td>{{ticketForm.get(['product_installation_date']).value}}</td>
+                </tr>
+              </tbody>
+            </table>
+           
 
-                  <h2>Vendor Details</h2>
-                  <label class="userDetailsLabel" for="vendor_name">Company name: {{ticketForm.get(['vendor_name']).value}}</label>
-                  <label class="userDetailsLabel" for="vendor_contact_person_name">Contact person name: {{ticketForm.get(['vendor_contact_person_name']).value}}</label>
-                  <label class="userDetailsLabel" for="vendor_contact_no">Mobile no: {{ticketForm.get(['vendor_contact_no']).value}}</label>
-                  <label class="userDetailsLabel" for="vendor_email_id">Email id: {{ticketForm.get(['vendor_email_id']).value}}</label>
+            <h2>Vendor Details</h2>
 
-
-                  <h2>Site Details</h2>
-                  <label class="userDetailsLabel" for="site_name">Site name: {{ticketForm.get(['site_name']).value}}</label>
-                  <label class="userDetailsLabel" for="site_udise_code">UDISE Code: {{ticketForm.get(['site_udise_code']).value}}</label>
-                  <label class="userDetailsLabel" for="site_block_id">Block: {{ticketForm.get(['site_block_name']).value}}</label>
-                  <label class="userDetailsLabel" for="site_address">Address: {{ticketForm.get(['site_address']).value}}</label>
-                  <label class="userDetailsLabel" for="site_contact_person_name">Contact person name: {{ticketForm.get(['site_contact_person_name']).value}}</label>
-                  <label class="userDetailsLabel" for="site_contact_no">Contact no: {{ticketForm.get(['site_contact_no']).value}}</label>
-                </ng-container>
-
-                <h2>Issue Details</h2>
-                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
-                  <label class="userDetailsLabel" for="issue_description">Description*</label>
-                  <textarea type="text" class="form-control userInput" id="issue_description" formControlName="issue_description"
-                      appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['issue_description']).hasError('required')}"
-                      [appRangeLength]="[2, 30]" appInputChar='username'></textarea>
-
-                  <div class="invalid-feedback"
-                      *ngIf="ticketForm.get(['issue_description']).hasError('inputcharvalidator') && !ticketForm.get(['issue_description']).hasError('rangeLength')"
-                      [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
-                      placement="bottom">
-                      {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
-                  </div>
-                  <div class="invalid-feedback"
-                      *ngIf="ticketForm.get(['issue_description']).hasError('rangeLength') || ticketForm.get(['issue_description']).hasError('trimError')"
-                      [tooltip]="'Must be between 2-30 characters'" placement="bottom">
-                      Must be between 2-30 characters
-                  </div>
-                  <div class="invalid-feedback"
-                      *ngIf="formSubmitted && ticketForm.get(['issue_description']).hasError('required')"
-                      tooltip="User Name is required" placement="bottom">
-                      Description is required
-                  </div>
-                </div>
-                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
-                  <label class="userDetailsLabel" for="issue_remarks">Remarks*</label>
-                  <textarea type="text" class="form-control userInput" id="issue_remarks" formControlName="issue_remarks"
-                      appInputTrim [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['issue_remarks']).hasError('required')}"
-                      [appRangeLength]="[2, 30]" appInputChar='username'></textarea>
-
-                  <div class="invalid-feedback"
-                      *ngIf="ticketForm.get(['issue_remarks']).hasError('inputcharvalidator') && !ticketForm.get(['issue_remarks']).hasError('rangeLength')"
-                      [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
-                      placement="bottom">
-                      {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'}}
-                  </div>
-                  <div class="invalid-feedback"
-                      *ngIf="ticketForm.get(['issue_remarks']).hasError('rangeLength') || ticketForm.get(['issue_remarks']).hasError('trimError')"
-                      [tooltip]="'Must be between 2-30 characters'" placement="bottom">
-                      Must be between 2-30 characters
-                  </div>
-                  <div class="invalid-feedback"
-                      *ngIf="formSubmitted && ticketForm.get(['issue_remarks']).hasError('required')"
-                      tooltip="User Name is required" placement="bottom">
-                      Remarks is required
-                  </div>
-                </div>
-
-              
-                <div class="row align-items-center marginBtm1Rem"  >
-                  <div class="col-md-9 pl-0">
-                    <h2 class="m-0">Documents</h2>
-                  </div>
-                  <div class="col-md-3 pr-0 marginBtm2rem text-end" *ngIf="formType == 'add'">
-                    <button type="button" (click)="uploadDocumentDialog()" class="btn createRole uploadBtnWidth"><i
-                        class="fa fa-upload"></i> Upload Document</button>
-                  </div>
-                </div>
-                <div class="patientDetailsTable">
-                  <app-common-data-table #documentsGrid [colModel]='documentcols' gridId='documentsGrid' sField='updatedDate'
-                    sOrder='desc' [lazyLoad]="false" selectType='none' [localData]="[]" idColumn='patient_document_id'
-                    paginationpos='none' [actionColumnTemplate]="patientDocuemntTemplate" [actionColumnRequired]="true">
-                    <ng-template #patientDocuemntTemplate let-gridData='griddata'>
-                      <button (click)="downloadDocument(gridData)" type="button" class="butonclover edit" data-toggle="tooltip"
-                        data-placement="top" title="Download Document">
-                        <span class="actionicons iconscls text-warning">
-                          <i class="fa fa-download"></i>
-                        </span>
-                      </button>
-                      <button (click)="removeDocument(gridData)" *ngIf="gridData.unsaved"  type="button" class="butonclover edit" data-toggle="tooltip"
-                        data-placement="top" title="Remove Document">
-                        <span class="actionicons iconscls text-warning">
-                          <i class="fa fa-trash"></i>
-                        </span>
-                      </button>
-                    </ng-template>
-                  </app-common-data-table>
-                </div>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Company name</th>
+                  <th>Contact person name</th>
+                  <th>Mobile no</th>
+                  <th>Email id</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ticketForm.get(['vendor_name']).value}}</td>
+                  <td>{{ticketForm.get(['vendor_contact_person_name']).value}}</td>
+                  <td>{{ticketForm.get(['vendor_contact_no']).value}}</td>
+                  <td>{{ticketForm.get(['vendor_email_id']).value}}</td>
+                </tr>
+              </tbody>
+            </table>
 
 
-                <ng-container *ngIf="visitsData && visitsData.length > 0" >
-                  <h2>Visits</h2>
-                  <div class="patientDetailsTable">
-                    <app-common-data-table #visitsGrid [colModel]='visitscols' gridId='visitsGrid' sField='visit_date'
-                      sOrder='desc' [lazyLoad]="false" selectType='none' [localData]="visitsData" idColumn='visit_id'
-                      paginationpos='none' [actionColumnTemplate]="" [actionColumnRequired]="false"
-                      [colFormatterTemplate]="{'visit_type': visitTypeTemplate, 'document_download': visitDownloadTemplate, 'visit_date': visitDateTemplate}">
-                      <ng-template #visitDownloadTemplate let-gridData='griddata'>
-                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                          <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu">
-                          <button mat-menu-item *ngFor="let item of gridData.documents" type="button" (click)="downloadVisitsDocument(item.visit_doc_id, item.new_title)">{{item.new_title}}</button>
-                        </mat-menu>
-                      </ng-template>
-                      <ng-template #visitTypeTemplate let-gridData='griddata'>
-                        <span>{{gridData.visit_type == 1 ? 'Aieze Member' : 'Vendor\'s Engineer'}}</span>
-                      </ng-template>
-                      <ng-template #visitDateTemplate let-gridData='griddata'>
-                        <span>{{gridData.visit_date | date:'dd-MM-YYYY'}}</span>
-                      </ng-template>
-                    </app-common-data-table>
-                  </div>
-                </ng-container>
-                <div class="col-md-12 text-end mt-4">
-                    <button class="btn createRoleBtn btnCenter" type="submit">Submit</button>
-                </div>
-              </div>
-          </form>
-      </div>
+            <h2>Site Details</h2>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Site name</th>
+                  <th>UDISE Code</th>
+                  <th>Block</th>
+                  <th>Address</th>
+                  <th>Contact person name</th>
+                  <th>Contact no</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ticketForm.get(['site_name']).value}}</td>
+                  <td>{{ticketForm.get(['site_udise_code']).value}}</td>
+                  <td>{{ticketForm.get(['site_block_name']).value}}</td>
+                  <td>{{ticketForm.get(['site_address']).value}}</td>
+                  <td>{{ticketForm.get(['site_contact_person_name']).value}}</td>
+                  <td>{{ticketForm.get(['site_contact_no']).value}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-container>
+
+          <h2>Issue Details</h2>
+          <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+            <label class="userDetailsLabel" for="issue_description">Description*</label>
+            <textarea type="text" class="form-control userInput" id="issue_description"
+              formControlName="issue_description" appInputTrim
+              [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['issue_description']).hasError('required')}"
+              [appRangeLength]="[2, 30]" appInputChar='username'></textarea>
+
+            <div class="invalid-feedback"
+              *ngIf="ticketForm.get(['issue_description']).hasError('inputcharvalidator') && !ticketForm.get(['issue_description']).hasError('rangeLength')"
+              [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+              placement="bottom">
+              {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and
+              Close parenthesis “)”'}}
+            </div>
+            <div class="invalid-feedback"
+              *ngIf="ticketForm.get(['issue_description']).hasError('rangeLength') || ticketForm.get(['issue_description']).hasError('trimError')"
+              [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+              Must be between 2-30 characters
+            </div>
+            <div class="invalid-feedback"
+              *ngIf="formSubmitted && ticketForm.get(['issue_description']).hasError('required')"
+              tooltip="User Name is required" placement="bottom">
+              Description is required
+            </div>
+          </div>
+          <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
+            <label class="userDetailsLabel" for="issue_remarks">Remarks*</label>
+            <textarea type="text" class="form-control userInput" id="issue_remarks" formControlName="issue_remarks"
+              appInputTrim
+              [ngClass]="{'invalid-field': formSubmitted && ticketForm.get(['issue_remarks']).hasError('required')}"
+              [appRangeLength]="[2, 30]" appInputChar='username'></textarea>
+
+            <div class="invalid-feedback"
+              *ngIf="ticketForm.get(['issue_remarks']).hasError('inputcharvalidator') && !ticketForm.get(['issue_remarks']).hasError('rangeLength')"
+              [tooltip]="'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and Close parenthesis “)”'"
+              placement="bottom">
+              {{'Must contain only English Alphabets (“a-z” and “A-Z”), Dot “.”, Hyphen “-”, Open parenthesis “(“ and
+              Close parenthesis “)”'}}
+            </div>
+            <div class="invalid-feedback"
+              *ngIf="ticketForm.get(['issue_remarks']).hasError('rangeLength') || ticketForm.get(['issue_remarks']).hasError('trimError')"
+              [tooltip]="'Must be between 2-30 characters'" placement="bottom">
+              Must be between 2-30 characters
+            </div>
+            <div class="invalid-feedback"
+              *ngIf="formSubmitted && ticketForm.get(['issue_remarks']).hasError('required')"
+              tooltip="User Name is required" placement="bottom">
+              Remarks is required
+            </div>
+          </div>
+
+
+          <div class="row align-items-center marginBtm1Rem">
+            <div class="col-md-9 pl-0">
+              <h2 class="m-0">Documents</h2>
+            </div>
+            <div class="col-md-3 pr-0 marginBtm2rem text-end" *ngIf="formType == 'add'">
+              <button type="button" (click)="uploadDocumentDialog()" class="btn createRole uploadBtnWidth"><i
+                  class="fa fa-upload"></i> Upload Document</button>
+            </div>
+          </div>
+          <div class="patientDetailsTable">
+            <app-common-data-table #documentsGrid [colModel]='documentcols' gridId='documentsGrid' sField='updatedDate'
+              sOrder='desc' [lazyLoad]="false" selectType='none' [localData]="[]" idColumn='patient_document_id'
+              paginationpos='none' [actionColumnTemplate]="patientDocuemntTemplate" [actionColumnRequired]="true">
+              <ng-template #patientDocuemntTemplate let-gridData='griddata'>
+                <button (click)="downloadDocument(gridData)" type="button" class="butonclover edit"
+                  data-toggle="tooltip" data-placement="top" title="Download Document">
+                  <span class="actionicons iconscls text-warning">
+                    <i class="fa fa-download"></i>
+                  </span>
+                </button>
+                <button (click)="removeDocument(gridData)" *ngIf="gridData.unsaved" type="button"
+                  class="butonclover edit" data-toggle="tooltip" data-placement="top" title="Remove Document">
+                  <span class="actionicons iconscls text-warning">
+                    <i class="fa fa-trash"></i>
+                  </span>
+                </button>
+              </ng-template>
+            </app-common-data-table>
+          </div>
+
+
+          <ng-container *ngIf="visitsData && visitsData.length > 0">
+            <h2>Visits</h2>
+            <div class="patientDetailsTable">
+              <app-common-data-table #visitsGrid [colModel]='visitscols' gridId='visitsGrid' sField='visit_date'
+                sOrder='desc' [lazyLoad]="false" selectType='none' [localData]="visitsData" idColumn='visit_id'
+                paginationpos='none' [actionColumnTemplate]="" [actionColumnRequired]="false"
+                [colFormatterTemplate]="{'visit_type': visitTypeTemplate, 'document_download': visitDownloadTemplate, 'visit_date': visitDateTemplate}">
+                <ng-template #visitDownloadTemplate let-gridData='griddata'>
+                  <button type="button" mat-icon-button [matMenuTriggerFor]="menu"
+                    aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item *ngFor="let item of gridData.documents" type="button"
+                      (click)="downloadVisitsDocument(item.visit_doc_id, item.new_title)">{{item.new_title}}</button>
+                  </mat-menu>
+                </ng-template>
+                <ng-template #visitTypeTemplate let-gridData='griddata'>
+                  <span>{{gridData.visit_type == 1 ? 'Aieze Member' : 'Vendor\'s Engineer'}}</span>
+                </ng-template>
+                <ng-template #visitDateTemplate let-gridData='griddata'>
+                  <span>{{gridData.visit_date | date:'dd-MM-YYYY'}}</span>
+                </ng-template>
+              </app-common-data-table>
+            </div>
+          </ng-container>
+          <div class="col-md-12 text-end mt-4">
+            <button class="btn createRoleBtn btnCenter" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
