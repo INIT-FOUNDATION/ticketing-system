@@ -1,4 +1,4 @@
-DROP VIEW public.vw_m_products;
+DROP VIEW IF EXISTS public.vw_m_products;
 CREATE OR REPLACE VIEW public.vw_m_products AS
 SELECT P.product_id, P.product_name, P.serial_number, P.model_number, P.installation_date, P.status,
 V.vendor_id, V.vendor_name, V.primary_contact_name AS vendor_contact_name, V.primary_contact_number AS vendor_contact_number, V.email_id,
@@ -13,7 +13,7 @@ INNER JOIN m_district D ON D.district_id = B.district_id
 INNER JOIN m_state ST ON ST.state_id = D.state_id;
 
 
-DROP VIEW public.vw_m_tickets;
+DROP VIEW IF EXISTS public.vw_m_tickets;
 CREATE OR REPLACE VIEW public.vw_m_tickets AS
 SELECT T.ticket_id, T.ticket_number, T.ticket_mode, T.description, T.remarks, T.opening_date, T.closing_date,
 P.product_id, P.product_name, P.serial_number, P.model_number, P.installation_date, P.status,
@@ -30,7 +30,7 @@ INNER JOIN m_district D ON D.district_id = B.district_id
 INNER JOIN m_state ST ON ST.state_id = D.state_id;
 
 
-DROP VIEW public.vw_m_users;
+DROP VIEW IF EXISTS public.vw_m_users;
 CREATE OR REPLACE VIEW public.vw_m_users
     AS
      SELECT users.user_id,
@@ -42,9 +42,6 @@ CREATE OR REPLACE VIEW public.vw_m_users
     users.gender,
     users.date_of_birth,
     users.role_id,
-    users.country_id,
-    c.country_name,
-    users.zip_code,
     users.date_created,
     users.date_modified,
     users.is_active,
@@ -55,5 +52,4 @@ CREATE OR REPLACE VIEW public.vw_m_users
     roles.level AS user_level,
     users.profile_picture_url
    FROM m_users users
-     LEFT JOIN m_roles roles ON users.role_id = roles.role_id
-     LEFT JOIN m_country c ON users.country_id = c.country_id;
+     LEFT JOIN m_roles roles ON users.role_id = roles.role_id;
