@@ -60,6 +60,17 @@ export class TicketService {
     )
   }
 
+  downloadVisitDocument(payload) {
+    const requestOptions: Object = {
+      responseType: 'blob' as 'blob'
+    };
+    return this.http.post(
+      `${environment.ticket_prefix_url}/visits/downloadDocument`,
+      payload,
+      requestOptions
+    )
+  }
+
   addVisit(payload) {
     return this.http.post(
       `${environment.ticket_prefix_url}/visits/addVisit`,

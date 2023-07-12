@@ -79,7 +79,8 @@ export class TicketFormComponent implements OnInit {
       new Colmodel('visit_type', 'Visit Type', false, false, false),
       new Colmodel('visit_by', 'Visited By', false, false, false),
       new Colmodel('remarks', 'Remarks', false, false, false),
-      new Colmodel('visit_date', 'Visited Date', false, false, true)
+      new Colmodel('visit_date', 'Visited Date', false, false, false),
+      new Colmodel('document_download', 'Download Documents', false, false, false),
     ];
   }
 
@@ -143,7 +144,13 @@ export class TicketFormComponent implements OnInit {
 
       if (res.visits && res.visits.length > 0) {
         res.visits.forEach((visit, index) => {
-          visit.visit_no = `${this.ordinal_suffix_of((index+1))} Visit`
+          visit.visit_no = `${this.ordinal_suffix_of((index+1))} Visit`;
+          visit.documents.forEach(doc => {
+            let title = doc.doc_title;
+            let url = doc.doc_url;
+            let [path, ext] = url.split('.');
+            doc.new_title = `${title}.${ext}`;
+          })
         })
         this.visitsData = res.visits;
       }
@@ -362,6 +369,32 @@ export class TicketFormComponent implements OnInit {
       document.body.removeChild(link);
     }
   }
+
+  downloadVisitsDocument(visit_doc_id, new_title) {
+    let filename = new_title;
+    let payload = {
+      visit_doc_id: visit_doc_id,
+    }
+
+    this.ticketService.downloadVisitDocument(payload).subscribe((res: any) => {
+      if (!res || res?.size <= 0) {
+        this.utilsService.showInfoToast('No document found !!');
+      }
+      else {
+        const blob: any = new Blob([res], { type: res.type });
+        const link = document.createElement('a');
+        if (link.download !== undefined) {
+          const url = URL.createObjectURL(blob);
+          link.setAttribute('href', url);
+          link.setAttribute('download', filename);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
+    })
+  }
+
 
   removeDocument(gridData) {
     let document_id = gridData.document_id;
