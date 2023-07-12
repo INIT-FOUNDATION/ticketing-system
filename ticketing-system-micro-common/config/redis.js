@@ -1,6 +1,11 @@
 let logger = require('../config/logger'),
     redis = require("redis");
 
+console.log('============== REDIS HOST =================');
+console.log(`HOST: ${process.env.TS_REDIS_HOST}`);
+console.log(`PORT: ${process.env.TS_REDIS_PORT}`);
+console.log('============== REDIS HOST =================');
+
 let client = redis.createClient(process.env.TS_REDIS_PORT, process.env.TS_REDIS_HOST, {});
 
 let clientReader;
