@@ -4,7 +4,7 @@
           <h2>Ticket Details</h2>
           <form class=" marginTop20" [formGroup]="ticketForm" (ngSubmit)="submit()">
               <div class="row">
-                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 marginTop20">
+                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 ">
                   <label class="userDetailsLabel" for="ticket_mode">Complaint Mode*</label>
                   <mat-form-field>
                       <mat-select class="userInput" id="ticket_mode" formControlName='ticket_mode'>
@@ -109,10 +109,13 @@
                   </div>
                 </div>
 
-                <h2>Documents</h2>
-                <div class="row" *ngIf="formType == 'add'" >
-                  <div class="col-md-12 marginBtm2rem text-end">
-                    <button type="button" (click)="uploadDocumentDialog()" class="btn createRole marginBtm1Rem"><i
+              
+                <div class="row align-items-center marginBtm1Rem"  >
+                  <div class="col-md-9 pl-0">
+                    <h2 class="m-0">Documents</h2>
+                  </div>
+                  <div class="col-md-3 pr-0 marginBtm2rem text-end" *ngIf="formType == 'add'">
+                    <button type="button" (click)="uploadDocumentDialog()" class="btn createRole uploadBtnWidth"><i
                         class="fa fa-upload"></i> Upload Document</button>
                   </div>
                 </div>
@@ -162,7 +165,7 @@
                     </app-common-data-table>
                   </div>
                 </ng-container>
-                <div class="col-md-6 text-end">
+                <div class="col-md-12 text-end mt-4">
                     <button class="btn createRoleBtn btnCenter" type="submit">Submit</button>
                 </div>
               </div>
