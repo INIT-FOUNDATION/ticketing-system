@@ -15,8 +15,8 @@ INNER JOIN m_state ST ON ST.state_id = D.state_id;
 
 DROP VIEW IF EXISTS public.vw_m_tickets;
 CREATE OR REPLACE VIEW public.vw_m_tickets AS
-SELECT T.ticket_id, T.ticket_number, T.ticket_mode, T.description, T.remarks, T.opening_date, T.closing_date,
-P.product_id, P.product_name, P.serial_number, P.model_number, P.installation_date, P.status,
+SELECT T.ticket_id, T.ticket_number, T.ticket_mode, T.description, T.remarks, T.opening_date, T.closing_date,T.status,
+P.product_id, P.product_name, P.serial_number, P.model_number, P.installation_date, 
 V.vendor_id, V.vendor_name, V.primary_contact_name AS vendor_contact_name, V.primary_contact_number AS vendor_contact_number, V.email_id,
 S.site_id, S.site_name, S.site_type, S.address, S.site_code, S.primary_contact_name, S.primary_contact_number,
 S.secondary_contact_name, S.secondary_contact_number, B.block_id, B.block_name, D.district_id, D.district_name,

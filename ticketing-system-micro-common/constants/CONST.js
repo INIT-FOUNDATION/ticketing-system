@@ -175,3 +175,10 @@ exports.GENDER = {
     2: 'Female',
     3: 'Others'
 }
+
+exports.TICKET_STATUS = {
+    1: 'Opened',
+    2: 'In Progress',
+    3: 'Closed',
+    4: 'Deleted'
+}

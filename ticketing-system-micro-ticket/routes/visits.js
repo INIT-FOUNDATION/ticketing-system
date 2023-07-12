@@ -6,6 +6,7 @@ let moment = require('moment');
 
 const visitModel = require('../models/visit')
 const visitService = require('../services/visitService')
+const ticketService = require('../services/ticketService')
 
 const { validateDocuments } = require('../utility/doc.util')
 
@@ -13,9 +14,9 @@ router.post("/addVisit", async (req, res) => {
 
     try {
 
-        // if (!req.files || Object.keys(req.files).length === 0) {
-        //     return res.status(STATUS.BAD_REQUEST).send({ errorCode: "VISITERR0004", error: VISIT_ERR.VISITERR0004 });
-        // }
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(STATUS.BAD_REQUEST).send({ errorCode: "VISITERR0004", error: VISIT_ERR.VISITERR0004 });
+        }
 
         const docsArr = Array.isArray(req.files.doc_files) ? req.files.doc_files : [req.files.doc_files];
         const isValidDocuments = validateDocuments(docsArr);
@@ -62,6 +63,12 @@ router.post("/addVisit", async (req, res) => {
             result.doc_title = doc_title
             docData.push(result)
         }
+
+        const ticketDetails = {
+            ticket_id: visitDetails.ticket_id,
+            status: 2
+        }
+        const updateTicketResult = await ticketService.updateTicket(ticketDetails);
 
         return res.status(STATUS.OK).send(data);
 

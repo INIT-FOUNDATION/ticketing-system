@@ -8,14 +8,14 @@ function convertObjectIntoSelectQuery(object) {
             if (data) {
                 if (typeof data == 'number') {
                     selectQuery += `${data} AS ${property},`
-                }else if (typeof data == 'string') {
+                } else if (typeof data == 'string') {
                     selectQuery += `'${data}' AS ${property},`
-                }else if (property.indexOf('date') > -1) {
+                } else if (property.indexOf('date') > -1) {
                     selectQuery += `NOW() AS ${property},`
-                }else if (typeof data == 'object') {
+                } else if (typeof data == 'object') {
                     selectQuery += `${data} AS ${property},`
                 }
-                
+
             } else {
                 selectQuery += `NULL AS ${property},`
             }
@@ -39,17 +39,18 @@ function convertObjectIntoUpdateQuery(object) {
             if (data) {
                 if (typeof data == 'number') {
                     selectQuery += `${property} = ${data}, `
-                }else if (typeof data == 'string') {
+                } else if (typeof data == 'string') {
                     selectQuery += `${property} = '${data}',`
-                }else if (property.indexOf('date') > -1) {
+                } else if (property.indexOf('date') > -1) {
                     selectQuery += `${property} = NOW(),`
-                }else if (typeof data == 'object') {
+                } else if (typeof data == 'object') {
                     selectQuery += `${property} = ${data},`
                 }
-                
-            } else {
-                selectQuery += `${property} = NULL,`
+
             }
+            //  else {
+            //     selectQuery += `${property} = NULL,`
+            // }
         }
         let lastComma = selectQuery.lastIndexOf(',');
         selectQuery = selectQuery.substring(0, lastComma);
@@ -58,18 +59,18 @@ function convertObjectIntoUpdateQuery(object) {
     return finalQuery;
 }
 
-function escapeSQL (value) {
+function escapeSQL(value) {
     let escapeString = "\'"
     value = replaceAll(value, escapeString);
     return value
 }
 
-function replaceAll (value, replaceString) {
+function replaceAll(value, replaceString) {
     let replaceAllRegex = `/${replaceString}/ig`;
     value = value.replace(eval(replaceAllRegex), "''");
     return value;
 }
 
-module.exports.convertObjectIntoSelectQuery= convertObjectIntoSelectQuery;
-module.exports.convertObjectIntoUpdateQuery= convertObjectIntoUpdateQuery;
+module.exports.convertObjectIntoSelectQuery = convertObjectIntoSelectQuery;
+module.exports.convertObjectIntoUpdateQuery = convertObjectIntoUpdateQuery;
 module.exports.escapeSQL = escapeSQL;
