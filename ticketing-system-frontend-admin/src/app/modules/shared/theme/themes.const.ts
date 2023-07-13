@@ -1,7 +1,7 @@
 export const themes = {
   light_theme: {
     '--torch-red': '#F80D38',
-    '--blue-lagoon': '#048390',
+    '--blue-lagoon': '#1e205a',
     '--alabaster': '#F7F7F7',
     '--silver': '#C5C5C5',
     '--mine-shaft': '#343434',

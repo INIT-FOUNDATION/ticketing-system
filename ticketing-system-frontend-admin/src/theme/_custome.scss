@@ -530,9 +530,9 @@ a {
   border: 1px solid $mercury;
   box-sizing: border-box;
   border-radius: 100px;
-  height: 55px;
+  height: 50px;
   margin-bottom: 30px;
-  padding: 18px 10px;
+  padding: 10px 10px;
   width: 100%;
   color: $black;
 }
@@ -884,6 +884,6 @@ h6.numberInfo {
 }
 
 ::ng-deep .p-selectbutton ::ng-deep .p-button.p-highlight{
-  background: #048390 !important;
-  border-color: #048390 !important;
+  background: #1e205a !important;
+  border-color: #1e205a !important;
 }
