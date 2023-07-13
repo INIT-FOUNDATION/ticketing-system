@@ -228,7 +228,7 @@ CREATE TABLE m_products (
   product_name VARCHAR(100) NOT NULL,
   site_id INTEGER NOT NULL,
   vendor_id INTEGER NOT NULL,
-  serial_number BIGINT NOT NULL,
+  serial_number VARCHAR(100) NOT NULL,
   model_number VARCHAR(100) NOT NULL,
   installation_date TIMESTAMP,
   status SMALLINT DEFAULT 1,

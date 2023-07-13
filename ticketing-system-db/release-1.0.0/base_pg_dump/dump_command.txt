@@ -1,5 +1,7 @@
 Restore
     psql -U postgres -d hmis < hmis.sql
+    psql -U hmisuser -h 13.126.242.87 -d ticketing_system < ticketing_system.sql
 
 Dump
     pg_dump -U postgres -d hmis > hmis.sql 
+    pg_dump -U hmisuser -h 13.126.242.87 -d ticketing_system > ticketing_system.sql 

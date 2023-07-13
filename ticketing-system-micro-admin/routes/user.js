@@ -469,6 +469,8 @@ router.post("/uploadProfilePic", async (req, res) => {
         Key: `profile-pictures/${fileData.file_name}`,
         Body: req.files.file.data
     };
+
+    console.log(params);
     s3.upload(params, async function (error, data) {
         if (error) {
             res.status(STATUS.INTERNAL_SERVER_ERROR).send(error);
@@ -553,7 +555,7 @@ const addCDNImages = async (result) => {
             let aws_s3_prefix_url = `https://${process.env.TS_S3_BUCKET}.s3.ap-south-1.amazonaws.com/`;
             if (user.profile_picture_url) {
                 let logo_path = user.profile_picture_url.replace(aws_s3_prefix_url, '');
-                user.profile_pic = `${process.env.CDN_CONTEXT_PATH}/api/v1/admin/cdn/file?file_name=${logo_path}`;
+                user.profile_pic = `${process.env.CDN_CONTEXT_PATH}/api/v1/cdn/file?file_name=${logo_path}`;
             }
         }, async function () {
             resolve(result);

@@ -1,7 +1,9 @@
 <div class="row">
   <div class="col-md-9 col-sm-9 col-lg-9 col-xl-4 ">
-    <form class="searchDoctor">
-      <input type="search" name="search" placeholder="Search doctors by name or title" class="searchRole">
+    <form class="searchDoctor" [formGroup]="searchForm">
+      <input type="search" name="search" placeholder="Search tickets by ticket number" class="searchRole" formControlName="search"
+             appIntegerInput maxlength="12" minlength="12"
+             (blur)="onBlurResetGrid()" (keydown.enter)="searchOnEnter()">
       <!-- <mat-icon class="custom-search-icon"></mat-icon> -->
     </form>
   </div>
@@ -23,7 +25,7 @@
       </span>
     </button>
     <button (click)="addVisit(gridData)" type="button"
-      class="butonclover edit" data-toggle="tooltip" data-placement="top" title="Add Visit">
+      class="butonclover edit" data-toggle="tooltip" data-placement="top" title="Add Visit" *ngIf="gridData.status != 3" >
       <span class="actionicons iconscls text-warning">
         <i class="fa fa-clipboard"></i>
       </span>
@@ -33,7 +35,8 @@
     {{gridData.ticket_mode == 2 ? 'By Auditor' : 'Self'}}
   </ng-template>
   <ng-template #ticketStatusFormatter let-gridData='griddata'>
-    {{gridData.status == 1 ? 'Pending' : 'Pending'}}
+    <!-- {{gridData.status == 1 ? 'Pending' : 'Pending'}} -->
+    {{ticketStatusUI[gridData.status]}}
   </ng-template>
   <ng-template #ticketOpeningDateFormatter let-gridData='griddata'>
     {{gridData.opening_date | date: 'dd-MM-YYYY'}}

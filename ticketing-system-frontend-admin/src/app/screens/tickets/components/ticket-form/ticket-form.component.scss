@@ -43,10 +43,26 @@
 .marginBtm1Rem{
   margin-bottom: 1rem;
 }
+.marginTop3Rem{
+  margin-top: 3rem;
+}
 .uploadBtnWidth{
   width: auto;
 }
 
 .uploadSection{
   margin-top: -2.6rem;
+}
+
+
+.dataIconSection{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  display: table;
+}
+.heightSection{
+  height: 50px;
 }

@@ -10,7 +10,7 @@ INSERT INTO m_country(country_id, country_name, latitude, longitude, date_create
 
 INSERT INTO public.m_app_version(app_id, app_version, apk_version, apk_link, force_update, remarks, release_date, date_created, date_modified) VALUES (1, '1.0.0', '1.0', 'init.apk', 1, 'new', now(), now(), now());
 
-INSERT INTO public.m_menus(menu_id, menu_name, menu_description, is_active, parent_menu_id, menu_order, route_url, icon_class, date_created, date_modified) VALUES (1, 'Tickets', 'Tickets Creation', 1, NULL, 0, '/tickets', 'custom-admin-dashboard', NOW(), NOW());
+INSERT INTO public.m_menus(menu_id, menu_name, menu_description, is_active, parent_menu_id, menu_order, route_url, icon_class, date_created, date_modified) VALUES (1, 'Tickets', 'Tickets Creation', 1, NULL, 0, '/tickets', 'custom-notepad', NOW(), NOW());
 
 	   
 INSERT INTO public.access_control(

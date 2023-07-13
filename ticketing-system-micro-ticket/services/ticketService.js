@@ -73,7 +73,7 @@ const getTicketList = async (reqParams) => {
         }
 
         if (reqParams.ticket_number) {
-            key += `|Ticket:${reqParams.ticket_number}`;
+            key += `|Ticket_No:${reqParams.ticket_number}`;
             whereClause += ` AND ticket_number='${reqParams.ticket_number}'`;
         }
 

@@ -52,7 +52,6 @@
       "TS_AUDIT_USER": "postgres",
       "TS_AUDIT_PASSWORD": "password",
       "TS_FROM_EMAIL": "no-reply@aieze.in",
-      "TS_S3_BUCKET": "ticketing-system-dev",
       "TS_PINPOINT": "a24e29f3e9044384b688733cd7e76157",
       "TS_PINPOINT_APP_ID": "a24e29f3e9044384b688733cd7e76157",
       "TS_PINPOINT_ENTITY_ID": "AIEZE VERTEX PRIVATE LIMITED",
@@ -64,7 +63,9 @@
       "AWS_ACCESS_KEY_ID": "AKIASNNVWZ52YAAWZQVO",
       "AWS_SECRET_ACCESS_KEY": "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",
       "WHATSAPP_API_KEY": "7603639047c29611b",
-      "WHATSAPP_API_HOST": "162.241.114.66"
+      "WHATSAPP_API_HOST": "162.241.114.66",
+      "TS_S3_BUCKET": "ticketing-system-dev",
+      "CDN_CONTEXT_PATH": "http://localhost:9015"
     }
   }
 }

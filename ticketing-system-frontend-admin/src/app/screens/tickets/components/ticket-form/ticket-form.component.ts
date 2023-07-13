@@ -11,6 +11,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { UploadDocumentComponent } from 'src/app/modules/shared/components/upload-document/upload-document.component';
 import {v4 as uuidv4} from 'uuid';
 import { forkJoin, of, switchMap } from 'rxjs';
+
+
+export const TICKET_STATUS = {
+  'Opened': 1,
+  'In Progress': 2,
+  'Closed': 3,
+  'Deleted': 4
+}
+
 @Component({
   selector: 'app-ticket-form',
   templateUrl: './ticket-form.component.html',
@@ -96,7 +105,7 @@ export class TicketFormComponent implements OnInit {
           ticket_id: ticketDetails.ticket_id,
           ticket_no: ticketDetails.ticket_number,
           ticket_mode: ticketDetails.ticket_mode,
-          ticket_raised_date: ticketDetails.ticket_mode,
+          ticket_raised_date: moment(ticketDetails.opening_date).format('DD-MM-YYYY'),
           product_id: ticketDetails.product_id,
           product_serial_no: ticketDetails.serial_number,
           product_model_number: ticketDetails.model_number,
@@ -119,7 +128,8 @@ export class TicketFormComponent implements OnInit {
           site_contact_person_name: ticketDetails.primary_contact_name,
           site_contact_no: ticketDetails.primary_contact_number,
           issue_description: ticketDetails.description,
-          issue_remarks: ticketDetails.remarks
+          issue_remarks: ticketDetails.remarks,
+          ticket_closing_date: moment(ticketDetails.closing_date).format('YYYY-MM-DD')
         });
         this.getBlocks(ticketDetails.district_id);
 
@@ -139,7 +149,20 @@ export class TicketFormComponent implements OnInit {
           this.prepareRemoteGridData();
         }
 
+        this.ticketForm.get('ticket_mode').disable();
         this.ticketForm.get('product_serial_no').disable();
+        this.ticketForm.get('issue_description').disable();
+
+        if (ticketDetails.status == TICKET_STATUS['In Progress']) {
+          this.ticketForm.get('issue_remarks').setValidators([Validators.required]);
+          this.ticketForm.get('ticket_closing_date').setValidators([Validators.required]);
+        } else if (ticketDetails.status == TICKET_STATUS.Closed) {
+          this.ticketForm.get('issue_remarks').disable();
+          this.ticketForm.get('ticket_closing_date').disable();
+        }
+
+        this.ticketForm.get('issue_remarks').updateValueAndValidity();
+        this.ticketForm.get('ticket_closing_date').updateValueAndValidity();
       }
 
       if (res.visits && res.visits.length > 0) {
@@ -200,7 +223,8 @@ export class TicketFormComponent implements OnInit {
       site_contact_person_name: new FormControl({value:null, disabled: true}, [Validators.required]),
       site_contact_no: new FormControl({value:null, disabled: true}, [Validators.required]),
       issue_description: new FormControl(null, [Validators.required]),
-      issue_remarks: new FormControl(null, [Validators.required])
+      issue_remarks: new FormControl(null),
+      ticket_closing_date: new FormControl(null),
     });
   }
 
@@ -245,6 +269,8 @@ export class TicketFormComponent implements OnInit {
           });
 
           this.getBlocks(productDetails.district_id);
+        } else {
+          this.utilsService.showErrorToast('Entered serial no is not valid/not found in our records. Please re-check serial no.');
         }
       })
     }
@@ -254,35 +280,48 @@ export class TicketFormComponent implements OnInit {
     this.formSubmitted = true;
     if (this.ticketForm.valid) {
       let formData = this.ticketForm.getRawValue();
-      let payload = {
-        ticket_mode: formData.ticket_mode,
-        product_id: formData.product_id,
-        description: formData.issue_description,
-        opening_date: formData.ticket_raised_date,
-        remarks: formData.issue_remarks
-      }
-      if (this.documents.length > 0) {
-        let formData = new FormData();
-        formData.append('ticket_mode', payload.ticket_mode);
-        formData.append('product_id', payload.product_id);
-        formData.append('description', payload.description);
-        formData.append('opening_date', payload.opening_date);
-        formData.append('remarks', payload.remarks);
-        for (let doc of this.documents) {
-          let file = (doc.form_data.get('file') as File);
-          let name = file.name;
-          let actualName = doc.form_data.get('file_name');
-          let ext = name.split('.')[1];
-          let filename = `${actualName}.${ext}`;
-          formData.append('doc_files', file, filename);
+      let payload: any = {};
+      if (this.formType == 'edit') {
+        payload = {
+          ticket_id: formData.ticket_id,
+          closing_date: moment(formData.ticket_closing_date).format('YYYY-MM-DD'),
+          description: formData.issue_final_status,
+          remarks: formData.issue_remarks
         }
 
-        this.ticketService.createTicket(formData).subscribe(res => {
-          this.utilsService.showSuccessToast('Ticket has been raised successfully');
+        this.ticketService.updateTicket(payload).subscribe(res => {
+          this.utilsService.showSuccessToast('Ticket has been updated successfully');
           this.back();
         })
       } else {
-        this.utilsService.showErrorToast('Please upload documents');
+        payload = {
+          ticket_mode: formData.ticket_mode,
+          product_id: formData.product_id,
+          description: formData.issue_description,
+          opening_date: formData.ticket_raised_date
+        }
+        if (this.documents.length > 0) {
+          let formData = new FormData();
+          formData.append('ticket_mode', payload.ticket_mode);
+          formData.append('product_id', payload.product_id);
+          formData.append('description', payload.description);
+          formData.append('opening_date', payload.opening_date);
+          for (let doc of this.documents) {
+            let file = (doc.form_data.get('file') as File);
+            let name = file.name;
+            let actualName = doc.form_data.get('file_name');
+            let ext = name.split('.')[1];
+            let filename = `${actualName}.${ext}`;
+            formData.append('doc_files', file, filename);
+          }
+
+          this.ticketService.createTicket(formData).subscribe(res => {
+            this.utilsService.showSuccessToast('Ticket has been raised successfully');
+            this.back();
+          })
+        } else {
+          this.utilsService.showErrorToast('Please upload documents');
+        }
       }
     }
   }
