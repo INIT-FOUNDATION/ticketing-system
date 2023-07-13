@@ -35,6 +35,13 @@ export class TicketService {
     )
   }
 
+  updateTicket(payload) {
+    return this.http.post(
+      `${environment.ticket_prefix_url}/updateTicket`,
+      payload
+    )
+  }
+
   addDocuments(payload) {
     return this.http.post(
       `${environment.ticket_prefix_url}/addDocuments`,

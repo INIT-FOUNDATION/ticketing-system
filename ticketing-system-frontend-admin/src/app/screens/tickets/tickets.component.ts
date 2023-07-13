@@ -8,6 +8,13 @@ import { EncDecService } from 'src/app/modules/shared/services/encryption-decryp
 import { PageHeaderService } from 'src/app/modules/shared/services/page-header.service';
 import { UtilsService } from 'src/app/modules/shared/services/utils.service';
 
+export const TICKET_STATUS_UI = {
+  1: 'Opened',
+  2: 'In Progress',
+  3: 'Closed',
+  4: 'Deleted'
+}
+
 @Component({
   selector: 'app-tickets',
   templateUrl: './tickets.component.html',
@@ -19,6 +26,7 @@ export class TicketsComponent implements OnInit {
   rowsPerPage = 50;
   cols: Colmodel[] = [];
   contactNumber;
+  ticketStatusUI = TICKET_STATUS_UI;
   rows = [
     {value: 50, label: '50'},
     {value: 100, label: '100'}
