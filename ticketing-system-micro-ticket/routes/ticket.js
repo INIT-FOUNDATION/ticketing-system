@@ -125,12 +125,14 @@ router.post("/getTicketList", async (req, res) => {
 
         const ticket_mode = req.body.ticket_mode ? req.body.ticket_mode : null;
         const product_id = req.body.product_id ? req.body.product_id : null;
+        const ticket_number = req.body.ticket_number ? req.body.ticket_number : null;
 
         const reqParams = {
             pageSize,
             currentPage,
             ticket_mode,
-            product_id
+            product_id,
+            ticket_number
         };
 
         const productData = await ticketService.getTicketList(reqParams)

@@ -121,7 +121,7 @@ const getProduct = async (reqParams) => {
 
     let whereClause = `WHERE 1=1`;
     if (reqParams.product_id) whereClause += ` AND product_id=${reqParams.product_id}`;
-    if (reqParams.serial_number) whereClause += ` AND serial_number=${reqParams.serial_number}`;
+    if (reqParams.serial_number) whereClause += ` AND serial_number='${reqParams.serial_number}'`;
     if (reqParams.model_number) whereClause += ` AND model_number='${reqParams.model_number}'`;
 
     const replaceObj = {

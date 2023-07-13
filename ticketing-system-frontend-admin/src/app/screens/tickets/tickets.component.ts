@@ -1,5 +1,6 @@
 import { TicketService } from './services/ticket.service';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Colmodel } from 'src/app/modules/common-data-table/model/colmodel.model';
 import { CommonDataViewComponent } from 'src/app/modules/common-data-view/common-data-view.component';
@@ -35,6 +36,7 @@ export class TicketsComponent implements OnInit {
   removePermission = false;
   userDetails;
   @ViewChild('ticketsGrid') ticketsGrid : CommonDataViewComponent;
+  searchForm: FormGroup;
   constructor(private pageHeaderService: PageHeaderService,
     private router: Router,
     private encDecService: EncDecService,
@@ -43,6 +45,9 @@ export class TicketsComponent implements OnInit {
     private ticketService: TicketService) { }
 
   ngOnInit(): void {
+    this.searchForm = new FormGroup({
+      search: new FormControl(null, [Validators.required, Validators.minLength(12), Validators.maxLength(12)])
+    })
     this.pageHeaderService.pageHeaderSet = this.header;
     this.pageHeaderService.backButtonRequired = false;
     this.prepareAppointmentGridCols();
@@ -78,7 +83,11 @@ export class TicketsComponent implements OnInit {
     this.currentPage = event.first == 0 ? 1 : (event.first/event.rows) + 1;
     this.ticketsGrid.rows = event.rows;
     const payload = {limit: true};
-    this.getTicketList(payload);
+    if (this.isSearch) {
+      this.searchByParam();
+    } else {
+      this.getTicketList(payload);
+    }
   }
 
   addTicket() {
@@ -91,5 +100,38 @@ export class TicketsComponent implements OnInit {
 
   addVisit(gridData) {
     this.router.navigate([`tickets/add-visit/${gridData.ticket_id}`])
+  }
+
+  isSearch = false;
+  searchOnEnter() {
+    this.currentPage = 0;
+    this.searchByParam();
+  }
+
+
+  searchByParam() {
+    if (this.searchForm.valid) {
+      let search = this.searchForm.get('search').value;
+
+      let payload = {
+        page_size: 50,
+        current_page: this.currentPage,
+        ticket_number: search
+      }
+
+      this.ticketService.getTicketList(payload).subscribe((res: any) => {
+        this.ticketsGrid.data = res.data;
+        this.ticketsGrid.totalRecords = res.count;
+      })
+    }
+  }
+
+  onBlurResetGrid() {
+    if (!this.searchForm.valid) {
+      this.searchForm.reset();
+      this.currentPage = 1;
+      this.isSearch = false;
+      this.getTicketList({});
+    }
   }
 }

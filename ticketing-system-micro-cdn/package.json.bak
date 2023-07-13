@@ -1,0 +1,51 @@
+{
+  "name": "ticketing-micro-cdn",
+  "version": "1.0.0",
+  "description": "INIT CDN Services",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "prod": "node app.js"
+  },
+  "author": "Chalukya Mohanraj",
+  "license": "ISC",
+  "dependencies": {
+    "app-root-path": "3.0.0",
+    "aws-sdk": "2.520.0",
+    "aws-xray-sdk": "3.3.1",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-sanitize-middleware": "^1.0.3",
+    "file-type": "~10.11.0",
+    "helmet": "^3.23.3",
+    "ticketing-system-micro-common": "../ticketing-system-micro-common",
+    "moment": "^2.25.3",
+    "moment-range": "^4.0.2",
+    "nodemon": "^1.19.2",
+    "winston": "^3.2.1"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2000",
+    "env": {
+      "NODE_ENV": "Development",
+      "PORT": 9015,
+      "HOST": "localhost",
+      "MODULE": "ticketing-micro-cdn",
+      "AWS_ACCESS_KEY_ID": "AKIASNNVWZ52YAAWZQVO",
+      "AWS_SECRET_ACCESS_KEY": "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",
+      "TS_S3_BUCKET": "ticketing-system-dev",
+      "TS_NOSQL_DB_REQUIRED": "false",
+      "SERVER_ENV": "SIT",
+      "REGION_NAME": "ap-south-1",
+      "TS_REDIS_HOST": "localhost",
+      "TS_REDIS_PORT": 6379,
+      "CONTEXT_PATH": "http://localhost:9001"
+    }
+  }
+}

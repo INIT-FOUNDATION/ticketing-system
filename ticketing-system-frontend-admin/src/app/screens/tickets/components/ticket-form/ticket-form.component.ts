@@ -268,6 +268,8 @@ export class TicketFormComponent implements OnInit {
           });
 
           this.getBlocks(productDetails.district_id);
+        } else {
+          this.utilsService.showErrorToast('Entered serial no is not valid/not found in our records. Please re-check serial no.');
         }
       })
     }

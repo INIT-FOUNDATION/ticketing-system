@@ -73,10 +73,11 @@
       "CAPTCHA_SECRET": "",
       "AWS_ACCESS_KEY_ID": "AKIASNNVWZ52YAAWZQVO",
       "AWS_SECRET_ACCESS_KEY": "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",
-      "TS_S3_BUCKET": "hmis-dev",
       "SERVER_ENV": "SIT",
       "TS_FROM_EMAIL": "no-reply@aieze.in",
-      "REGION_NAME": "ap-south-1"
+      "REGION_NAME": "ap-south-1",
+      "TS_S3_BUCKET": "ticketing-system-dev",
+      "CDN_CONTEXT_PATH": "http://localhost:9015"
     }
   }
 }
