@@ -149,6 +149,7 @@ export class TicketFormComponent implements OnInit {
           this.prepareRemoteGridData();
         }
 
+        this.ticketForm.get('ticket_mode').disable();
         this.ticketForm.get('product_serial_no').disable();
         this.ticketForm.get('issue_description').disable();
 

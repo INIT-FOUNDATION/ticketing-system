@@ -232,15 +232,19 @@
               <!-- <label class="userDetailsLabel" for="issue_final_remarks">Date of Closing*</label> -->
               <label class="userDetailsLabel">Date of Closing*</label>
               <mat-form-field appearance="fill" class="example-form-field">
-              
+
                 <input matInput [matDatepicker]="picker" class="heightSection" formControlName="ticket_closing_date">
                 <mat-datepicker-toggle matIconSuffix [for]="picker" class="dataIconSection"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
             </div>
+
+            <div class="col-md-12 text-end mt-4" *ngIf="formType == 'edit'">
+              <button class="btn createRoleBtn btnCenter" [disabled]="!ticketForm.valid" type="submit">Update</button>
+            </div>
           </ng-container>
-          <div class="col-md-12 text-end mt-4">
-            <button class="btn createRoleBtn btnCenter" type="submit">{{ formType=='add' ? 'Submit' : 'Update'}}</button>
+          <div class="col-md-12 text-end mt-4" *ngIf="formType == 'add'" >
+            <button class="btn createRoleBtn btnCenter" [disabled]="!ticketForm.valid" type="submit">Submit</button>
           </div>
         </div>
       </form>
