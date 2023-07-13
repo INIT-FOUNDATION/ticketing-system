@@ -72,6 +72,11 @@ const getTicketList = async (reqParams) => {
             whereClause += ` AND product_id=${reqParams.product_id}`;
         }
 
+        if (reqParams.ticket_number) {
+            key += `|Ticket:${reqParams.ticket_number}`;
+            whereClause += ` AND ticket_number='${reqParams.ticket_number}'`;
+        }
+
         if (reqParams.pageSize) {
             key += `|Size:${reqParams.pageSize}`;
             limitClause = ` LIMIT ${reqParams.pageSize}`;
