@@ -6,35 +6,35 @@
           <h2>Issue Details</h2>
           <div class="issueSection">
             <!-- <div class="card-body"> -->
-             
-              <p class="detailsInfo" for="product_name"><b>Hardware name:</b>
-                {{ticketDetails?.product_name}}</p>
-              <p class="detailsInfo" for="product_hw_name"><b>Model Number:</b>
-                {{ticketDetails?.model_number}}</p>
-              <p class="detailsInfo" for="product_hw_name"><b>Installation date:</b>
-                {{ticketDetails?.installation_date
-                | date:'dd-MM-YYYY'}}</p>
-              <p class="detailsInfo" for="vendor_name"><b>Company name:</b> {{ticketDetails?.vendor_name}}</p>
-              <p class="detailsInfo" for="vendor_contact_person_name"><b>Contact person name:</b>
-                {{ticketDetails?.vendor_contact_name}}</p>
-              <p class="detailsInfo" for="vendor_contact_person_name"><b>Mobile no:</b>
-                {{ticketDetails?.vendor_contact_number}}</p>
-              <p class="detailsInfo" for="site_name"><b>Site name:</b> {{ticketDetails?.state_name}}</p>
-              <p class="detailsInfo" for="site_udise_code"><b>UDISE Code:</b> {{ticketDetails?.site_code}}</p>
-              <p class="detailsInfo" for="primary_contact_name"><b>Contact person name:</b>
-                {{ticketDetails?.primary_contact_name}}</p>
-              <p class="detailsInfo" for="primary_contact_number"><b>Contact no:</b>
-                {{ticketDetails?.primary_contact_number}}</p>
-              <p class="detailsInfo" for="description"><b>Issue description:</b>
-                {{ticketDetails?.description}}</p>
-              <p class="detailsInfo" for="remarks"><b>Issue remarks:</b> {{ticketDetails?.remarks}}</p>
+
+            <p class="detailsInfo" for="product_name"><b>Hardware name:</b>
+              {{ticketDetails?.product_name}}</p>
+            <p class="detailsInfo" for="product_hw_name"><b>Model Number:</b>
+              {{ticketDetails?.model_number}}</p>
+            <p class="detailsInfo" for="product_hw_name"><b>Installation date:</b>
+              {{ticketDetails?.installation_date
+              | date:'dd-MM-YYYY'}}</p>
+            <p class="detailsInfo" for="vendor_name"><b>Company name:</b> {{ticketDetails?.vendor_name}}</p>
+            <p class="detailsInfo" for="vendor_contact_person_name"><b>Contact person name:</b>
+              {{ticketDetails?.vendor_contact_name}}</p>
+            <p class="detailsInfo" for="vendor_contact_person_name"><b>Mobile no:</b>
+              {{ticketDetails?.vendor_contact_number}}</p>
+            <p class="detailsInfo" for="site_name"><b>Site name:</b> {{ticketDetails?.state_name}}</p>
+            <p class="detailsInfo" for="site_udise_code"><b>UDISE Code:</b> {{ticketDetails?.site_code}}</p>
+            <p class="detailsInfo" for="primary_contact_name"><b>Contact person name:</b>
+              {{ticketDetails?.primary_contact_name}}</p>
+            <p class="detailsInfo" for="primary_contact_number"><b>Contact no:</b>
+              {{ticketDetails?.primary_contact_number}}</p>
+            <p class="detailsInfo" for="description"><b>Issue description:</b>
+              {{ticketDetails?.description}}</p>
+            <p class="detailsInfo" for="remarks"><b>Issue remarks:</b> {{ticketDetails?.remarks}}</p>
             <!-- </div> -->
           </div>
         </div>
         <div class="col-md-12">
           <div class="issueSection">
             <!-- <div class="card-body"> -->
-              <h2>Visit Details</h2>
+            <h2>Visit Details</h2>
 
             <!-- </div> -->
           </div>
@@ -57,7 +57,7 @@
 
           <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0 marginTop20">
             <label class="userDetailsLabel" for="visit_date">Visit date*</label>
-            <span>{{visitForm.get(['visit_date']).value | date:'dd-MM-YYYY'}}</span>
+            <p>{{visitForm.get(['visit_date']).value | date:'dd-MM-YYYY'}}</p>
           </div>
 
           <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
@@ -132,10 +132,12 @@
             </div>
           </div>
 
-          <h2>Documents</h2>
-          <div class="row" *ngIf="formType == 'add'">
-            <div class="col-md-12 marginBtm2rem text-end">
-              <button type="button" (click)="uploadDocumentDialog()" class="btn createRole marginBtm1Rem"><i
+          <div class="row marginBtm1Rem align-items-center">
+            <div class="col-md-9">
+              <h2>Documents</h2>
+            </div>
+            <div class="col-md-3 text-end" *ngIf="formType == 'add'">
+              <button type="button" (click)="uploadDocumentDialog()" class="btn createRole widthAutoBtn"><i
                   class="fa fa-upload"></i> Upload Document</button>
             </div>
           </div>
@@ -159,7 +161,7 @@
               </ng-template>
             </app-common-data-table>
           </div>
-          <div class="col-md-6 text-end">
+          <div class="col-md-12 text-end mt-4">
             <button class="btn createRoleBtn btnCenter" type="submit">Submit</button>
           </div>
         </div>

@@ -147,4 +147,7 @@ mat-icon {
   &[class*="custom-delete"] {
     mask-image: url(../assets/delete.svg);
   }
+  &[class*="custom-notepad"] {
+    mask-image: url(../assets/notepad-icon.svg);
+  }
 }

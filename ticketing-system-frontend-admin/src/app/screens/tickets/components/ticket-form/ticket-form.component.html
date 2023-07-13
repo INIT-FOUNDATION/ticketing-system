@@ -230,10 +230,11 @@
 
             <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xl-6  pl-0">
               <!-- <label class="userDetailsLabel" for="issue_final_remarks">Date of Closing*</label> -->
-              <mat-form-field>
-                <mat-label>Date of Closing*</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="ticket_closing_date">
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <label class="userDetailsLabel">Date of Closing*</label>
+              <mat-form-field appearance="fill" class="example-form-field">
+              
+                <input matInput [matDatepicker]="picker" class="heightSection" formControlName="ticket_closing_date">
+                <mat-datepicker-toggle matIconSuffix [for]="picker" class="dataIconSection"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
             </div>
