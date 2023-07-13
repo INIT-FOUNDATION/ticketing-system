@@ -35,6 +35,8 @@ const UpdateTicket = function (ticketData) {
     this.closing_date = ticketData.closing_date ? ticketData.closing_date : null;
     this.remarks = ticketData.remarks ? ticketData.remarks : null;
     this.status = ticketData.status ? parseInt(ticketData.status) : null;
+
+    this.status = this.closing_date ? 3 : this.status;
 };
 
 const validateUpdateTicket = (ticketData) => {
