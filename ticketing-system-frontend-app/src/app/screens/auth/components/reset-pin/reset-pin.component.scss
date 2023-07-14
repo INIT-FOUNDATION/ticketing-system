@@ -1,0 +1,19 @@
+@import "../../../../../theme/custom.scss";
+@import "../../../../../theme/colors.scss";
+
+::ng-deep .otp-input {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  border: 1px solid $blueLagoon !important;
+}
+
+::ng-deep app-reset-pin {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-icon {
+  left: 1.5rem;
+}

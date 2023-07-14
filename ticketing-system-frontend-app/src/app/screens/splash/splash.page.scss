@@ -1,0 +1,108 @@
+@import "../../../theme/colors.scss";
+
+.welcomeScreen {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: table;
+  text-align: center;
+  width: 15%;
+
+  h1 {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 35px;
+    color: $white;
+  }
+}
+
+#container {
+  width: 100%;
+  height: 100%;
+  // text-align: center;
+  // position: absolute;
+  // left: 0;
+  // right: 0;
+  // top: 50%;
+  // transform: translateY(-50%);
+  background-color: #303c72 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  #container {
+    background-color: #303c72 !important;
+  }
+}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+
+  color: #8c8c8c;
+
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+.getStart {
+  color: $blueLagoon !important;
+  // padding: 8px 10px;
+  position: relative;
+  top: 10rem;
+  font-size: 17px;
+  width: 90%;
+  --background-hover: $white;
+  --background-activated: $white;
+  --background-focused: $white;
+  font-weight: 700;
+
+  &::part(native) {
+    background: $white !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .getStart {
+    &::part(native) {
+      background: $block !important;
+      color: $white !important;
+    }
+  }
+}
+
+@-webkit-keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(3);
+  }
+}
+
+.scale-up-center {
+  -webkit-animation: scale-up-center 2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: scale-up-center 2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}

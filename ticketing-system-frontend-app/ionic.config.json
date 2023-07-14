@@ -1,0 +1,8 @@
+{
+  "name": "init-frontend-patient-app",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

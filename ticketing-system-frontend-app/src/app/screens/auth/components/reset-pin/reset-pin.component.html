@@ -1,0 +1,184 @@
+<ion-content
+  class="centerAlign"
+  *ngIf="utilityService.isMobile(); else desktop"
+>
+  <div class="shapeImgTop"></div>
+  <div class="welcomeUserInfo">
+    <div
+      class="px-4 mb-4 position-relative d-flex align-items-center justify-content-center"
+    >
+      <span class="position-absolute back-icon" (click)="back()"
+        ><img src="assets/images/backIcon.svg" alt=""
+      /></span>
+      <img src="assets/images/emoneedsLogo.svg" alt="" />
+      <span></span>
+    </div>
+    <p class="infoSubHeading text-start ps-4">
+      OTP Verification <br />
+      {{ infoSubHeading }}
+      <span class="text-theme infoSubHeading">
+        <span class="text-theme-2"> {{ mobile_number }}</span></span
+      >
+    </p>
+  </div>
+  <div class="welcomeForm">
+    <!-- Mobile Number Form -->
+    <form
+      [formGroup]="mobileForm"
+      *ngIf="!showSetPINToggle"
+      (ngSubmit)="verifyOtp()"
+    >
+      <ng-otp-input
+        class="bg-transparent text-dark rounded-pill"
+        [formCtrl]="otpFrmCtrl"
+        [config]="{ length: 6, allowNumbersOnly: true }"
+      ></ng-otp-input>
+      <div class="text-theme mt-3">{{ timeLeftInMinFormat }}</div>
+      <div class="infoSubHeading my-2">
+        If you don’t receive code!
+        <span
+          [ngClass]="{
+            'text-secondary': timeLeft > 0,
+            'text-theme': timeLeft < 0
+          }"
+          (click)="getOtp()"
+          >Resend</span
+        >
+      </div>
+      <ion-button
+        class="customUserBtn"
+        type="submit"
+        [disabled]="mobileForm.invalid"
+        >Verify OTP</ion-button
+      >
+    </form>
+
+    <!-- SET PIN Form -->
+    <form
+      *ngIf="showSetPINToggle"
+      [formGroup]="setPinForm"
+      (ngSubmit)="resetPin()"
+    >
+      <mat-label class="text-dark mb-3">New Pin</mat-label>
+      <ng-otp-input
+        class="bg-transparent text-dark rounded-pill"
+        [formCtrl]="new_pinFrmCtrl"
+        [config]="{ length: 6, allowNumbersOnly: true, disableAutoFocus: true }"
+      ></ng-otp-input>
+
+      <div class="my-3">
+        <mat-label class="text-dark mb-3">Confirm Pin</mat-label>
+        <ng-otp-input
+          class="bg-transparent text-dark rounded-pill"
+          [formCtrl]="confirm_pinFrmCtrl"
+          [config]="{
+            length: 6,
+            allowNumbersOnly: true,
+            disableAutoFocus: true
+          }"
+        ></ng-otp-input>
+      </div>
+      <ion-button
+        class="customUserBtn"
+        type="submit"
+        [disabled]="setPinForm.invalid"
+        >Set Pin</ion-button
+      >
+    </form>
+  </div>
+  <div class="shapeImgBottom">
+    <!-- <p class="logoinHeadingBottom">Don’t have an account? <a href="#">Sign Up</a></p> -->
+  </div>
+</ion-content>
+
+<ng-template #desktop>
+  <ion-content
+    class="centerAlign mobileViewContainer"
+    *ngIf="utilityService.isDesktop()"
+  >
+    <div class="shapeImgTop">
+      <span class="backToSection" *ngIf="showSetPINToggle" (click)="back()"
+        ><i class="fa fa-long-arrow-left"></i
+      ></span>
+      <p class="logoinHeadingTop">Reset PIN</p>
+    </div>
+    <div class="welcomeUserInfo">
+      <h1 class="infoHeading">{{ infoHeading }}</h1>
+      <p class="infoSubHeading">{{ infoSubHeading }} +91 {{ mobile_number }}</p>
+    </div>
+    <div class="welcomeForm">
+      <!-- Mobile Number Form -->
+      <form
+        [formGroup]="mobileForm"
+        *ngIf="!showSetPINToggle"
+        (ngSubmit)="verifyOtp()"
+      >
+        <!-- <mat-form-field appearance="outline">
+          <mat-label>Phone</mat-label>
+          <mat-icon class="addonIcon" matPrefix><i class="fa fa-phone"></i></mat-icon>
+          <input type="tel" appIntegerInput [appMin]="6000000000" [appMax]="9999999999" [appRange]="[6000000000, 9999999999]"
+                 formControlName="mobile_number" maxlength="10" matInput placeholder="Enter your mobile number">
+        </mat-form-field> -->
+
+        <mat-label>Enter OTP</mat-label>
+        <ng-otp-input
+          [formCtrl]="otpFrmCtrl"
+          [config]="{ length: 6, allowNumbersOnly: true }"
+        ></ng-otp-input>
+        <p class="sendOtp">{{ timeLeftInMinFormat }}</p>
+        <p class="sendOtp">
+          If you don’t receive code!
+          <a
+            [ngClass]="{ 'in-active': timeLeft > 0, active: timeLeft < 0 }"
+            (click)="getOtp()"
+            >Resend</a
+          >
+        </p>
+        <ion-button
+          class="customUserBtn"
+          type="submit"
+          [disabled]="mobileForm.invalid"
+          >Verify OTP</ion-button
+        >
+      </form>
+
+      <!-- SET PIN Form -->
+      <form
+        *ngIf="showSetPINToggle"
+        [formGroup]="setPinForm"
+        (ngSubmit)="resetPin()"
+      >
+        <mat-label class="text-dark mb-3">New Pin</mat-label>
+        <ng-otp-input
+          class="bg-transparent text-dark rounded-pill mb-3"
+          [formCtrl]="new_pinFrmCtrl"
+          [config]="{
+            length: 6,
+            allowNumbersOnly: true,
+            disableAutoFocus: true
+          }"
+        ></ng-otp-input>
+
+        <mat-label class="text-dark mb-3">Confirm Pin</mat-label>
+        <ng-otp-input
+          class="bg-transparent text-dark rounded-pill"
+          [formCtrl]="confirm_pinFrmCtrl"
+          [config]="{
+            length: 6,
+            allowNumbersOnly: true,
+            disableAutoFocus: true
+          }"
+        ></ng-otp-input>
+        <ion-button
+          class="customUserBtn"
+          type="submit"
+          [disabled]="setPinForm.invalid"
+          >Set Pin</ion-button
+        >
+      </form>
+    </div>
+    <div class="shapeImgBottom">
+      <!-- <p class="logoinHeadingBottom">Don’t have an account? <a href="#">Sign Up</a></p> -->
+    </div>
+  </ion-content>
+</ng-template>

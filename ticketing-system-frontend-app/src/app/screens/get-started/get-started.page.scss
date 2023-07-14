@@ -1,0 +1,49 @@
+@import "../../../theme/colors.scss";
+@import "../../../theme/custom.scss";
+
+.homeSlider {
+  height: 100%;
+}
+.sliderHome {
+  flex-flow: column nowrap;
+  .sliderBanner {
+    height: 20rem;
+  }
+}
+
+.skipNow {
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 18px;
+  color: $manatee;
+}
+
+.customBtn {
+  color: $white;
+  font-weight: 700;
+  font-size: 17px;
+  // padding: 8px 10px;
+  --background-hover: $blueLagoon;
+  --background-activated: $blueLagoon;
+  --background-focused: $blueLagoon;
+  &::part(native) {
+    background: $blueLagoon !important;
+  }
+}
+
+.heading {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: $block;
+}
+
+.para {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.3rem;
+  color: $manatee;
+}
+
+ion-content {
+  --ion-background-color: #ffffff;
+}

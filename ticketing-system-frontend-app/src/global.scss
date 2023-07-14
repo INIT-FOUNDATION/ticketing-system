@@ -1,0 +1,164 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+/* --- custom css --- */
+@import "./theme/custom.scss";
+//  colors css
+@import "./theme/colors.scss";
+
+// icons css
+@import "./theme/icons.scss";
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+span,
+ion-button,
+ion-label,
+.doctorRating {
+  font-family: "Lato" !important;
+  letter-spacing: 0.05rem !important;
+}
+
+.ion-page {
+  display: inline;
+  align-items: center;
+  justify-content: center !important;
+}
+
+body {
+  // background: linear-gradient(45deg, #09646e, #00181a);
+  background-image: url(assets/images/signupBg.svg);
+}
+
+ion-content {
+  --ion-background-color: #fff;
+}
+
+ion-card {
+  box-shadow: none;
+}
+
+:root * {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: rgba(142, 142, 142, 0.8);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  }
+
+  &::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(187, 187, 187, 0.4);
+  }
+}
+
+ion-toast.custom-success {
+  --background: #198754;
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: #fff;
+}
+
+ion-toast.custom-error {
+  --background: #dc3545;
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: #fff;
+}
+
+ion-toast.custom-info {
+  --background: #0dcaf0;
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: #000;
+}
+
+.overflow-auto::-webkit-scrollbar {
+  display: none;
+}
+
+.overflow-auto {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.paddingBottom {
+  padding-bottom: 100px;
+}
+
+:root {
+  --ion-color-rose: transparent;
+  --ion-color-rose-rgb: 254, 205, 211;
+  --ion-color-rose-contrast: #000000;
+  --ion-color-rose-contrast-rgb: 0, 0, 0;
+  --ion-color-rose-shade: #ddd;
+  --ion-color-rose-tint: #ddd;
+}
+
+.ion-color-rose {
+  --ion-color-base: var(--ion-color-rose);
+  --ion-color-base-rgb: var(--ion-color-rose-rgb);
+  --ion-color-contrast: var(--ion-color-rose-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-rose-contrast-rgb);
+  --ion-color-shade: var(--ion-color-rose-shade);
+  --ion-color-tint: var(--ion-color-rose-tint);
+}
+
+div[slot="content"] {
+  background: #efefef;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6rem;
+}
+
+.diagnosis-body ion-icon,
+.psychologist-body ion-icon,
+.counselor-body ion-icon,
+.psychiatrist-body ion-icon {
+  margin: 0rem;
+}
+
+ion-accordion {
+  ion-item {
+    padding: 0.5rem;
+    --inner-padding-end: 0rem;
+    --padding-start: 0.5rem;
+  }
+}

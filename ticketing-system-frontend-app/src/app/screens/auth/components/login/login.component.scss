@@ -1,0 +1,71 @@
+@import "../../../../../theme/custom.scss";
+@import "../../../../../theme/colors.scss";
+
+::ng-deep .otp-input {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  border: 1px solid $blueLagoon !important;
+}
+
+::ng-deep app-login {
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+::ng-deep ng-otp-input-wrapper {
+  margin: 0.5rem 1.5rem;
+}
+
+::ng-deep .mat-form-field {
+  width: 5rem !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+  padding: 0rem !important;
+  height: 2.2rem;
+}
+
+::ng-deep .mat-select-arrow-wrapper {
+  height: 0rem !important;
+}
+
+::ng-deep .mat-form-field-infix {
+  display: flex !important;
+  align-items: center;
+  width: 5rem !important;
+  border-top: 0rem !important;
+  margin-top: 0.6rem;
+}
+
+::ng-deep .mat-select-trigger {
+  flex-direction: row-reverse;
+}
+
+::ng-deep mat-select-value-text {
+  font-weight: 500;
+}
+
+.country-flags {
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
+.social-site-links {
+  border: 1px solid #000;
+  padding: 0.7rem 0rem;
+}
+
+.back-icon {
+  left: 1.5rem;
+}
+
+.border-theme {
+  border: 1px solid $blueLagoon;
+  padding: 0.6rem;
+  padding-left: 6.5rem;
+  font-size: 1.1rem;
+}

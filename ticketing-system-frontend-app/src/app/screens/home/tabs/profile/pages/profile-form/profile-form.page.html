@@ -1,0 +1,175 @@
+<ion-header class="d-flex align-items-center justify-content-between my-3 px-3">
+  <span class="backToSection rounded-circle" (click)="back()"
+    ><i class="fa fa-long-arrow-left"></i
+  ></span>
+  <span class="text-dark fs-4 fw-bold">Profile Information</span>
+  <span></span>
+</ion-header>
+
+<ion-content>
+  <div class="paddingBottom">
+    <div
+      class="position-relative d-flex align-items-center justify-content-center"
+    >
+      <img
+        class="profile-photo rounded-circle"
+        [src]="(profileService.profilePic | async) || 'assets/images/profilePic.png'"
+        alt=""
+      />
+      <input
+        type="file"
+        accept="image/*"
+        (change)="onSelectFile($event)"
+        #uploadFile
+        style="display: none"
+      />
+      <span
+        class="upload-btn position-absolute bg-theme rounded-pill p-2"
+        (click)="selectImage(uploadFile)"
+      >
+        <img src="assets/images/uploadProfile.svg" alt="" />
+      </span>
+    </div>
+
+    <ion-modal [isOpen]="isModalOpen">
+      <ng-template>
+        <ion-content class="ion-padding">
+          <ion-card class="imageCropCard">
+            <ion-card-content>
+              <image-cropper
+                [imageFile]="uploadedFile[0]"
+                [imageBase64]="base64Image"
+                [cropperMinWidth]="300"
+                [cropperMinHeight]="300"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="1 / 1"
+                format="png"
+                (imageCropped)="imageCropped($event)"
+              >
+              </image-cropper>
+            </ion-card-content>
+          </ion-card>
+          <div class="d-flex align-items-center justify-content-between">
+            <button
+              class="btn cancelBtn border-dark w-50 me-1 bg-light"
+              type="button"
+              (click)="closeCropping()"
+            >
+              Cancel
+            </button>
+            <button
+              class="btn createLinkBtn border-dark w-50 ms-1 bg-theme"
+              type="button"
+              (click)="confirmCropping()"
+            >
+              Crop
+            </button>
+          </div>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <div class="text-dark text-center fw-bolder fs-3">
+      {{ patientDetailsArray?.patient_name }}
+    </div>
+
+    <div class="text-dark text-center fs-6">
+      <span> UHID:</span>
+      <span> {{ patientDetailsArray?.patient_ref_id }}</span>
+    </div>
+
+    <div class="d-flex align-items-center ms-3 border-bottom mt-3 mb-3 pb-2">
+      <img src="assets/images/mobileIcon.svg" alt="" />
+      <span class="text-dark fs-6 ms-3"
+        >{{patientDetailsArray?.mobile_number}}</span
+      >
+    </div>
+
+    <div class="d-flex align-items-center ms-3 border-bottom pb-2">
+      <img src="assets/images/emailIcon.svg" alt="" />
+      <span class="text-dark fs-6 ms-3">{{patientDetailsArray?.email_id}}</span>
+    </div>
+
+    <div class="m-3">
+      <span class="text-dark fw-bold">Summary</span>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" (click)="setOpen(true, 'Diagnosis')">
+            <div class="diagnosis-body px-3 py-2 d-flex align-items-center">
+              <img src="assets/images/diagnosisImage.svg" alt="" />
+              <div class="d-flex flex-column ms-3 text-truncate">
+                <span class="fw-bold fs-09 text-truncate">Diagnosis</span>
+                <span class="text-dark fw-bold text-truncate"
+                  >{{patientSummaryDetails?.provisionaldiagnosisandcode}}</span
+                >
+              </div>
+            </div>
+          </ion-col>
+
+          <ion-col size="6" (click)="setOpen(true, 'Counselor')">
+            <div class="counselor-body px-3 py-2 d-flex align-items-center">
+              <img src="assets/images/counselorImage.svg" alt="" />
+              <div class="d-flex flex-column ms-3 text-truncate">
+                <span class="fw-bold fs-09 text-truncate">Counselor</span>
+                <span class="text-dark fw-bold text-truncate"
+                  >{{patientSummaryDetails?.patient_rpp_counsellor_assignment}}</span
+                >
+              </div>
+            </div>
+          </ion-col>
+
+          <ion-col size="6" (click)="setOpen(true, 'Psychologist')">
+            <div class="psychologist-body px-3 py-2 d-flex align-items-center">
+              <img
+                src="assets/images/psychologistImage.svg"
+                style="width: 2rem; height: 3.8rem"
+              />
+              <div class="d-flex flex-column ms-3 text-truncate">
+                <span class="fw-bold fs-09 text-truncate">Psychologist</span>
+                <span class="text-dark fw-bold text-truncate"
+                  >{{patientSummaryDetails?.patient_rpp_psychologist_assignment}}</span
+                >
+              </div>
+            </div>
+          </ion-col>
+
+          <ion-col size="6" (click)="setOpen(true, 'Psychiatrist')">
+            <div class="psychiatrist-body px-3 py-2 d-flex align-items-center">
+              <img src="assets/images/psychiatristImage.svg" alt="" />
+              <div class="d-flex flex-column ms-3 text-truncate">
+                <span class="fw-bold fs-09 text-truncate">Psychiatrist</span>
+                <span class="text-dark fw-bold text-truncate"
+                  >{{patientSummaryDetails?.patient_rpp_psychiatrist_assignment}}</span
+                >
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <ion-modal [isOpen]="isSummaryDetailsOpen">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>{{assignedAs}}</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false, close)">X</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <p class="text-dark" *ngFor="let item of assignedTo">
+            {{ item ? item : 'Nothing to display' }}
+          </p>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <div class="text-center text-secondary fs-6 lh-sm">
+      Note <br />
+      If you want to change any of the above information please call our support
+      team.
+    </div>
+  </div>
+</ion-content>

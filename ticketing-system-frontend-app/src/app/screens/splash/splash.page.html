@@ -1,0 +1,32 @@
+<!-- mobile section start  -->
+<div id="container" *ngIf="utilityService.isMobile() else desktop;">
+  <div class="welcomeScreen">
+    <!-- <h1>Doctor <br>Appointment</h1> -->
+    <img
+      src="../../../assets/images/logo.svg"
+      class="w-100 scale-up-center"
+      alt=""
+    />
+    <!-- <ion-button class="getStart" type="button" (click)="getStarted()">Get started</ion-button> -->
+  </div>
+</div>
+<!-- mobile section end  -->
+<!-- desktop screen start  -->
+<ng-template #desktop>
+  <div
+    id="container"
+    class="mobileViewContainer"
+    *ngIf="utilityService.isDesktop()"
+  >
+    <div class="welcomeScreen">
+      <!-- <h1>Doctor <br>Appointment</h1> -->
+      <img
+        src="../../../assets/images/logo.svg"
+        class="w-100 scale-up-center"
+        alt=""
+      />
+      <!-- <ion-button class="getStart" type="button" (click)="getStarted()">Get started</ion-button> -->
+    </div>
+  </div>
+</ng-template>
+<!-- desktop screen end  -->

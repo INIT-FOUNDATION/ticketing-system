@@ -1,0 +1,139 @@
+<!-- mobile section start  -->
+
+<ion-content *ngIf="utilityService.isMobile() else desktop;">
+  <div class="shapeImgTop mb-2"></div>
+  <div (click)="getStarted()" class="skipNow me-3 text-end">Skip</div>
+  <ion-slides pager="true" [options]="sliderOptions" class="homeSlider" #slider>
+    <ion-slide class="sliderHome justify-content-start">
+      <ion-img
+        src="assets/images/onlineTreatmentGetStartedPage.svg"
+        class="sliderBanner"
+      ></ion-img>
+      <h1 class="heading mb-2">Simplified Online Treatment</h1>
+      <p class="para px-3">
+        Stay connected with your Emoneeds team through the app
+      </p>
+      <div class="bottomDiv w-100 mt-4">
+        <ion-button
+          class="customBtn w-75"
+          shape="round"
+          type="button"
+          (click)="slider.slideNext()"
+          >Next</ion-button
+        >
+      </div>
+    </ion-slide>
+
+    <ion-slide class="sliderHome justify-content-start">
+      <ion-img
+        src="assets/images/manageAppointmentGetStartedPage.svg"
+        class="sliderBanner"
+      ></ion-img>
+      <h1 class="heading mb-2">Manage Appointments & Prescriptions</h1>
+      <p class="para px-3">
+        Efficiently manage your appointments and prescriptions through the app
+      </p>
+      <div class="bottomDiv w-100 mt-4">
+        <ion-button
+          class="customBtn w-75"
+          shape="round"
+          type="button"
+          (click)="slider.slideNext()"
+          >Next</ion-button
+        >
+      </div>
+    </ion-slide>
+
+    <ion-slide class="sliderHome justify-content-start">
+      <ion-img
+        src="assets/images/trackProgressGetStartedPage.svg"
+        class="sliderBanner"
+      ></ion-img>
+      <h1 class="heading mb-2">Track Progress & More</h1>
+      <p class="para px-3">
+        Track your progress through the app and see how far you have come
+      </p>
+      <div class="bottomDiv w-100 mt-4">
+        <ion-button
+          class="customBtn w-75"
+          shape="round"
+          type="button"
+          (click)="getStarted()"
+          >Start</ion-button
+        >
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+<!-- mobile section end  -->
+
+<!-- desktop screen start  -->
+<ng-template #desktop>
+  <ion-content *ngIf="utilityService.isDesktop()" class="mobileViewContainer">
+    <ion-slides
+      pager="true"
+      [options]="sliderOptions"
+      class="homeSlider"
+      #slider
+    >
+      <ion-slide class="sliderHome">
+        <ion-img
+          src="../../../assets/images/banner1.svg"
+          class="sliderBanner"
+        ></ion-img>
+        <h1 class="heading">Thousands of doctors</h1>
+        <p class="para">
+          Access thousands of doctors instantly. You can easily contact with the
+          doctors and contact for your needs.
+        </p>
+        <div class="bottomDiv">
+          <ion-button
+            class="customBtn"
+            type="button"
+            (click)="slider.slideNext()"
+            >Next</ion-button
+          >
+        </div>
+      </ion-slide>
+
+      <ion-slide class="sliderHome">
+        <ion-img
+          src="../../../assets/images/banner2.svg"
+          class="sliderBanner"
+        ></ion-img>
+        <h1 class="heading">Live talk with doctors</h1>
+        <p class="para">
+          Easily connect with doctor and start video chat for your better
+          treatment & prescription.
+        </p>
+        <div class="bottomDiv">
+          <ion-button
+            class="customBtn"
+            type="button"
+            (click)="slider.slideNext()"
+            >Next</ion-button
+          >
+          <a (click)="getStarted()" class="skipNow">Skip for now</a>
+        </div>
+      </ion-slide>
+
+      <ion-slide class="sliderHome">
+        <ion-img
+          src="../../../assets/images/banner3.svg"
+          class="sliderBanner"
+        ></ion-img>
+        <h1 class="heading">Chat with doctors</h1>
+        <p class="para">
+          Book an appointment with doctor.Chat with doctor via appoinment letter
+          & get consultant.
+        </p>
+        <div class="bottomDiv">
+          <ion-button class="customBtn" type="button" (click)="getStarted()"
+            >Start</ion-button
+          >
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </ion-content>
+</ng-template>
+<!-- desktop screen end  -->

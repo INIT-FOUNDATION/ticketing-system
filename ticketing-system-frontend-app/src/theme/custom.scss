@@ -1,0 +1,408 @@
+@import "./colors.scss";
+
+.mobileViewContainer {
+  width: 100%;
+  height: 100%;
+  max-width: 25em;
+  max-height: 52em;
+  // border-radius: 1em;
+  box-shadow: 0 0 1em 2px rgb(0 0 0 / 25%);
+  margin: auto;
+}
+
+.swiper-pagination-bullet-active {
+  background: #267392 !important;
+}
+
+// .swiper-pagination-fraction,
+// .swiper-pagination-custom,
+// .swiper-container-horizontal>.swiper-pagination-bullets {
+//   bottom: 10rem !important;
+
+// }
+
+ion-content.centerAlign {
+  height: 100vh;
+}
+
+.infoHeading {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  color: $blueLagoon;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.centerAlign {
+  text-align: center;
+}
+
+.logoinHeadingTop {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 23px;
+  color: $white;
+  margin: 0;
+  position: relative;
+  top: -1rem;
+  text-align: center;
+  margin: auto;
+}
+
+.welcomeUserInfo {
+  padding: 0.5rem;
+  padding-bottom: 0;
+}
+
+.welcomeForm {
+  padding: 0 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-start,
+.mat-form-field-appearance-outline .mat-form-field-outline-end,
+.mat-form-field-appearance-outline .mat-form-field-outline-gap {
+  border: 0px solid transparent !important;
+  background: $athensGray;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-start {
+  border-radius: 10px 0 0 10px !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-end {
+  border-radius: 0 10px 10px 0 !important;
+}
+
+.mat-form-field-flex {
+  height: 55px;
+  align-items: center !important;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field-infix {
+  margin-left: 0.7rem;
+}
+
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label,
+.mat-form-field-appearance-outline.mat-form-field-can-float
+  .mat-input-server:focus
+  + .mat-form-field-label-wrapper
+  .mat-form-field-label {
+  transform: translateY(-0.8em) scale(0.75);
+  width: auto;
+  color: #267392;
+}
+
+.mat-input-element,
+.mat-form-field-label-wrapper {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  color: $block;
+}
+
+.addonIcon {
+  font-size: 15px;
+  color: $manatee;
+}
+
+.customUserBtn {
+  color: $white !important;
+  // padding: 3px 0px;
+  font-size: 17px;
+  width: 100%;
+  --background-hover: $blueLagoon;
+  --background-activated: $blueLagoon;
+  --background-focused: $blueLagoon;
+  font-weight: 700;
+  margin-top: 1rem;
+
+  &::part(native) {
+    background: $blueLagoon !important;
+    padding-top: 1.3rem;
+    padding-bottom: 1.3rem;
+  }
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0 !important;
+}
+
+ion-button {
+  text-transform: capitalize !important;
+}
+
+.invalid-form-control,
+.invalid-field {
+  border: 1px solid red !important;
+}
+
+.paddingStartEnd {
+  padding-inline-start: 0px;
+  padding-inline-end: 0px;
+}
+
+.marginAllSide {
+  margin: 0;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0;
+  padding-top: 2rem;
+}
+
+.cardTitle {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: $block;
+  margin: 0;
+}
+
+.cardLink {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: $blueLagoon;
+  margin: 0;
+  text-decoration: none;
+}
+
+.paddingTopZero {
+  padding-top: 0;
+}
+
+.doctorName {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: $block;
+}
+
+.doctorTitle {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: $manatee;
+  display: block;
+  // display: -webkit-box;
+  // max-width: 100%;
+  // -webkit-line-clamp: 2;
+  // -webkit-box-orient: vertical;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+}
+
+.doctorFee,
+.doctorRating {
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 14px;
+  color: $block;
+}
+
+::ng-deep .scroll-y {
+  --overflow-y: inherit !important;
+}
+
+.cardSubTitles {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  color: $manatee;
+  margin: 0;
+  margin-top: 1rem;
+}
+
+.paddingTopZero {
+  padding-top: 0;
+}
+
+.header-md::after {
+  display: none;
+}
+
+// .paddingTopBottomZero {
+//   padding: 0 2rem;
+// }
+
+.custom-andrologist,
+.custom-cardiologist,
+.custom-dentist,
+.custom-dermatology,
+.custom-diabetes,
+.custom-endocrinology,
+.custom-fertilityspecialist,
+.custom-gastroenterology,
+.custom-generalphysician,
+.custom-generalsurgeon,
+.custom-gynecologist,
+.custom-nephrologist,
+.custom-neurologist,
+.custom-neurosurgeon,
+.custom-oncology,
+.custom-orthopedician,
+.custom-pediatrician,
+.custom-psychiatrist,
+.custom-psychotherapist,
+.custom-pulmonologist,
+.custom-sportsmedicine,
+.custom-urologist,
+.custom-cosmetologist,
+.custom-dietitian {
+  color: $blueLagoon;
+  // width: 40px;
+  // height: 40px;
+  // margin: auto;
+  // display: table;
+  // margin-top: 1rem;
+  width: 20px;
+  height: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .doctorName,
+  .doctorDig,
+  .doctorTitle,
+  .doctorFee,
+  .cardTitle {
+    color: $white !important;
+  }
+
+  .searchbar-input {
+    background: $block !important;
+    color: $white !important;
+  }
+
+  .mat-input-element {
+    color: $white !important;
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline-start,
+  .mat-form-field-appearance-outline .mat-form-field-outline-end,
+  .mat-form-field-appearance-outline .mat-form-field-outline-gap {
+    background: transparent !important;
+  }
+
+  .custom-filter {
+    color: $white !important;
+  }
+
+  .SpecialityTabs {
+    .nav-pills {
+      background: #1e1e1e !important;
+
+      .filterTitle {
+        background: #1e1e1e !important;
+        color: #fff !important;
+        border-bottom: 1px solid #313131 !important;
+      }
+
+      .active {
+        background: $block !important;
+        color: $white !important;
+      }
+    }
+  }
+
+  .customUserBtn {
+    &::part(native) {
+      color: $white !important;
+    }
+  }
+
+  .mat-form-field-label {
+    color: #8c8fa5;
+  }
+  // .mat-select-value {
+  //   color: $white;
+  // }
+  .mat-select-panel {
+    background: #393939;
+  }
+  .mat-option {
+    color: #ffffff;
+  }
+  .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: #04818e;
+  }
+}
+
+// Emoneeds CSS
+.text-theme {
+  color: $blueSecondary;
+}
+
+.text-theme-2 {
+  color: $blueLagoon;
+}
+
+.bg-theme {
+  background-color: $blueLagoon;
+}
+
+.fs-11 {
+  font-size: 1.1rem;
+}
+
+.fs-09 {
+  font-size: 0.9rem;
+}
+
+.infoSubHeading {
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.3rem;
+  color: $mirage;
+}
+
+.backToSection {
+  background-color: $blueLagoon;
+  padding: 0.5rem 0.7rem;
+}
+
+input:focus-visible {
+  outline-color: $blueSecondary;
+}
+
+.shapeImgTop {
+  background-image: url(../assets/images/shapeImgtop.svg);
+  height: 5rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.headerBgColor {
+  --background: #fff;
+  // padding: 2rem;
+}
+
+.doctorSearchBox {
+  --background: #f5f5f5;
+}
+
+.mainBgHeader {
+  background: #f5f5f5;
+}
+
+.headerMainHeading {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: $block;
+}
+
+.headerSubHeading {
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: $block;
+}

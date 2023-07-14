@@ -1,0 +1,136 @@
+<!-- mobile screen start  -->
+<app-header></app-header>
+<ion-content class="bgColorBox bg-white">
+  <div class="paddingBottom">
+    <ion-header class="mainBgHeader">
+      <ion-toolbar class="headerBgColor profileHeader">
+        <div
+          class="position-relative d-flex align-items-center justify-content-center"
+        >
+          <img
+            class="profile-photo rounded-circle"
+            [src]="(profileService.profilePic | async) || 'assets/images/profilePic.png'"
+            alt=""
+          />
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onSelectFile($event)"
+            #uploadFile
+            style="display: none"
+          />
+          <span
+            class="upload-btn position-absolute bg-theme rounded-pill p-2"
+            (click)="selectImage(uploadFile)"
+          >
+            <img src="assets/images/uploadProfile.svg" alt="" />
+          </span>
+        </div>
+
+        <ion-modal [isOpen]="isModalOpen">
+          <ng-template>
+            <ion-content class="ion-padding">
+              <ion-card class="imageCropCard">
+                <ion-card-content>
+                  <image-cropper
+                    [imageFile]="uploadedFile[0]"
+                    [imageBase64]="base64Image"
+                    [cropperMinWidth]="300"
+                    [cropperMinHeight]="300"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="1 / 1"
+                    format="png"
+                    (imageCropped)="imageCropped($event)"
+                  >
+                  </image-cropper>
+                </ion-card-content>
+              </ion-card>
+              <div class="d-flex align-items-center justify-content-between">
+                <button
+                  class="btn cancelBtn border-dark w-50 me-1 bg-light"
+                  type="button"
+                  (click)="closeCropping()"
+                >
+                  Cancel
+                </button>
+                <button
+                  class="btn createLinkBtn border-dark w-50 ms-1 bg-theme"
+                  type="button"
+                  (click)="confirmCropping()"
+                >
+                  Crop
+                </button>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+
+        <h1 class="headerMainHeading">
+          {{patientProfileDetails?.patient_name}}
+        </h1>
+        <div class="text-dark text-center fs-6">
+          <span> UHID:</span>
+          <span> {{ patientProfileDetails?.patient_ref_id }}</span>
+        </div>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-card class="my-0">
+      <ion-card-content class="paddingStartEnd py-0">
+        <ion-card>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ul class="profileInfo">
+                  <li (click)="openProfileSettings()">
+                    <span>
+                      <img src="assets/images/profileInformation.svg" alt="" />
+                      <span class="ps-3">Profile Information</span>
+                    </span>
+                  </li>
+                  <li class="my-2" (click)="notificationSettings()">
+                    <span class="">
+                      <span>
+                        <img
+                          src="assets/images/notificationSettings.svg"
+                          alt=""
+                        />
+                        <span class="ps-3">Notification Settings</span>
+                      </span></span
+                    >
+                  </li>
+                  <li class="my-2" (click)="planManagement()">
+                    <span class="">
+                      <span>
+                        <img src="assets/images/plan.png" alt="" class="plan" />
+                        <span class="ps-3">Plan Management</span>
+                      </span></span
+                    >
+                  </li>
+                  <!-- <li>
+                    <span class="">
+                      <span>
+                        <img src="assets/images/feedbakIcon.svg" alt="" />
+                        <span class="ps-3">Feedback</span>
+                      </span></span
+                    >
+                  </li> -->
+                  <li class="mt-2" (click)="logout()">
+                    <span class="">
+                      <span>
+                        <img src="assets/images/logoutIcon.svg" alt="" />
+                        <span class="ps-3">Logout</span>
+                      </span></span
+                    >
+                  </li>
+                </ul>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<!-- mobile screen end  -->

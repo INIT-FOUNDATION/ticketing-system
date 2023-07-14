@@ -1,0 +1,145 @@
+ion-icon {
+  &[class*="custom-"] {
+    mask-size: contain;
+    mask-position: 50% 50%;
+    mask-repeat: no-repeat;
+    background: currentColor;
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+  }
+
+  &[class*="custom-cardiologist"] {
+    mask-image: url(../assets/icons/cardiologist.svg);
+  }
+  &[class*="custom-orthopaedic"] {
+    mask-image: url(../assets/icons/orthopaedic.svg);
+  }
+  &[class*="custom-dentist"] {
+    mask-image: url(../assets/icons/dentist.svg);
+  }
+  &[class*="custom-profileSetting"] {
+    mask-image: url(../assets/icons/profileSetting.svg);
+  }
+  &[class*="custom-rightArrow"] {
+    mask-image: url(../assets/icons/rightArrow.svg);
+  }
+  &[class*="custom-notifications"] {
+    mask-image: url(../assets/icons/notifications.svg);
+  }
+  &[class*="custom-favourite"] {
+    mask-image: url(../assets/icons/favourite.svg);
+  }
+  &[class*="custom-paymentdetails"] {
+    mask-image: url(../assets/icons/paymentdetails.svg);
+  }
+  &[class*="custom-referafriend"] {
+    mask-image: url(../assets/icons/referafriend.svg);
+  }
+  &[class*="custom-location"] {
+    mask-image: url(../assets/icons/location.svg);
+  }
+  &[class*="custom-filter"] {
+    mask-image: url(../assets/icons/filter.svg);
+  }
+  &[class*="custom-andrologist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/andrologist.svg);
+  }
+  &[class*="custom-cardiologist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/cardiologist.svg);
+  }
+  &[class*="custom-dentist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/dentist.svg);
+  }
+  &[class*="custom-dermatology"] {
+    mask-image: url(../assets/icons/Speciality_Icons/dermatology.svg);
+  }
+  &[class*="custom-diabetes"] {
+    mask-image: url(../assets/icons/Speciality_Icons/diabetes.svg);
+  }
+  &[class*="custom-endocrinology"] {
+    mask-image: url(../assets/icons/Speciality_Icons/endocrinology.svg);
+  }
+  &[class*="custom-fertilityspecialist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/fertilityspecialist.svg);
+  }
+  &[class*="custom-gastroenterology"] {
+    mask-image: url(../assets/icons/Speciality_Icons/gastroenterology.svg);
+  }
+  &[class*="custom-generalphysician"] {
+    mask-image: url(../assets/icons/Speciality_Icons/generalphysician.svg);
+  }
+  &[class*="custom-generalsurgeon"] {
+    mask-image: url(../assets/icons/Speciality_Icons/generalsurgeon.svg);
+  }
+  &[class*="custom-gynecologist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/gynecologist.svg);
+  }
+  &[class*="custom-nephrologist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/nephrologist.svg);
+  }
+  &[class*="custom-neurologist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/neurologist.svg);
+  }
+  &[class*="custom-neurosurgeon"] {
+    mask-image: url(../assets/icons/Speciality_Icons/neurosurgeon.svg);
+  }
+  &[class*="custom-oncology"] {
+    mask-image: url(../assets/icons/Speciality_Icons/oncology.svg);
+  }
+  &[class*="custom-orthopedician"] {
+    mask-image: url(../assets/icons/Speciality_Icons/orthopedician.svg);
+  }
+  &[class*="custom-pediatrician"] {
+    mask-image: url(../assets/icons/Speciality_Icons/pediatrician.svg);
+  }
+  &[class*="custom-psychiatrist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/psychiatrist.svg);
+  }
+  &[class*="custom-psychotherapist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/psychotherapist.svg);
+  }
+  &[class*="custom-pulmonologist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/pulmonologist.svg);
+  }
+  &[class*="custom-sportsmedicine"] {
+    mask-image: url(../assets/icons/Speciality_Icons/sportsmedicine.svg);
+  }
+  &[class*="custom-urologist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/urologist.svg);
+  }
+  &[class*="custom-cosmetologist"] {
+    mask-image: url(../assets/icons/Speciality_Icons/cosmetologist.svg);
+  }
+  &[class*="custom-dietitian"] {
+    mask-image: url(../assets/icons/Speciality_Icons/dietitian.svg);
+  }
+  &[class*="custom-pateints"] {
+    mask-image: url(../assets/icons/pateints.svg);
+  }
+  &[class*="custom-experience"] {
+    mask-image: url(../assets/icons/experience.svg);
+  }
+  &[class*="custom-close"] {
+    mask-image: url(../assets/icons/close.svg);
+  }
+  &[class*="custom-home"] {
+    mask-image: url(../assets/icons/home.svg);
+  }
+  &[class*="custom-appointment"] {
+    mask-image: url(../assets/icons/appointment.svg);
+  }
+  &[class*="custom-profile"] {
+    mask-image: url(../assets/icons/profile.svg);
+  }
+  &[class*="custom-success"] {
+    mask-image: url(../assets/icons/success-green-check-mark-icon.svg);
+  }
+  &[class*="custom-cancel"] {
+    mask-image: url(../assets/icons/cancel.svg);
+  }
+  &[class*="custom-check-mark-line-icon"] {
+    mask-image: url(../assets/icons/check-mark-line-icon.svg);
+  }
+
+}

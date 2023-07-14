@@ -1,0 +1,25 @@
+<div class="d-flex align-items-center justify-content-between p-3">
+  <ion-icon
+    *ngIf="homeService?.header?.data == true"
+    name="arrow-back-circle"
+    class="arrow-back-circle"
+    (click)="redirectToPreviousPage()"
+  ></ion-icon>
+  <ion-label class="text-dark fw-bold fs-4 me-2">{{
+    homeService?.header?.value
+  }}</ion-label>
+  <div class="position-relative" (click)="directTonotifications()">
+    <img
+      *ngIf="homeService?.header?.icon == true"
+      src="assets/images/notificationIcon.svg"
+      style="width: 1.2rem"
+    /><span
+      class="position-absolute"
+      [ngClass]="{
+        count: totalNotificationsCount != 0
+      }"
+      *ngIf="homeService?.header?.icon == true"
+      >{{ totalNotificationsCount == 0 ? "" : totalNotificationsCount }}</span
+    >
+  </div>
+</div>
