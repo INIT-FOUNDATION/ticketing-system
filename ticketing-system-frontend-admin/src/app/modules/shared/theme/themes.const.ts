@@ -27,7 +27,8 @@ export const themes = {
     '--list-view-hover-text-color': '#495057',
     '--mat-disabled': '#00000061',
     '--athensGray': '#F5F5F6',
-    '--tabs-back': '#d9d5d5'
+    '--tabs-back': '#d9d5d5',
+    '--header-text': '#1e205a',
   },
   dark_theme: {
     '--alabaster': '#353535',
@@ -47,5 +48,6 @@ export const themes = {
     '--tabs-back': '#353535',
     '--geyser': '#7b8290',
     '--mercury':'#7b8290',
+    '--header-text': '#ffffff',
   }
 }

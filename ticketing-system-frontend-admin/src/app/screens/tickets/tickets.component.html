@@ -18,18 +18,21 @@
           [actionColumnTemplate]="ticketActionTemplate"
           [actionColumnRequired]="true" [colFormatterTemplate]="{'ticket_mode': ticketModeFormatter, 'status': ticketStatusFormatter, 'opening_date': ticketOpeningDateFormatter}">
   <ng-template #ticketActionTemplate let-gridData='griddata'>
-    <button (click)="editTicket(gridData)" type="button"
+    <button (click)="editTicket(gridData)" type="button" *ngIf="userDetails?.user_level == 'Admin'"
       class="butonclover edit" data-toggle="tooltip" data-placement="top" title="Edit Ticket">
       <span class="actionicons iconscls text-warning">
-        <i class="fa fa-pencil"></i>
+        <i class="fa fa-pencil" *ngIf="gridData.status == 1"></i>
+        <i class="fa fa-eye" *ngIf="gridData.status != 1"></i>
       </span>
     </button>
-    <button (click)="addVisit(gridData)" type="button"
-      class="butonclover edit" data-toggle="tooltip" data-placement="top" title="Add Visit" *ngIf="gridData.status != 3" >
-      <span class="actionicons iconscls text-warning">
-        <i class="fa fa-clipboard"></i>
-      </span>
-    </button>
+    <ng-container *ngIf="userDetails?.user_level == 'Auditor'">
+      <button (click)="addVisit(gridData)" type="button"
+        class="butonclover edit" data-toggle="tooltip" data-placement="top" title="Add Visit" *ngIf="gridData.status != 3" >
+        <span class="actionicons iconscls text-warning">
+          <i class="fa fa-clipboard"></i>
+        </span>
+      </button>
+    </ng-container>
   </ng-template>
   <ng-template #ticketModeFormatter let-gridData='griddata'>
     {{gridData.ticket_mode == 2 ? 'By Auditor' : 'Self'}}
