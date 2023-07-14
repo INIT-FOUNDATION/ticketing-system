@@ -10,7 +10,7 @@ RUN node --max_old_space_size=10240 ./node_modules/@angular/cli/bin/ng build --c
 FROM 166274191221.dkr.ecr.ap-south-1.amazonaws.com/aieze-nginx:1.17.1-alpine
 RUN rm -rf /usr/share/nginx/html/*
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /usr/src/app/dist/init-frontend-admin /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/ticketing-system-frontend-admin /usr/share/nginx/html
 RUN chmod -R 777 /usr/share/nginx/html
 EXPOSE 83
 CMD ["nginx", "-g", "daemon off;"]
