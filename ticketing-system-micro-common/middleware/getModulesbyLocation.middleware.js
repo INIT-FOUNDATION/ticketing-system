@@ -9,6 +9,10 @@ const getModulesbyLocation = (req) => {
         req.initPayload = {};
 
         switch (level) {
+            case 'National':
+                req.initPayload.access = 'country_id = ' + country_id;
+                req.initPayload.role_access = ['Admin', 'Auditor'];
+                break;
 
             case 'Admin':
                 req.initPayload.access = 'country_id = ' + country_id;

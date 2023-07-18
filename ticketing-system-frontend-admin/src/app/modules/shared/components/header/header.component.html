@@ -23,10 +23,6 @@
         <div class="topHeader darkThemMain">
             <div class="row align-items-center">
                 <div class="col-md-6 col-sm-12 col-lg-8 col-xl-8">
-                    <!-- <form>
-                        <input type="text" name="search" placeholder="Search.." class="searchRole">
-                        <mat-icon class="custom-search-icon"></mat-icon>
-                    </form> -->
                     <h1 class="headingSection"> <mat-icon class="custom-back" *ngIf="pageHeaderService.backButtonRequired" (click)="goBackToPrvsScreen()"></mat-icon> {{ pageHeaderService.pageHeader | async }}</h1>
                 </div>
                 <div class="col-md-6 col-sm-12 col-lg-4 col-xl-4 p-0">
@@ -34,13 +30,11 @@
 
                         <li>
                             <mat-icon (click)="changeThemeToggle()" [ngClass]="{'custom-contrast-icon': !dark_theme, 'custom-moon': dark_theme}" class="" alt="contrast-icon"></mat-icon>
-                            <!-- <mat-icon class="custom-moon" alt="contrast-icon"></mat-icon> -->
+                        </li>
 
-                        </li>
-                      
-                        <li>
+                        <!-- <li>
                             <img src="../assets/notification.svg" alt="notification">
-                        </li>
+                        </li> -->
 
                         <li>
                             <div class="userDetails">

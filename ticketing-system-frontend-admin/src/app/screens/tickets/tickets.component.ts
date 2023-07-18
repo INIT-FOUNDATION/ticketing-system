@@ -41,10 +41,11 @@ export class TicketsComponent implements OnInit {
     private router: Router,
     private encDecService: EncDecService,
     private utilService: UtilsService,
-    private dataService: DataService,
+    public dataService: DataService,
     private ticketService: TicketService) { }
 
   ngOnInit(): void {
+    this.userDetails = this.dataService.userDetails;
     this.searchForm = new FormGroup({
       search: new FormControl(null, [Validators.required, Validators.minLength(12), Validators.maxLength(12)])
     })
