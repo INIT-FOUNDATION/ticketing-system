@@ -82,9 +82,6 @@ router.post("/getVisit", async (req, res) => {
     try {
         const visit_id = req.body.visit_id ? req.body.visit_id : null;
         const visitData = await visitService.getVisit(visit_id)
-        const docData = await visitService.getDocument(visit_id)
-        console.log(docData);
-        visitData.documents = docData
         res.send(visitData)
     } catch (error) {
         console.log("catch error", error);
@@ -94,13 +91,9 @@ router.post("/getVisit", async (req, res) => {
 
 router.post("/getAllVisits", async (req, res) => {
     try {
-
         const ticket_id = req.body.ticket_id ? req.body.ticket_id : null;
         const visits = await visitService.getAllVisits(ticket_id)
-
-        
         res.send(visits)
-
     } catch (error) {
         console.log("catch error", error);
         return res.status(STATUS.INTERNAL_SERVER_ERROR).send(`{"errorCode":"CMNERR0000", "error":"${COMMON_ERR.CMNERR0000}"}`);

@@ -16,15 +16,47 @@ const createVisit = async (visitData) => {
 
 const getVisit = async (visit_id) => {
     try {
+        const cacheKey = `Visit_${visit_id}`;
+        let isCached = false;
+        const cachedData = await redis.GetKeyRedis(cacheKey);
+        const isVisitUpdated = await visitUpdateCheck(visit_id);
+        isCached = (cachedData) && (isVisitUpdated == 0) ? true : false;
+
+        if (isCached) {
+            console.log('From the Cache');
+            const result = JSON.parse(cachedData);
+            return result;
+        }
+
         const _query = {
             text: VISIT_QUERIES.getVisit,
             values: [visit_id]
         }
         console.log(_query);
-        const data = await pg.executeQueryPromise(_query);
-        return data[0];
+        const [data] = await pg.executeQueryPromise(_query);
+        const docData = await getDocument(visit_id)
+        console.log(docData);
+        data.documents = docData
+        redis.SetRedis(cacheKey, data, 10 * 60).then().catch(err => console.log(err));
+        return data;
     } catch (error) {
         throw error
+    }
+}
+
+
+const visitUpdateCheck = async (visit_id) => {
+    try {
+        const _query = {
+            text: VISIT_QUERIES.visitUpdateCheck,
+            values: [visit_id]
+        }
+        console.log('Check Query');
+        console.log(_query);
+        const queryResult = await pg.executeQueryPromise(_query);
+        return parseInt(queryResult[0].count);
+    } catch (error) {
+        throw error;
     }
 }
 

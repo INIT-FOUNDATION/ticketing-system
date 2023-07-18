@@ -37,7 +37,6 @@ const createTicket = async (ticketData) => {
     }
 }
 
-
 const updateTicket = async (ticketData) => {
     try {
         const ticket_id = ticketData.ticket_id;
@@ -157,6 +156,17 @@ const getAllTicketCount = async (whereClause) => {
 
 const getTicket = async (ticket_id) => {
     try {
+        const cacheKey = `Ticket_${ticket_id}`;
+        let isCached = false;
+        const cachedData = await redis.GetKeyRedis(cacheKey);
+        const isVisitUpdated = await visitUpdateCheck(visit_id);
+        isCached = (cachedData) && (isVisitUpdated == 0) ? true : false;
+
+        if (isCached) {
+            console.log('From the Cache');
+            const result = JSON.parse(cachedData);
+            return result;
+        }
 
         const _query = {
             text: TICKET_QUERIES.getTicket,
@@ -171,6 +181,22 @@ const getTicket = async (ticket_id) => {
         throw error
     }
 }
+
+const ticketUpdateCheck = async (ticket_id) => {
+    try {
+        const _query = {
+            text: TICKET_QUERIES.visitUpdateCheck,
+            values: [visit_id]
+        }
+        console.log('Check Query');
+        console.log(_query);
+        const queryResult = await pg.executeQueryPromise(_query);
+        return parseInt(queryResult[0].count);
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 const checkTicketIdExists = async (ticket_id) => {
     try {

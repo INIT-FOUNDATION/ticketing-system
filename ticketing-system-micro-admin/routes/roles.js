@@ -59,7 +59,7 @@ router.post("/addRole", async (req, res) => {
     }
 
   } catch (err) {
-
+    console.log(err);
     return res.status(STATUS.INTERNAL_SERVER_ERROR).send();
   }
 });
@@ -163,11 +163,11 @@ router.post("/updateRoleDetails", async (req, res) => {
 
 router.get("/getActiveRoleList", async (req, res) => {
   try {
-    var import_access = req.initPayload.role_access;
-    let token = req.plainToken;
-    var role_id = token.role;
-    var role_access = import_access.join("','");
-    let data = await roleService.getactiveRoles(role_access, role_id);
+    const import_access = req.initPayload.role_access;
+    const token = req.plainToken;
+    const role_id = token.role;
+    const role_access = import_access ? import_access.join("','") : null;
+    const data = await roleService.getactiveRoles(role_access, role_id);
     res.status(STATUS.OK).send(data);
   } catch (err) {
     console.log(err);
